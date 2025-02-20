@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # archives
     zip
@@ -10,8 +10,6 @@
     ripgrep # recursively searches directories for a regex pattern
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processer https://github.com/mikefarah/yq
-    fzf # A command-line fuzzy finder
-
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
@@ -85,7 +83,39 @@
       enableFishIntegration = true;
     };
 
-    gh = { enable = true; };
-    lazygit = { enable = true; };
+    gh = {enable = true;};
+    lazygit = {enable = true;};
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+    };
+
+    ghostty = {
+      enable = true;
+      # Let brew manage the package
+      package = null;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      # installBatSyntax = true;
+      # installVimSyntax = true;
+
+      settings = {
+        background-blur-radius = 20;
+        theme = "dark:catppuccin-mocha,light:catppuccin-latte";
+        window-theme = "dark";
+        #window-theme = "system"; # TODO make vim and terminal somehow respect this?
+        background-opacity = 0.8;
+        minimum-contrast = 1.1;
+        keybinding = [
+          # keybind = global:ctrl+`=toggle_quick_terminal
+          "global:ctrl+`=toggle_quick_terminal"
+          "ctrl+h=goto_split:left"
+          "ctrl+l=goto_split:right"
+        ];
+      };
+    };
   };
 }
