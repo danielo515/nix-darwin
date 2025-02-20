@@ -1,7 +1,7 @@
 { pkgs, ... }: {
 
   ##########################################################################
-  # 
+  #
   #  Install all apps and packages here.
   #
   ##########################################################################
@@ -26,7 +26,7 @@
   environment.variables.EDITOR = "nvim";
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
-  # 
+  #
   # The apps installed by homebrew are not managed by nix, and not reproducible!
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
   homebrew = {
@@ -44,7 +44,6 @@
     # `brew install`
     # TODO Feel free to add your favorite apps here.
     brews = [
-      "wget" # download tool
       "curl" # no not install curl via nixpkgs, it's not working well on macOS!
       "aria2" # download tool
       "httpie" # http client

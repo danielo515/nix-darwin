@@ -26,6 +26,7 @@
     gawk
     zstd
     gnupg
+    wget
 
     # productivity
     glow # markdown previewer in terminal
@@ -69,10 +70,22 @@
       enableBashIntegration = true;
     };
 
+    #Story your CLI history in a database synced across machines
     atuin = {
       enable = true;
       enableZshIntegration = true;
       enableBashIntegration = true;
+      enableFishIntegration = true;
     };
+
+    autojump = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+    };
+
+    gh = { enable = true; };
+    lazygit = { enable = true; };
   };
 }
