@@ -109,9 +109,9 @@
         #window-theme = "system"; # TODO make vim and terminal somehow respect this?
         background-opacity = 0.8;
         minimum-contrast = 1.1;
-        keybinding = [
+        keybind = [
           # keybind = global:ctrl+`=toggle_quick_terminal
-          "global:ctrl+`=toggle_quick_terminal"
+          "global:ctrl+grave_accent=toggle_quick_terminal"
           "ctrl+h=goto_split:left"
           "ctrl+l=goto_split:right"
         ];
