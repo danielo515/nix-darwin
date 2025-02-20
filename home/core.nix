@@ -13,6 +13,7 @@
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
+    ast-grep # AST-based code search
 
     # misc
     cowsay
@@ -99,6 +100,7 @@
       enableZshIntegration = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
+      # Not allowed when package is null
       # installBatSyntax = true;
       # installVimSyntax = true;
 
@@ -107,7 +109,7 @@
         theme = "dark:catppuccin-mocha,light:catppuccin-latte";
         window-theme = "dark";
         #window-theme = "system"; # TODO make vim and terminal somehow respect this?
-        background-opacity = 0.8;
+        background-opacity = 0.85;
         minimum-contrast = 1.1;
         keybind = [
           # keybind = global:ctrl+`=toggle_quick_terminal
