@@ -40,3 +40,11 @@ unavoidable
 
 1. login in the bitwarden extension
 2.configure sync for my profiles (personal and work)
+
+## Login into atuin
+
+```bash
+atuin login -u <username>
+```
+
+Will ask for the key, or password, it's on bitwarden

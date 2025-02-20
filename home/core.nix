@@ -68,5 +68,11 @@
       enable = true;
       enableBashIntegration = true;
     };
+
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+    };
   };
 }
