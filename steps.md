@@ -22,6 +22,11 @@ Required by home-manager to handle brew packages
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
+Maybe in the future I can just use `nix-homebrew` ??
+
+References:
+- https://github.com/mg/home-manager/blob/main/flake.nix
+
 ## run nix-darwin installation
 
 ```bash
