@@ -2,6 +2,7 @@
   description = "Danielo nix-darwin system flake";
 
   inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -13,13 +14,14 @@
 
   outputs = inputs @ {
     self,
+    flake-utils,
     nix-darwin,
     nixpkgs,
     home-manager,
   }: let
     username = "danielo";
     useremail = "rdanielo@gmail.com";
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+    system = flake-utils.system.aarch64-darwin; # aarch64-darwin or x86_64-darwin
     hostname = "Danielos-MacBook-Pro";
     specialArgs = inputs // {inherit username useremail hostname system;};
     configuration = {
@@ -37,7 +39,7 @@
       # $ darwin-rebuild changelog
       system.stateVersion = 6;
       # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
+      nixpkgs.hostPlatform = system;
       # nixpkgs.hostPlatform = builtins.trace "System: ${system}" system;
     };
   in {
