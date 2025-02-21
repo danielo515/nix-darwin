@@ -1,7 +1,7 @@
 # just is a command runner, Justfile is very similar to Makefile, but simpler.
 
 # TODO update hostname here!
-hostname := "your-hostname"
+hostname := "Danielos-MacBook-Pro"
 
 # List all the just commands
 default:
@@ -13,20 +13,15 @@ default:
 #
 ############################################################################
 
-#  TODO Feel free to remove this target if you don't need a proxy to speed up the build process
 [group('desktop')]
-darwin-set-proxy:
-  sudo python3 scripts/darwin_set_proxy.py
-
-[group('desktop')]
-darwin: darwin-set-proxy
+darwin:
   nix build .#darwinConfigurations.{{hostname}}.system \
     --extra-experimental-features 'nix-command flakes'
 
   ./result/sw/bin/darwin-rebuild switch --flake .#{{hostname}}
 
 [group('desktop')]
-darwin-debug: darwin-set-proxy
+darwin-debug:
   nix build .#darwinConfigurations.{{hostname}}.system --show-trace --verbose \
     --extra-experimental-features 'nix-command flakes'
 
@@ -57,7 +52,7 @@ history:
 # Open a nix shell with the flake
 [group('nix')]
 repl:
-  nix repl -f flake:nixpkgs
+  nix repl -f flake:nixpkgs -f flake:flake-utils
 
 # remove all generations older than 7 days
 # on darwin, you may need to switch to root user to run this command
@@ -83,4 +78,3 @@ fmt:
 [group('nix')]
 gcroot:
   ls -al /nix/var/nix/gcroots/auto/
-
