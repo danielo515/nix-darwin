@@ -15,7 +15,6 @@
   environment.systemPackages = with pkgs; [
     neovim
     git
-    direnv
     sshs
     glow
     nushell
@@ -33,10 +32,13 @@
     enable = true;
 
     onActivation = {
-      autoUpdate = true; # Fetch the newest stable branch of Homebrew's git repo
+      # Whether to enable Homebrew to auto-update itself and all formulae during nix-darwin system activation.
+      # The default is false so that repeated invocations of darwin-rebuild switch are idempotent.
+      autoUpdate = false;
       upgrade = true; # Upgrade outdated casks, formulae, and App Store apps
       # 'zap': uninstalls all formulae(and related files) not listed in the generated Brewfile
-      cleanup = "zap";
+      # 'uninstall': just uninstalls what is not listed, but not related files
+      cleanup = "uninstall";
     };
 
     taps = [ "homebrew/services" ];
@@ -59,6 +61,7 @@
       "firefox@developer-edition"
       "google-chrome"
       "visual-studio-code"
+      "windsurf"
 
       "anki"
       "iina" # video player
