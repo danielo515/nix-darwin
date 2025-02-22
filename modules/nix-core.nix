@@ -7,10 +7,6 @@
   nix.settings.experimental-features = "nix-command flakes";
   # The platform the configuration will be used on.
   # nixpkgs.hostPlatform = builtins.trace "System: ${system}" system;
-
-  # Enable alternative shell support in nix-darwin.
-  programs.fish.enable = true;
-
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
   # This is very redundant (because it is also defined in home manager)
