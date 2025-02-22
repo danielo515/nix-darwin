@@ -21,7 +21,9 @@
   }: let
     username = "danielo";
     useremail = "rdanielo@gmail.com";
-    system = flake-utils.system.aarch64-darwin; # aarch64-darwin or x86_64-darwin
+    _ = builtins.trace "flake-utils: ${flake-utils}" flake-utils;
+    # system = flake-utils.system.aarch64-darwin; # aarch64-darwin or x86_64-darwin
+    system = "aarch64-darwin";
     hostname = "Danielos-MacBook-Pro";
     specialArgs = inputs // {inherit username useremail hostname system;};
     configuration = {
