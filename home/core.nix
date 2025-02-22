@@ -14,6 +14,7 @@
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
     ast-grep # AST-based code search
+    fd # A simple, fast and user-friendly alternative to find
 
     # misc
     cowsay
@@ -54,6 +55,8 @@
     yazi = {
       enable = true;
       enableZshIntegration = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
       settings = {
         manager = {
           show_hidden = true;
@@ -118,6 +121,13 @@
           "ctrl+l=goto_split:right"
         ];
       };
+    };
+
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+      # enableFishIntegration = true;
     };
   };
 }
