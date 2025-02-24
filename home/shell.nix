@@ -2,9 +2,22 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    enableVteIntegration = true;
+    # Automatically enter into a directory if typed directly into shell.
+    autocd = true;
+    autosuggestion = {
+      enable = true;
+      strategy = ["history"];
+    };
+    defaultKeymap = "vicmd";
     initExtra = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
     '';
+    # This are automatically substituted in any part of a command
+    # for example `ls -la @g downloads` becomes `ls -la | grep -i downloads`
+    shellGlobalAliases = {
+      "@g" = "| grep -i ";
+    };
   };
 
   # Enable alternative shell support in nix-darwin.
