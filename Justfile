@@ -27,6 +27,12 @@ darwin-debug:
 
   ./result/sw/bin/darwin-rebuild switch --flake .#{{hostname}} --show-trace --verbose
 
+
+# Executes only home-manager to apply home related changes
+# Not sure if this is a good idea. Seems to have some unexpected side effects
+[group('desktop')]
+home-manager:
+    nix run nixpkgs#home-manager -- switch --flake . --show-trace --verbose
 ############################################################################
 #
 #  nix related commands
@@ -72,7 +78,7 @@ gc:
 [group('nix')]
 fmt:
   # format the nix files in this repo
-  nix fmt
+  nix fmt .
 
 # Show all the auto gc roots in the nix store
 [group('nix')]
