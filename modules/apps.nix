@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   ##########################################################################
   #
   #  Install all apps and packages here.
@@ -40,7 +40,7 @@
       cleanup = "uninstall";
     };
 
-    taps = ["homebrew/services"];
+    taps = [ "homebrew/services" ];
 
     # `brew install`
     # TODO Feel free to add your favorite apps here.
@@ -67,7 +67,6 @@
       "stats" # beautiful system monitor
 
       # Development
-      "insomnia" # REST client
       "wireshark" # network analyzer
       "font-fira-code"
       "font-inconsolata"
@@ -88,7 +87,6 @@
       "kitty"
       "lagrange"
       "losslesscut"
-      "raycast"
       "monitorcontrol"
       "mos"
       "obs"
@@ -97,17 +95,15 @@
       "orcaslicer"
       "steam"
       "upscayl"
-      "utm"
+      "utm" # full featured system emulator and virtual machine host
       "wezterm"
       "zed"
       "zoom"
       #"stremio"
       #"tableplus"
-      #"transmission"
       #"ubersicht"
       #"maccy"
       #"podman-desktop"
-      #"qbittorrent"
       #"signal"
       #"slack"
     ];
