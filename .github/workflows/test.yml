@@ -1,0 +1,37 @@
+name: "Test nix-darwin configuration"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  tests:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
+      with:
+        extra-conf: |
+          experimental-features = nix-command flakes
+
+    - name: Check flake inputs
+      run: nix flake show
+      
+    - name: Check flake evaluation
+      run: nix flake check
+      
+    - name: Build configuration
+      run: |
+        # Use the predefined hostname from the flake
+        # instead of the CI machine's hostname
+        nix build .#darwinConfigurations.Danielos-MacBook-Pro.system
+        
+    - name: Test configuration evaluation
+      run: |
+        # Use the predefined hostname from the flake
+        # instead of the CI machine's hostname
+        nix eval .#darwinConfigurations.Danielos-MacBook-Pro.system
