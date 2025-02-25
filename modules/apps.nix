@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   ##########################################################################
   #
   #  Install all apps and packages here.
@@ -41,7 +40,7 @@
       cleanup = "uninstall";
     };
 
-    taps = [ "homebrew/services" ];
+    taps = ["homebrew/services"];
 
     # `brew install`
     # TODO Feel free to add your favorite apps here.
@@ -52,7 +51,6 @@
       "imagemagick"
       "skhd"
       "yabai"
-
     ];
 
     # `brew install --cask`
@@ -90,28 +88,28 @@
       "kitty"
       "lagrange"
       "losslesscut"
-      #"maccy"
+      "raycast"
       "monitorcontrol"
       "mos"
       "obs"
       "openscad"
       "orbstack"
       "orcaslicer"
-      #"podman-desktop"
-      #"qbittorrent"
-      "raycast"
-      #"signal"
-      #"slack"
       "steam"
-      #"stremio"
-      #"tableplus"
-      #"transmission"
-      #"ubersicht"
       "upscayl"
       "utm"
       "wezterm"
       "zed"
       "zoom"
+      #"stremio"
+      #"tableplus"
+      #"transmission"
+      #"ubersicht"
+      #"maccy"
+      #"podman-desktop"
+      #"qbittorrent"
+      #"signal"
+      #"slack"
     ];
   };
 }
