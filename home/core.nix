@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     # archives
     zip
@@ -28,6 +28,8 @@
     gnupg
     wget
 
+    # dev
+    nixd # nix language server
     # productivity
     glow # markdown previewer in terminal
   ];
@@ -78,6 +80,7 @@
       enableZshIntegration = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
+      settings = { filter_mode_shell_up_key_binding = "session"; };
     };
 
     autojump = {
@@ -87,8 +90,8 @@
       enableFishIntegration = true;
     };
 
-    gh = {enable = true;};
-    lazygit = {enable = true;};
+    gh = { enable = true; };
+    lazygit = { enable = true; };
     fzf = {
       enable = true;
       enableZshIntegration = true;
@@ -111,7 +114,6 @@
         background-blur-radius = 20;
         theme = "dark:catppuccin-mocha,light:catppuccin-latte";
         window-theme = "dark";
-        #window-theme = "system"; # TODO make vim and terminal somehow respect this?
         background-opacity = 0.85;
         minimum-contrast = 1.1;
         keybind = [
@@ -127,6 +129,7 @@
       enable = true;
       enableZshIntegration = true;
       enableBashIntegration = true;
+      nix-direnv.enable = true;
       # enableFishIntegration = true;
     };
   };
