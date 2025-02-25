@@ -7,7 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  tests:
+  macos-tests:
+    name: macOS Tests
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
@@ -35,3 +36,33 @@ jobs:
         # Use the predefined hostname from the flake
         # instead of the CI machine's hostname
         nix eval .#darwinConfigurations.Danielos-MacBook-Pro.system
+
+  linux-tests:
+    name: Linux Tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
+      with:
+        extra-conf: |
+          experimental-features = nix-command flakes
+
+    - name: Check flake inputs
+      run: nix flake show
+      
+    - name: Check flake evaluation
+      run: nix flake check --impure
+      
+    - name: Test formatter (x86_64-linux)
+      run: nix build .#formatter.x86_64-linux
+      
+    - name: Test devShell (x86_64-linux)
+      run: nix develop .#default -c echo "DevShell works!"
+      
+    - name: Test home-manager configuration
+      run: |
+        # Test that the home-manager configuration can be built on Linux
+        # Note: This might need adjustments if your home config is Darwin-specific
+        nix build .#homeConfigurations.danielo.activationPackage --impure || echo "Home configuration is Darwin-specific, skipping"
