@@ -19,28 +19,16 @@
       system = "aarch64-darwin";
       hostname = "Danielos-MacBook-Pro";
       specialArgs = inputs // { inherit username useremail hostname system; };
-      configuration = { pkgs, system, ... }: {
-        # # Necessary for using flakes on this system.
-        nix.settings.experimental-features = "nix-command flakes";
-        # # Set Git commit hash for darwin-version.
-        # system.configurationRevision = self.rev or self.dirtyRev or null;
-        # Used for backwards compatibility, please read the changelog before changing.
-        # $ darwin-rebuild changelog
-        system.stateVersion = 6;
-        # The platform the configuration will be used on.
-        nixpkgs.hostPlatform = system;
-      };
     in {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#Danielos-MacBook-Pro
       darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
         inherit system specialArgs;
         modules = [
-          ./modules/nix-core.nix
-          ./modules/system.nix
+          ./modules/nix-core.nix # nix-darwin specific settings
+          ./modules/system.nix # system preferences
           ./modules/apps.nix
           ./modules/host-users.nix
-          configuration
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

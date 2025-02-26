@@ -1,7 +1,7 @@
 { username, ... }: {
   # import sub modules
   imports =
-    [ ./shell.nix ./core.nix ./git.nix ./starship.nix ./hammerspoon.nix ];
+    [ ./shell.nix ./apps.nix ./git.nix ./starship.nix ./hammerspoon.nix ];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.

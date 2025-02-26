@@ -132,5 +132,14 @@
       nix-direnv.enable = true;
       # enableFishIntegration = true;
     };
+
+    navi = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+    };
+    pet = {
+      enable = true;
+    };
   };
 }

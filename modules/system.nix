@@ -46,9 +46,6 @@
         TrackpadThreeFingerDrag = false; # enable three finger drag
       };
 
-      # customize settings that not supported by nix-darwin directly
-      # Incomplete list of macOS `defaults` commands :
-      #   https://github.com/yannbertrand/macos-defaults
       NSGlobalDomain = {
         AppleShowAllFiles = true;
         # `defaults read NSGlobalDomain "xxx"`

@@ -4,4 +4,5 @@
     "cSpell.words": [
         "pkgs"
     ],
+    "makefile.configureOnOpen": false,
 }
