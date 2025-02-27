@@ -1,7 +1,19 @@
-{ self, pkgs, lib, username, system, ... }: {
+{
+  self,
+  pkgs,
+  lib,
+  username,
+  system,
+  ...
+}: {
   nix.enable = true;
   # Necessary for using flakes on this system.
-  nix.settings.experimental-features = builtins.trace ">>> Setting nix.settings.experimental-features in modules/nix-core.nix <<<" (builtins.trace ">>> Setting experimental-features to 'nix-command flakes' <<<" "nix-command flakes");
+  nix.settings.experimental-features =
+    builtins.trace
+    ">>> Setting nix.settings.experimental-features in modules/nix-core.nix <<<"
+    (builtins.trace
+      ">>> Setting experimental-features to 'nix-command flakes' <<<"
+      "nix-command flakes");
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = builtins.trace ">>> System: ${system} <<<" system;
   # Set Git commit hash for darwin-version.
@@ -27,7 +39,7 @@
   # Disable auto-optimise-store because of this issue:
   #   https://github.com/NixOS/nix/issues/7273
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
-  nix.settings = builtins.trace ">>> Setting nix.settings in modules/nix-core.nix <<<" {
-    auto-optimise-store = false;
-  };
+  # nix.settings = builtins.trace ">>> Setting nix.settings in modules/nix-core.nix <<<" {
+  #   auto-optimise-store = false;
+  # };
 }

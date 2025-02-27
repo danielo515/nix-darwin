@@ -1,14 +1,17 @@
 # Linux-specific home-manager configurations
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # Linux-specific home configuration
   home.packages = with pkgs; [
     # Linux-specific packages
     xclip
     # gnome.gnome-tweaks
   ];
-  
+
   # Linux-specific services
   services = {
     # Enable gpg-agent for SSH authentication

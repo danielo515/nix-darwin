@@ -1,5 +1,5 @@
 # Darwin-specific applications
-{ pkgs, ... }: {
+{pkgs, ...}: {
   ##########################################################################
   #
   #  Install all apps and packages here.
@@ -39,7 +39,7 @@
       cleanup = "uninstall";
     };
 
-    taps = [ "homebrew/services" ];
+    taps = ["homebrew/services"];
 
     # `brew install`
     brews = [

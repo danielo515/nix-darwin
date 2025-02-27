@@ -33,6 +33,43 @@ darwin-debug:
 [group('desktop')]
 home-manager:
     nix run nixpkgs#home-manager -- switch --flake . --show-trace --verbose
+
+############################################################################
+#
+#  Testing related commands
+#
+############################################################################
+
+# Test all configurations with dry-run builds
+[group('test')]
+test-all:
+  @echo "Running all configuration tests..."
+  @just test-darwin
+  @just test-home
+  @just test-structure
+  @echo "\nAll configurations built successfully!"
+
+# Test only the Darwin system configuration
+[group('test')]
+test-darwin:
+  @echo "Testing Darwin system configuration..."
+  nix build .#darwinConfigurations.{{hostname}}.system --dry-run
+
+# Test only the home configurations
+[group('test')]
+test-home:
+  @echo "Testing Darwin home configuration..."
+  nix build .#homeConfigurations.danielo-darwin.activationPackage --dry-run
+  @echo "\nTesting Linux home configuration..."
+  nix build .#homeConfigurations.danielo-linux.activationPackage --dry-run
+
+# Run flake checks to verify configuration structure
+[group('test')]
+test-structure:
+  @echo "Checking configuration structure..."
+  nix flake check
+  @echo "Configuration structure check passed!"
+
 ############################################################################
 #
 #  nix related commands

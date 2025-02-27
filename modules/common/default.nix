@@ -1,7 +1,10 @@
 # Common modules for all systems
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./fonts.nix
     ./networking.nix

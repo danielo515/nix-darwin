@@ -1,7 +1,11 @@
 # Common Nix settings for all systems
-{ pkgs, lib, username, system, ... }:
-
 {
+  pkgs,
+  lib,
+  username,
+  system,
+  ...
+}: {
   nix.enable = true;
 
   # Necessary for using flakes on this system
@@ -29,6 +33,6 @@
     auto-optimise-store = false;
 
     # Trusted users
-    trusted-users = [ "root" username ];
+    trusted-users = ["root" username];
   };
 }

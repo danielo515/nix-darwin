@@ -1,7 +1,10 @@
 # Common font configuration
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   fonts = {
     # fontDir.enable is no longer needed in newer nix-darwin versions
     packages = with pkgs; [

@@ -1,7 +1,5 @@
 # Common packages for all environments
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # Packages to be installed in the user's environment
   home.packages = with pkgs; [
     # Development tools
@@ -13,7 +11,7 @@
     nodejs
     python3
     nixd # nix language server
-    
+
     # System utilities
     htop
     btop
@@ -24,11 +22,11 @@
     wget
     curl
     unzip
-    
+
     # archives
     zip
     unzip
-    
+
     # utils
     ripgrep
     jq
@@ -36,20 +34,20 @@
     eza
     bat
     fd
-    
+
     # networking tools
     httpie
-    
+
     # Text processing
     vim
     neovim
-    
+
     # Version control
     git-lfs
-    
+
     # Terminal enhancements
     tmux
-    
+
     # productivity
     glow # markdown previewer in terminal
   ];

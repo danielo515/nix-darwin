@@ -1,7 +1,10 @@
 # Common home-manager configurations for all environments
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./packages.nix
     ./programs.nix

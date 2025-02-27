@@ -1,5 +1,5 @@
 # Darwin-specific program configurations
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs = {
     # Terminal emulator for macOS
     ghostty = {
@@ -42,7 +42,7 @@
       };
     };
   };
-  
+
   # Enable Syncthing service
   services.syncthing.enable = true;
 }

@@ -1,7 +1,10 @@
 # ZSH configuration
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -10,7 +13,7 @@
     autocd = true;
     autosuggestion = {
       enable = true;
-      strategy = [ "history" ];
+      strategy = ["history"];
     };
     defaultKeymap = "vicmd";
     initExtra = ''
@@ -18,8 +21,8 @@
     '';
     # This are automatically substituted in any part of a command
     # for example `ls -la @g downloads` becomes `ls -la | grep -i downloads`
-    shellGlobalAliases = { "@g" = "| grep -i "; };
-    
+    shellGlobalAliases = {"@g" = "| grep -i ";};
+
     plugins = [
       {
         name = "zsh-syntax-highlighting";
@@ -41,7 +44,7 @@
       }
     ];
   };
-  
+
   # Common shell aliases
   home.shellAliases = {
     k = "kubectl";

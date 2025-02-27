@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # archives
     zip
@@ -80,7 +80,7 @@
       enableZshIntegration = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
-      settings = { filter_mode_shell_up_key_binding = "session"; };
+      settings = {filter_mode_shell_up_key_binding = "session";};
     };
 
     autojump = {
@@ -90,8 +90,8 @@
       enableFishIntegration = true;
     };
 
-    gh = { enable = true; };
-    lazygit = { enable = true; };
+    gh = {enable = true;};
+    lazygit = {enable = true;};
     fzf = {
       enable = true;
       enableZshIntegration = true;
