@@ -14,7 +14,7 @@
     ./programs/neovim.nix
     ./programs/tmux.nix
     ./programs/starship.nix
-    
+
     # Darwin-specific programs
     (if isDarwin then ./programs/hammerspoon.nix else null)
 
@@ -29,8 +29,9 @@
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home = {
-    username = builtins.trace "username:${username}" username;
-    homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+    username = builtins.trace ">>> username:${username} <<<" username;
+    homeDirectory = builtins.trace ">>> Setting homeDirectory in home/default.nix <<<"
+      (if isDarwin then "/Users/${username}" else "/home/${username}");
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

@@ -22,6 +22,9 @@
   ];
   environment.variables.EDITOR = "nvim";
 
+  # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
+  #
+  # The apps installed by homebrew are not managed by nix, and not reproducible!
   # Homebrew configuration
   homebrew = {
     enable = true;

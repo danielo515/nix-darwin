@@ -1,9 +1,9 @@
 { self, pkgs, lib, username, system, ... }: {
   nix.enable = true;
   # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
+  nix.settings.experimental-features = builtins.trace ">>> Setting nix.settings.experimental-features in modules/nix-core.nix <<<" (builtins.trace ">>> Setting experimental-features to 'nix-command flakes' <<<" "nix-command flakes");
   # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = builtins.trace "System: ${system}" system;
+  nixpkgs.hostPlatform = builtins.trace ">>> System: ${system} <<<" system;
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
   # This is very redundant (because it is also defined in home manager)
@@ -19,17 +19,15 @@
   nix.package = pkgs.nix;
 
   # do garbage collection weekly to keep disk usage low
-  # nix.gc = {
-  #   automatic = lib.mkDefault true;
-  #   options = lib.mkDefault "--delete-older-than 7d";
-  # };
+  nix.gc = builtins.trace ">>> Setting nix.gc in modules/nix-core.nix <<<" {
+    automatic = lib.mkDefault true;
+    options = lib.mkDefault "--delete-older-than 7d";
+  };
 
   # Disable auto-optimise-store because of this issue:
   #   https://github.com/NixOS/nix/issues/7273
   # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
-  nix.settings = { auto-optimise-store = false; };
-  nix.extraOptions = ''
-  !include /etc/nix/nix.conf.before-nix-darwin
-  ''
-  ;
+  nix.settings = builtins.trace ">>> Setting nix.settings in modules/nix-core.nix <<<" {
+    auto-optimise-store = false;
+  };
 }
