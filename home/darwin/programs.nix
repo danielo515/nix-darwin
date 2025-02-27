@@ -37,8 +37,6 @@
         window-inherit-working-directory = true;
         macos-option-as-alt = true;
         mouse-hide-while-typing = true;
-        # Ligatures
-        font-feature = [ "calt" "liga" "dlig" ];
         # Disable ligatures when cursor is on them
         font-disable-ligatures-in-cursor-line = true;
       };

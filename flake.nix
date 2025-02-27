@@ -1,5 +1,5 @@
 {
-  description = "Danielo's Nix configuration for both NixOS and Darwin";
+  description = "Danielo's Nix configuration for macOS";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
@@ -44,18 +44,6 @@
         # };
       };
 
-      nixosHosts = {
-        "desktop" = {
-          system = "x86_64-linux";
-          hostPath = ./hosts/desktop;
-        };
-        "laptop" = {
-          system = "x86_64-linux";
-          hostPath = ./hosts/laptop;
-        };
-        # Add more NixOS hosts here as needed
-      };
-
       # Function to create home-manager configuration for a host
       mkHomeManagerConfig = { system, hostname, extraSpecialArgs ? { } }: {
         home-manager.useGlobalPkgs = true;
@@ -91,55 +79,48 @@
           ];
         };
 
-      # Function to create a NixOS configuration
-      mkNixosConfig = hostname: hostConfig:
-        nixpkgs.lib.nixosSystem {
-          system = hostConfig.system;
-          specialArgs = commonSpecialArgs // {
-            inherit (inputs) home-manager;
-            hostname = hostname;
-            system = hostConfig.system;
-            isDarwin = false;
-          };
-          modules = [
-            # Host-specific configuration
-            hostConfig.hostPath
-            (_: {
-              boot.loader.grub.device =
-                "/dev/disk/by-id/wwn-0x500001234567890a";
-            })
-            # Include home-manager module
-            home-manager.nixosModules.home-manager
-            (mkHomeManagerConfig {
-              system = hostConfig.system;
-              hostname = hostname;
-              extraSpecialArgs = { isDarwin = false; };
-            })
-
-            # Include overlays
-            { nixpkgs.overlays = import ./overlays; }
-          ];
-        };
-
       # Generate all Darwin configurations
       darwinConfigurations = builtins.mapAttrs mkDarwinConfig darwinHosts;
 
-      # Generate all NixOS configurations
-      nixosConfigurations = builtins.mapAttrs mkNixosConfig nixosHosts;
+      # Standalone home-manager configuration for any system
+      mkHomeConfig = system: isDarwin:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          modules = [ ./home ];
+          extraSpecialArgs = commonSpecialArgs // { inherit isDarwin; };
+        };
 
     in {
       # Export the configurations
-      inherit darwinConfigurations nixosConfigurations;
+      inherit darwinConfigurations;
+      
+      # Standalone home-manager configurations for different systems
+      homeConfigurations = {
+        # Darwin standalone home configuration
+        "${username}-darwin" = mkHomeConfig darwinSystems.0 true;
+        
+        # Linux standalone home configuration
+        "${username}-linux" = mkHomeConfig nixosSystems.0 false;
+      };
 
       # Nix code formatter for all systems
-      formatter = flake-utils.lib.eachDefaultSystem
-        (system: nixpkgs.legacyPackages.${system}.alejandra);
+      formatter = builtins.listToAttrs (map
+        (system: {
+          name = system;
+          value = nixpkgs.legacyPackages.${system}.alejandra;
+        })
+        (darwinSystems ++ nixosSystems));
 
       # Development shells
-      devShells = flake-utils.lib.eachDefaultSystemPassThrough (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in {
-          ${system}.default = pkgs.mkShell { buildInputs = [ pkgs.nixd ]; };
-        });
+      devShells = builtins.listToAttrs (map
+        (system: {
+          name = system;
+          value = {
+            default = nixpkgs.legacyPackages.${system}.mkShell {
+              buildInputs = [ nixpkgs.legacyPackages.${system}.nixd ];
+            };
+          };
+        })
+        (darwinSystems ++ nixosSystems));
     };
 }

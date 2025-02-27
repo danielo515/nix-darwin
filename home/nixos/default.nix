@@ -1,10 +1,21 @@
-# NixOS-specific home-manager configurations
+# Linux-specific home-manager configurations
 { config, lib, pkgs, ... }:
 
 {
-  imports = [
-    # Add NixOS-specific home-manager modules here
+  # Linux-specific home configuration
+  home.packages = with pkgs; [
+    # Linux-specific packages
+    xclip
+    # gnome.gnome-tweaks
   ];
   
-  # NixOS-specific home-manager configurations
+  # Linux-specific services
+  services = {
+    # Enable gpg-agent for SSH authentication
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      defaultCacheTtl = 1800;
+    };
+  };
 }

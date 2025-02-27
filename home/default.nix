@@ -13,8 +13,10 @@
     ./programs/git.nix
     ./programs/neovim.nix
     ./programs/tmux.nix
-    ./programs/hammerspoon.nix
     ./programs/starship.nix
+    
+    # Darwin-specific programs
+    (if isDarwin then ./programs/hammerspoon.nix else null)
 
     # Shell
     ./shell/zsh.nix
@@ -28,8 +30,7 @@
   # paths it should manage.
   home = {
     username = builtins.trace "username:${username}" username;
-    homeDirectory =
-      if isDarwin then "/Users/${username}" else "/home/${username}";
+    homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

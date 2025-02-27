@@ -3,14 +3,21 @@
 
 {
   imports = [
-    # Import common host configuration
-    ../common
+    # Import common modules
+    ../../modules/common
     
     # Import darwin-specific modules
     ../../modules/darwin
     
     # Import darwin-specific configuration
     ./darwin-configuration.nix
+  ];
+  
+  # Common system packages (previously in hosts/common)
+  environment.systemPackages = with pkgs; [
+    git
+    curl
+    wget
   ];
   
   # Host-specific system configurations
@@ -23,7 +30,7 @@
     useUserPackages = true;
     extraSpecialArgs = { inherit username hostname system; };
     users.${username} = import ../../home;
-    backupFileExtension = "bk";
+    backupFileExtension = lib.mkForce "home-bk";
   };
   
   # Host-specific system preferences

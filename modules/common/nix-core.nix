@@ -1,5 +1,5 @@
 # Common Nix settings for all systems
-{ self, pkgs, lib, username, system, isDarwin, ... }:
+{ pkgs, lib, username, system, ... }:
 
 {
   nix.enable = true;
@@ -12,13 +12,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # Set Git commit hash for version
-  system.configurationRevision = self.rev or self.dirtyRev or null;
-
-  # User home directory (platform-specific)
-  users.users.${username}.home =
-    if isDarwin then "/Users/${username}" else "/home/${username}";
 
   # Nix package
   nix.package = pkgs.nix;
@@ -38,12 +31,4 @@
     # Trusted users
     trusted-users = [ "root" username ];
   };
-
-  # Darwin-specific settings
-  nix.extraOptions = lib.mkIf isDarwin ''
-    !include /etc/nix/nix.conf.before-nix-darwin
-  '';
-
-  # Darwin state version
-  system.stateVersion = lib.mkIf isDarwin 6;
 }

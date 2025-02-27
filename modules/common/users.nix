@@ -1,14 +1,14 @@
-# Common user configuration
+# User configuration for Darwin
 { config, lib, pkgs, username, useremail, ... }:
 
 {
-  users.groups.${username} = { };
+  # Enable zsh
   programs.zsh.enable = true;
+  
   # User configuration
   users.users.${username} = {
-    # Common user settings
+    # Darwin-specific user settings
     shell = pkgs.zsh;
-    group = username;
-    isNormalUser = true;
+    home = "/Users/${username}";
   };
 }

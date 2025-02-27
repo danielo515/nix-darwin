@@ -1,10 +1,21 @@
 # Darwin-specific modules
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, username, ... }:
 
 {
   imports = [
     ./apps.nix
   ];
+  
+  # Darwin-specific user settings
+  users.users.${username}.home = "/Users/${username}";
+  
+  # Darwin-specific Nix settings
+  nix.extraOptions = ''
+    !include /etc/nix/nix.conf.before-nix-darwin
+  '';
+  
+  # Darwin state version
+  system.stateVersion = 6;
   
   # Darwin-specific settings
   system.defaults = {

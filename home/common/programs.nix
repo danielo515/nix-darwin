@@ -1,5 +1,7 @@
 # Common program configurations for all environments
-{ pkgs, ... }: {
+{ pkgs, ... }:
+
+{
   programs = {
     # A modern replacement for 'ls'
     eza = {

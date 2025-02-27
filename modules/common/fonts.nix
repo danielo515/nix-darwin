@@ -3,9 +3,11 @@
 
 {
   fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
+    # fontDir.enable is no longer needed in newer nix-darwin versions
+    packages = with pkgs; [
+      # Use the new nerd-fonts namespace
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.fira-code
       fira-code
       jetbrains-mono
     ];
