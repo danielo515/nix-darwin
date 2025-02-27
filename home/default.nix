@@ -1,13 +1,35 @@
-{ username, ... }: {
-  # import sub modules
-  imports =
-    [ ./shell.nix ./apps.nix ./git.nix ./starship.nix ./hammerspoon.nix ];
+{ username, isDarwin, ... }:
+
+{
+  # Import common and platform-specific modules
+  imports = [
+    # Common configurations for all platforms
+    ./common
+
+    # Platform-specific configurations
+    (if isDarwin then ./darwin else ./nixos)
+
+    # Programs
+    ./programs/git.nix
+    ./programs/neovim.nix
+    ./programs/tmux.nix
+    ./programs/hammerspoon.nix
+    ./programs/starship.nix
+
+    # Shell
+    ./shell/zsh.nix
+    ./shell/bash.nix
+
+    # Keep these until fully migrated
+    ./apps.nix
+  ];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home = {
     username = builtins.trace "username:${username}" username;
-    homeDirectory = "/Users/${username}";
+    homeDirectory =
+      if isDarwin then "/Users/${username}" else "/home/${username}";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -22,5 +44,4 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
 }
