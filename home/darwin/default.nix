@@ -1,13 +1,6 @@
 # Darwin-specific home-manager configurations
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
-  imports = [
-    ./programs.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./programs.nix ./hammerspoon.nix ];
 
   # Darwin-specific configurations
   home.packages = with pkgs; [
@@ -19,9 +12,7 @@
   # macOS-specific services
   services = {
     # Enable Syncthing for file synchronization
-    syncthing = {
-      enable = true;
-    };
+    syncthing = { enable = true; };
 
     # Enable Karabiner Elements for keyboard customization
     # karabiner-elements.enable = true;

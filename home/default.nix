@@ -1,42 +1,21 @@
-{
-  username,
-  isDarwin,
-  ...
-}: {
+{ username, isDarwin, ... }: {
   # Import common and platform-specific modules
-  imports =
-    [
-      # Common configurations for all platforms
-      ./common
+  imports = [
+    # Platform-specific configurations
+    (if isDarwin then ./darwin else ./nixos)
 
-      # Platform-specific configurations
-      (
-        if isDarwin
-        then ./darwin
-        else ./nixos
-      )
+    # Programs
+    ./programs/git.nix
+    ./programs/neovim.nix
+    ./programs/tmux.nix
+    ./programs/starship.nix
+    # Shell
+    ./shell/zsh.nix
+    ./shell/bash.nix
 
-      # Programs
-      ./programs/git.nix
-      ./programs/neovim.nix
-      ./programs/tmux.nix
-      ./programs/starship.nix
-    ]
-    # Darwin-specific programs
-    ++ (
-      if isDarwin
-      then [./programs/hammerspoon.nix]
-      else []
-    )
-    # Shell and other imports
-    ++ [
-      # Shell
-      ./shell/zsh.nix
-      ./shell/bash.nix
-
-      # Keep these until fully migrated
-      ./apps.nix
-    ];
+    # Keep these until fully migrated
+    ./apps.nix
+  ];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -44,11 +23,7 @@
     username = builtins.trace ">>> username:${username} <<<" username;
     homeDirectory =
       builtins.trace ">>> Setting homeDirectory in home/default.nix <<<"
-      (
-        if isDarwin
-        then "/Users/${username}"
-        else "/home/${username}"
-      );
+      (if isDarwin then "/Users/${username}" else "/home/${username}");
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
