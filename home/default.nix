@@ -10,6 +10,7 @@
     ./programs/tmux.nix
     ./programs/starship.nix
     # Shell
+    ./shell/common.nix
     ./shell/zsh.nix
     ./shell/bash.nix
 
