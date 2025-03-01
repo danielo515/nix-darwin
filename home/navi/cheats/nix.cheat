@@ -54,6 +54,32 @@ home-manager switch --flake .#
 # List generations of Home Manager
 home-manager generations
 
+% nix, home-manager, module, inspect
+
+# Show details of a home-manager module (options, descriptions, default values)
+nix eval --raw .#homeConfigurations.<config>.options.<module_path> --apply builtins.toJSON | jq
+
+# Show the default value of a home-manager module option
+nix eval --raw .#homeConfigurations.<config>.options.<module_path>.default --apply builtins.toJSON | jq
+
+# Show the example value of a home-manager module option (if available)
+nix eval --raw .#homeConfigurations.<config>.options.<module_path>.example --apply builtins.toJSON | jq
+
+# Show the description of a home-manager module option
+nix eval --raw .#homeConfigurations.<config>.options.<module_path>.description --apply builtins.toJSON | jq -r
+
+# Show the declaration location of a home-manager module option
+nix eval --raw .#homeConfigurations.<config>.options.<module_path>.declarations --apply builtins.toJSON | jq
+
+# Show all available home-manager options
+nix eval --raw .#homeConfigurations.<config>.options --apply 'opts: builtins.toJSON (builtins.attrNames opts)' | jq | grep <search_term>
+
+# Interactively select configuration and browse home-manager options with fzf
+nix eval --impure --raw --expr "builtins.toJSON (builtins.attrNames (builtins.getFlake \"$(pwd)\").homeConfigurations)" | jq -r '.[]' | fzf --prompt="Select configuration: " | xargs -I{} sh -c 'nix eval --raw .#homeConfigurations.{}.options --apply "opts: builtins.toJSON (builtins.attrNames opts)" | jq -r ".[]" | fzf --preview "nix eval --raw .#homeConfigurations.{}.options.{} --apply builtins.toJSON | jq"'
+
+# Interactively select configuration and browse home-manager options with description preview
+nix eval --impure --raw --expr "builtins.toJSON (builtins.attrNames (builtins.getFlake \"$(pwd)\").homeConfigurations)" | jq -r '.[]' | fzf --prompt="Select configuration: " | xargs -I{} sh -c 'nix eval --raw .#homeConfigurations.{}.options --apply "opts: builtins.toJSON (builtins.attrNames opts)" | jq -r ".[]" | fzf --preview "nix eval --raw .#homeConfigurations.{}.options.{}.description --apply builtins.toJSON | jq -r"'
+
 % nix, flake, template
 
 # Create a new flake from a template
@@ -101,3 +127,14 @@ nix path-info -S <flake_ref>
 
 # Show the tree of dependencies of a package
 nix-store -q --tree <path>
+
+% nix, flake, inspect, recursive
+
+# Interactively explore flake structure recursively with fzf
+nix eval --impure --json --expr "builtins.getFlake \"$(pwd)\"" | jq -r | fzf --preview "echo {} | grep -o '\".*\":' | tr -d '\":' | xargs -I% sh -c 'nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").%\" | jq'"
+
+# Interactively explore flake structure recursively with fzf (start from a specific path)
+nix eval --impure --json --expr "(builtins.getFlake \"$(pwd)\").<start_path>" | jq -r | fzf --preview "echo {} | grep -o '\".*\":' | tr -d '\":' | xargs -I% sh -c 'nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").<start_path>.%\" | jq'"
+
+# Interactively explore current flake structure with nested navigation
+bash -c 'current=""; while true; do if [ -z "$current" ]; then attrs=$(nix eval --impure --json --expr "builtins.attrNames (builtins.getFlake \"$(pwd)\")" | jq -r ".[]"); else attrs=$(nix eval --impure --json --expr "builtins.attrNames ((builtins.getFlake \"$(pwd)\").$current)" | jq -r ".[]"); fi; selected=$(echo "$attrs" | fzf --preview "if [ -z \"$current\" ]; then nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").$selected\" | jq; else nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").$current.$selected\" | jq; fi" --header="Current path: $current" --bind="ctrl-b:execute(if [ -z \"$current\" ]; then echo \"At root\"; else current=$(echo \"$current\" | sed \"s/\\.[^.]*$//\"); echo \"Going back to $current\"; fi)+reload(if [ -z \"$current\" ]; then nix eval --impure --json --expr \"builtins.attrNames (builtins.getFlake \\\"$(pwd)\\\")\" | jq -r \".[]\"; else nix eval --impure --json --expr \"builtins.attrNames ((builtins.getFlake \\\"$(pwd)\\\").$current)\" | jq -r \".[]\"; fi)" --bind="ctrl-q:abort" --bind="enter:execute(if [ -z \"$current\" ]; then nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").$selected\" | jq; else nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").$current.$selected\" | jq; fi | less -R)+abort"); if [ $? -ne 0 ]; then break; fi; if [ -z "$current" ]; then current="$selected"; else current="$current.$selected"; fi; done'
