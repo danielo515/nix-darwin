@@ -37,6 +37,15 @@
         # Development shells
         devShells.default = pkgs.mkShell { buildInputs = [ pkgs.nixd ]; };
 
+        # Custom packages
+        packages = import ./pkgs { inherit pkgs; } // {
+          # Set repo-cloner as the default package
+          default = pkgs.callPackage ./pkgs/repo-cloner { };
+          hola = (pkgs.writeShellApplication {
+            name = "hola";
+            text = ''echo "Hola, mundo!" '';
+          });
+        };
       };
 
       flake = {
@@ -79,6 +88,7 @@
                   home-manager.useUserPackages = true;
                   home-manager.extraSpecialArgs = commonSpecialArgs // {
                     isDarwin = true;
+                    flake = self;
                   };
                   home-manager.users.${username} = import ./home;
                   home-manager.backupFileExtension = "home-bk";
