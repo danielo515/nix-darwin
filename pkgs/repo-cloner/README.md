@@ -37,7 +37,8 @@ The tool will guide you through the entire process with interactive prompts and 
 
 ## Important Notes
 
-- The tool assumes that the cloned repository (danielo515/nix-darwin) is itself a valid nix-darwin configuration
+- The tool clones the danielo515/nix-darwin repository
+- The tool assumes that the cloned repository is a valid nix-darwin configuration
 - No additional configuration files are created; the repository is used as-is
 - The tool will attempt to build and switch to the configuration using the hostname of your machine
 
