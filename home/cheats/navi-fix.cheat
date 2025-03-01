@@ -1,0 +1,16 @@
+% navi, config, fix
+
+# Set NAVI_PATH environment variable to use custom cheats
+export NAVI_PATH="/private/etc/nix-darwin/home/cheats"
+
+# View current navi config path
+navi info config-path
+
+# View current navi cheats path
+navi info cheats-path
+
+# Check if navi config file exists
+ls -la "$(navi info config-path)"
+
+# Print navi config file contents
+cat "$(navi info config-path)"

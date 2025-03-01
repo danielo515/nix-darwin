@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }:
+let
+  navi-settings = { cheats = { paths = [ "${../home/cheats}" ]; }; };
+  yamlFormat = pkgs.formats.yaml { };
+in {
   home.packages = with pkgs; [
     # dev
     nixd # nix language server
@@ -97,7 +101,11 @@
       enable = true;
       enableZshIntegration = true;
       enableBashIntegration = true;
+      settings = navi-settings;
     };
     pet = { enable = true; };
   };
+  # My temporal fix until https://github.com/nix-community/home-manager/issues/6559
+  home.file."${config.xdg.configHome}/navi/config.yaml".source =
+    (yamlFormat.generate "navi-config" navi-settings);
 }
