@@ -2,5 +2,7 @@
 { pkgs }:
 
 {
-  repo-cloner = pkgs.callPackage ./repo-cloner { };
+  repo-cloner = pkgs.callPackage ./repo-cloner { 
+    inherit (pkgs) git gh gum; 
+  };
 }
