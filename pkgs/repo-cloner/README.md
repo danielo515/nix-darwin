@@ -1,6 +1,12 @@
 # repo-cloner
 
-A simple utility to perform a shallow clone of the danielo515/nix-darwin repository to a target directory.
+A utility to perform a shallow clone of the danielo515/nix-darwin repository to a target directory. It uses the GitHub CLI (`gh`) for authentication and cloning, which will open a web browser if needed for authentication.
+
+## Features
+
+- Automatic GitHub authentication using the GitHub CLI
+- Shallow clone of the repository to save bandwidth and disk space
+- Simple one-command operation
 
 ## Usage
 
@@ -15,6 +21,8 @@ The command takes a single argument - the target directory where the repository 
 ```bash
 repo-cloner ~/my-nix-config
 ```
+
+If you're not already authenticated with GitHub, the tool will guide you through the authentication process before cloning the repository.
 
 ## Installation
 
@@ -39,3 +47,7 @@ environment.systemPackages = with pkgs; [
   # Other packages...
   repo-cloner
 ];
+
+## Dependencies
+
+This tool requires the GitHub CLI (`gh`) and Git to be installed, which are automatically included as runtime dependencies.

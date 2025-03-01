@@ -1,12 +1,13 @@
 { lib
 , stdenv
 , git
+, gh
 , writeShellApplication
 }:
 
 writeShellApplication {
   name = "repo-cloner";
-  runtimeInputs = [ git ];
+  runtimeInputs = [ git gh ];
   text = ''
     if [ $# -ne 1 ]; then
       echo "Usage: $0 <target-directory>"
@@ -21,7 +22,16 @@ writeShellApplication {
       exit 1
     fi
 
-    git clone --depth 1 "https://github.com/danielo515/nix-darwin.git" "$TARGET_DIR"
+    # Check if user is authenticated with GitHub
+    if ! gh auth status &>/dev/null; then
+      echo "You need to authenticate with GitHub first."
+      echo "Initiating GitHub authentication process..."
+      gh auth login
+    fi
+
+    # Clone the repository using gh cli
+    echo "Cloning repository to $TARGET_DIR..."
+    gh repo clone danielo515/nix-darwin "$TARGET_DIR" -- --depth 1
     echo "Repository cloned successfully to $TARGET_DIR"
   '';
 }

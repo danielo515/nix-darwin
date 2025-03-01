@@ -35,7 +35,8 @@
         formatter = pkgs.alejandra;
 
         # Development shells
-        devShells.default = pkgs.mkShell { buildInputs = [ pkgs.nixd ]; };
+        devShells.default =
+          pkgs.mkShell { buildInputs = [ pkgs.nixd pkgs.just ]; };
 
         # Custom packages
         packages = import ./pkgs { inherit pkgs; } // {

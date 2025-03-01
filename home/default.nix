@@ -1,4 +1,4 @@
-{ self, system, config, username, isDarwin, pkgs, flake, ... }: {
+{ system, username, isDarwin, pkgs, flake, ... }: {
   # Import common and platform-specific modules
   imports = [
     # Platform-specific configurations
@@ -37,10 +37,8 @@
     stateVersion = "24.11";
   };
 
-  home.packages = with pkgs; [
-    self.packages.${system}.hola
-    flake.packages.${system}.repo-cloner
-  ];
+  home.packages =
+    [ flake.packages.${system}.hola flake.packages.${system}.repo-cloner ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
