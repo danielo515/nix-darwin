@@ -9,6 +9,7 @@
     ./programs/neovim.nix
     ./programs/tmux.nix
     ./programs/starship.nix
+    ./navi
     # Shell
     ./shell/common.nix
     ./shell/zsh.nix
