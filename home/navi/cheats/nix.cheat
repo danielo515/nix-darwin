@@ -1,19 +1,10 @@
 % nix, package, flake
 
-# Install a package from a flake
-nix profile install <flake_ref>
-
 # Install a specific package from a flake
 nix profile install <flake_ref>#<package>
 
-# Run a package from a flake without installing
-nix run <flake_ref>
-
 # Run a specific package from a flake without installing
 nix run <flake_ref>#<package>
-
-# Build a package from a flake
-nix build <flake_ref>
 
 # Build a specific package from a flake
 nix build <flake_ref>#<package>
@@ -36,36 +27,15 @@ nix search nixpkgs <search_term>
 # Get information about a package
 nix-env -qa --description <package>
 
-# List all packages installed in the current profile
-nix profile list
-
-# Remove a package from the current profile by index
-nix profile remove <index>
-
 % nix, derivation, shell
-
-# Create a shell with packages
-nix-shell -p <package1> <package2>
 
 # Run a command in a shell with packages
 nix-shell -p <packages> --run "<command>"
-
-# Enter a shell defined by a shell.nix file
-nix-shell
-
-# Enter a shell defined by a specific .nix file
-nix-shell <file.nix>
-
-# Get a pure shell (no environment variables from the host system)
-nix-shell --pure
 
 # Create a temporary shell with packages
 nix shell nixpkgs#<package1> nixpkgs#<package2>
 
 % nix, darwin, system
-
-# Rebuild and switch to a new Darwin configuration
-darwin-rebuild switch
 
 # Rebuild and switch to a new Darwin configuration from a flake
 darwin-rebuild switch --flake <flake_ref>
@@ -73,45 +43,21 @@ darwin-rebuild switch --flake <flake_ref>
 # Rebuild and switch to a new Darwin configuration from the current directory flake
 darwin-rebuild switch --flake .#
 
-# Build but don't activate a Darwin configuration
-darwin-rebuild build
-
 # Build but don't activate a Darwin configuration from a flake
 darwin-rebuild build --flake <flake_ref>
 
-# Edit the current Darwin configuration
-sudo nano /etc/nixos/configuration.nix
-
 % nix, home-manager
-
-# Rebuild and switch to a new Home Manager configuration
-home-manager switch
-
-# Rebuild and switch to a new Home Manager configuration from a flake
-home-manager switch --flake <flake_ref>
 
 # Rebuild and switch to a new Home Manager configuration from the current directory flake
 home-manager switch --flake .#
 
-# Build but don't activate a Home Manager configuration
-home-manager build
-
-# Build but don't activate a Home Manager configuration from a flake
-home-manager build --flake <flake_ref>
-
 # List generations of Home Manager
 home-manager generations
-
-# Roll back to the previous generation
-home-manager rollback
 
 % nix, flake, template
 
 # Create a new flake from a template
 nix flake init -t <template_flake_ref>
-
-# Create a new flake from the default template
-nix flake init
 
 # Create a new flake from a specific template
 nix flake init -t github:NixOS/templates#<template>
@@ -155,44 +101,3 @@ nix path-info -S <flake_ref>
 
 # Show the tree of dependencies of a package
 nix-store -q --tree <path>
-
-% nix, writeShellApplication
-
-# Create a basic shell script with writeShellApplication
-writeShellApplication {
-  name = "<script_name>";
-  text = ''
-    echo "Hello, world!"
-  '';
-}
-
-# Create a shell script with runtime dependencies
-writeShellApplication {
-  name = "<script_name>";
-  runtimeInputs = [ pkgs.curl pkgs.jq ];
-  text = ''
-    curl -s https://api.example.com | jq .
-  '';
-}
-
-# Create a shell script with environment variables
-writeShellApplication {
-  name = "<script_name>";
-  runtimeInputs = [ pkgs.curl ];
-  runtimeEnv = {
-    API_URL = "https://api.example.com";
-    API_KEY = "your-api-key";
-  };
-  text = ''
-    curl -s "$API_URL?key=$API_KEY"
-  '';
-}
-
-# Create a shell script with custom bash options
-writeShellApplication {
-  name = "<script_name>";
-  bashOptions = [ "errexit" "nounset" "pipefail" "xtrace" ];
-  text = ''
-    echo "This script will print commands as they execute"
-  '';
-}
