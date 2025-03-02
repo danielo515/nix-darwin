@@ -1,16 +1,17 @@
-{
-  lib,
-  useremail,
-  ...
-}: {
+{ lib, useremail, ... }: {
   # `programs.git` will generate the config file: ~/.config/git/config
   # to make git use this config file, `~/.gitconfig` should not exist!
   #
   #    https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
-  home.activation.removeExistingGitconfig = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
-    rm -f ~/.gitconfig
-  '';
+  home.activation.removeExistingGitconfig =
+    lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+      rm -f ~/.gitconfig
+    '';
 
+  # Git companion apps
+  programs.gh = { enable = true; };
+  lazygit = { enable = true; };
+  # git config
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -39,7 +40,7 @@
 
     delta = {
       enable = true;
-      options = {features = "side-by-side";};
+      options = { features = "side-by-side"; };
     };
 
     aliases = {
@@ -60,5 +61,6 @@
       update = "submodule update --init --recursive";
       foreach = "submodule foreach";
     };
+    ignores = [ ".DS_Store" "*.swp" "*~" ".vscode" ".idea" ];
   };
 }

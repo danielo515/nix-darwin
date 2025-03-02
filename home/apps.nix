@@ -76,8 +76,6 @@
       enableFishIntegration = true;
     };
 
-    gh = { enable = true; };
-    lazygit = { enable = true; };
     fzf = {
       enable = true;
       enableZshIntegration = true;

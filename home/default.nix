@@ -5,7 +5,7 @@
     (if isDarwin then ./darwin else ./nixos)
 
     # Programs
-    ./programs/git.nix
+    ./git.nix
     ./programs/neovim.nix
     ./programs/tmux.nix
     ./programs/starship.nix

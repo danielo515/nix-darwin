@@ -1,15 +1,12 @@
 % nix, package, flake
 
-# Install a specific package from a flake
-nix profile install <flake_ref>#<package>
-
 # Run a specific package from a flake without installing
 nix run <flake_ref>#<package>
 
 # Build a specific package from a flake
 nix build <flake_ref>#<package>
 
-# Show all outputs of a flake
+# Show outputs of a flake
 nix flake show <flake_ref>
 
 # Update flake lock file
@@ -17,9 +14,6 @@ nix flake update <flake_ref>
 
 # Update a specific input in flake lock file
 nix flake lock --update-input <input> <flake_ref>
-
-# Create a development shell from a flake
-nix develop <flake_ref>
 
 # Search for a package in nixpkgs
 nix search nixpkgs <search_term>
@@ -129,6 +123,9 @@ nix path-info -S <flake_ref>
 nix-store -q --tree <path>
 
 % nix, flake, inspect, recursive
+
+# Explore first level of flake structure
+nix eval --impure --json --expr "builtins.attrNames (builtins.getFlake \"$(pwd)\")" | jq -r '.[]' | fzf --preview "nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").{}\" | jq"
 
 # Interactively explore flake structure recursively with fzf
 nix eval --impure --json --expr "builtins.getFlake \"$(pwd)\"" | jq -r | fzf --preview "echo {} | grep -o '\".*\":' | tr -d '\":' | xargs -I% sh -c 'nix eval --impure --json --expr \"(builtins.getFlake \\\"$(pwd)\\\").%\" | jq'"
