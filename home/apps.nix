@@ -30,6 +30,9 @@
 
   programs = {
 
+    #a better cat alternative with fancy colors
+    bat = { enable = true; };
+
     # A modern replacement for ‘ls’
     # useful in bash/zsh prompt, not in nushell.
     eza = {

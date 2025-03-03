@@ -10,7 +10,7 @@
 
   # Git companion apps
   programs.gh = { enable = true; };
-  lazygit = { enable = true; };
+  programs.lazygit = { enable = true; };
   # git config
   programs.git = {
     enable = true;

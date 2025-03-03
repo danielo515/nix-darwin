@@ -79,6 +79,9 @@ nix eval --impure --raw --expr "builtins.toJSON (builtins.attrNames (builtins.ge
 # Create a new flake from a template
 nix flake init -t <template_flake_ref>
 
+#new flake using flake-parts template
+nix flake init -t github:hercules-ci/flake-parts
+
 # Create a new flake from a specific template
 nix flake init -t github:NixOS/templates#<template>
 
