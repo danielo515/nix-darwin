@@ -13,8 +13,5 @@
   services = {
     # Enable Syncthing for file synchronization
     syncthing = { enable = true; };
-
-    # Enable Karabiner Elements for keyboard customization
-    # karabiner-elements.enable = true;
   };
 }

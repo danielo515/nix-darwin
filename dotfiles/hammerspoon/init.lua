@@ -5,7 +5,7 @@ spoon.ReloadConfiguration:start()
 -- StreamDeck:start()
 hs.loadSpoon("EmmyLua")
 hs.grid.setGrid("10x6")
-require("keyboard.yabai")
+-- require("keyboard.yabai") -- testing aerospace
 require("tab-chooser")
 -- local stateMachine = require("lib.stateMachine")
 -- local slack = require("lib.slack")
