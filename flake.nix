@@ -4,6 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    # Theme many apps with catppucin
+    # catppuccin.url = "github:catppuccin/nix";
+
     # Flake parts
     flake-parts.url = "github:hercules-ci/flake-parts";
 
@@ -80,7 +83,6 @@
               modules = [
                 # Host-specific configuration
                 hostConfig.hostPath
-
                 # Include home-manager module
                 home-manager.darwinModules.home-manager
                 {

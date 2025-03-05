@@ -1,30 +1,16 @@
 # Bash configuration
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+_: {
   programs.bash = {
     enable = true;
     enableCompletion = true;
 
-    historyControl = [
-      "erasedups"
-      "ignoredups"
-      "ignorespace"
-    ];
+    historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
 
     historyFileSize = 10000;
     historySize = 10000;
 
-    shellOptions = [
-      "histappend"
-      "checkwinsize"
-      "extglob"
-      "globstar"
-      "checkjobs"
-    ];
+    shellOptions =
+      [ "histappend" "checkwinsize" "extglob" "globstar" "checkjobs" ];
 
     initExtra = ''
       # Set prompt
@@ -33,10 +19,5 @@
       # Add additional paths
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
     '';
-  };
-
-  # Bash-specific aliases
-  home.shellAliases = {
-    # Add any bash-specific aliases here
   };
 }
