@@ -15,7 +15,6 @@
     ./shell/zsh.nix
     ./shell/bash.nix
     ./shell/wezterm.nix
-
     # Keep these until fully migrated
     ./apps.nix
   ];
