@@ -1,4 +1,4 @@
-{ system, username, isDarwin, pkgs, flake, ... }: {
+{ system, username, isDarwin, flake, ... }: {
   # Import common and platform-specific modules
   imports = [
     # Platform-specific configurations
@@ -14,6 +14,7 @@
     ./shell/common.nix
     ./shell/zsh.nix
     ./shell/bash.nix
+    ./shell/wezterm.nix
 
     # Keep these until fully migrated
     ./apps.nix
