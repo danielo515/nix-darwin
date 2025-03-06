@@ -1,5 +1,5 @@
 # Darwin-specific Homebrew configuration
-{pkgs, ...}: {
+{ pkgs, ... }: {
   # Homebrew configuration
   # To make this work, homebrew needs to be installed manually, see https://brew.sh
   #
@@ -17,7 +17,7 @@
       cleanup = "uninstall";
     };
 
-    taps = ["homebrew/services"];
+    taps = [ "homebrew/services" ];
 
     # `brew install`
     brews = [
@@ -25,8 +25,6 @@
       "aria2" # download tool
       "httpie" # http client
       "imagemagick"
-      "skhd"
-      "yabai"
     ];
 
     # `brew install --cask`
@@ -40,6 +38,7 @@
       "iina" # video player
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       "stats" # beautiful system monitor
+      "keycastr" # display keyboard keys pressed
 
       # Development
       "wireshark" # network analyzer
