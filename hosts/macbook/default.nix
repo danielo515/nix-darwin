@@ -6,9 +6,6 @@
 
     # Import darwin-specific modules
     ../../modules/darwin
-
-    # Import darwin-specific configuration
-    ./darwin-configuration.nix
   ];
 
   # Common system packages (previously in hosts/common)
