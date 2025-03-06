@@ -1,48 +1,37 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   home.packages = with pkgs; [
-    # archives
-    zip
-    xz
-    unzip
-    p7zip
-
-    # utils
-    ripgrep # recursively searches directories for a regex pattern
-    jq # A lightweight and flexible command-line JSON processor
-    yq-go # yaml processer https://github.com/mikefarah/yq
-    aria2 # A lightweight multi-protocol & multi-source command-line download utility
-    socat # replacement of openbsd-netcat
-    nmap # A utility for network discovery and security auditing
-    ast-grep # AST-based code search
-    fd # A simple, fast and user-friendly alternative to find
-
-    # misc
-    cowsay
-    file
-    which
-    tree
-    gnused
-    gnutar
-    gawk
-    zstd
-    gnupg
-    wget
-
     # dev
     nixd # nix language server
-    # productivity
+
+    # misc
+    aria2 # A lightweight multi-protocol & multi-source command-line download utility
+    ast-grep # AST-based code search
+    file
+    fd # A simple, fast and user-friendly alternative to find
+    gawk
     glow # markdown previewer in terminal
+    htop
+    jq # A lightweight and flexible command-line JSON processor
+    nmap # A utility for network discovery and security auditing
+    ripgrep # recursively searches directories for a regex pattern
+    socat # replacement of openbsd-netcat
+    wget
+    yq-go # yaml processer https://github.com/mikefarah/yq
+
+    # System utilities
+    btop
+    httpie
+    tmux
+    vim
+
   ];
 
   services.syncthing.enable = true;
 
   programs = {
-    # modern vim
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      vimAlias = true;
-    };
+
+    #a better cat alternative with fancy colors
+    bat = { enable = true; };
 
     # A modern replacement for ‘ls’
     # useful in bash/zsh prompt, not in nushell.
@@ -80,6 +69,7 @@
       enableZshIntegration = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
+      flags = [ "--disable-up-arrow" ];
       settings = { filter_mode_shell_up_key_binding = "session"; };
     };
 
@@ -90,39 +80,11 @@
       enableFishIntegration = true;
     };
 
-    gh = { enable = true; };
-    lazygit = { enable = true; };
     fzf = {
       enable = true;
       enableZshIntegration = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
-    };
-
-    ghostty = {
-      enable = true;
-      # Let brew manage the package
-      package = null;
-      enableZshIntegration = true;
-      enableBashIntegration = true;
-      enableFishIntegration = true;
-      # Not allowed when package is null
-      # installBatSyntax = true;
-      # installVimSyntax = true;
-
-      settings = {
-        background-blur-radius = 20;
-        theme = "dark:catppuccin-mocha,light:catppuccin-latte";
-        window-theme = "dark";
-        background-opacity = 0.85;
-        minimum-contrast = 1.1;
-        keybind = [
-          # keybind = global:ctrl+`=toggle_quick_terminal
-          "global:ctrl+grave_accent=toggle_quick_terminal"
-          "ctrl+h=goto_split:left"
-          "ctrl+l=goto_split:right"
-        ];
-      };
     };
 
     direnv = {
@@ -132,5 +94,7 @@
       nix-direnv.enable = true;
       # enableFishIntegration = true;
     };
+
+    pet = { enable = true; };
   };
 }

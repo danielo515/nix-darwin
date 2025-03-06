@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{pkgs, ...}:
 ###################################################################################
 #
 #  macOS's System configuration
@@ -46,9 +46,6 @@
         TrackpadThreeFingerDrag = false; # enable three finger drag
       };
 
-      # customize settings that not supported by nix-darwin directly
-      # Incomplete list of macOS `defaults` commands :
-      #   https://github.com/yannbertrand/macos-defaults
       NSGlobalDomain = {
         AppleShowAllFiles = true;
         # `defaults read NSGlobalDomain "xxx"`
@@ -130,7 +127,7 @@
           location = "~/screenshots";
           type = "png";
         };
-        "com.apple.AdLib" = { allowApplePersonalizedAdvertising = false; };
+        "com.apple.AdLib" = {allowApplePersonalizedAdvertising = false;};
         # Prevent Photos from opening automatically when devices are plugged in
         "com.apple.ImageCapture".disableHotPlug = true;
       };
@@ -168,7 +165,7 @@
   # Create /etc/zshrc that loads the nix-darwin environment.
   # this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
-  environment.shells = [ pkgs.zsh ];
+  environment.shells = [pkgs.zsh];
 
   # Set your time zone.
   time.timeZone = "Europe/Madrid";

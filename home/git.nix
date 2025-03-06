@@ -8,6 +8,10 @@
       rm -f ~/.gitconfig
     '';
 
+  # Git companion apps
+  programs.gh = { enable = true; };
+  programs.lazygit = { enable = true; };
+  # git config
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -57,5 +61,6 @@
       update = "submodule update --init --recursive";
       foreach = "submodule foreach";
     };
+    ignores = [ ".DS_Store" "*.swp" "*~" ".vscode" ".idea" ];
   };
 }
