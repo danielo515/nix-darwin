@@ -1,6 +1,6 @@
 { pkgs, ... }: {
 
-  # Common shell aliases
+  # Common shell aliases for all shells
   home.shellAliases = rec {
     k = "kubectl";
     urldecode =

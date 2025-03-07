@@ -39,6 +39,7 @@
           sha256 = "1g3pij5qn2j7v7jjac2a63lxd97mcsgw6xq6k5p7835q9fjiid98";
         };
       }
+      # This plugin introduces problems with atuin control+r hooks
       # {
       #   name = "vi-mode";
       #   src = pkgs.zsh-vi-mode;
