@@ -17,5 +17,8 @@
     llt = "${ll} --tree";
     tree = "${ls} --tree";
 
+    gco = "git checkout $(git branch | fzf)";
+    gcor = "git checkout $(git branch --remote | fzf)";
+
   };
 }

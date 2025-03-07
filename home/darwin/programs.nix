@@ -1,5 +1,5 @@
 # Darwin-specific program configurations
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs = {
     # Terminal emulator for macOS
     ghostty = {
@@ -25,11 +25,7 @@
         ];
         font-family = "JetBrainsMono Nerd Font";
         font-size = 14;
-        font-feature = [
-          "calt"
-          "liga"
-          "dlig"
-        ];
+        font-feature = [ "calt" "liga" "dlig" ];
         font-variation-weight = 700;
         cursor-style = "block";
         cursor-style-blink = false;
