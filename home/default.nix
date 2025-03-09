@@ -6,7 +6,7 @@
 
     # Programs
     ./git.nix
-    ./programs/neovim.nix
+    ./programs/neovim
     ./programs/tmux.nix
     ./programs/starship.nix
     ./navi
