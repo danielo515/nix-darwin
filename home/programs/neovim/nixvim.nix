@@ -1,5 +1,6 @@
 # Neovim configuration managed using https://github.com/nix-community/nixvim
 {
+  imports = [ ./lualine.nix ./startup.nix ./bufferline.nix ];
   # Theme
   colorschemes.tokyonight.enable = true;
 
@@ -20,8 +21,6 @@
 
     # UI
     web-devicons.enable = true;
-    lualine.enable = true;
-    bufferline.enable = true;
     treesitter.enable = true;
     which-key = { enable = true; };
     noice = {
@@ -68,6 +67,31 @@
       };
     };
     lazygit.enable = true;
+    gitsigns = {
+    enable = true;
+    settings = {
+      signs = {
+        add = {
+          text = " ";
+        };
+        change = {
+          text = " ";
+        };
+        delete = {
+          text = " ";
+        };
+        untracked = {
+          text = "";
+        };
+        topdelete = {
+          text = "󱂥 ";
+        };
+        changedelete = {
+          text = "󱂧 ";
+        };
+      };
+    };
+  };
   };
   keymaps = [
     # Open lazygit within nvim. 
@@ -75,5 +99,10 @@
       action = "<cmd>LazyGit<CR>";
       key = "<leader>gg";
     }
+    {
+      action = "<cmd>w<CR>";
+      key = "<leader>w";
+      options.desc = "save buffer";
+      }
   ];
 }
