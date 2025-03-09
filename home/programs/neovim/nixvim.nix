@@ -1,6 +1,6 @@
 # Neovim configuration managed using https://github.com/nix-community/nixvim
 {
-  imports = [ ./lualine.nix ./startup.nix ./bufferline.nix ];
+  imports = [./lualine.nix ./startup.nix ./bufferline.nix ./cmp.nix ./navic.nix ./neo-tree.nix];
   # Theme
   colorschemes.tokyonight.enable = true;
 
@@ -15,14 +15,26 @@
   };
 
   # Keymaps
-  globals = { mapleader = " "; };
+  globals = {mapleader = " ";};
 
   plugins = {
-
     # UI
     web-devicons.enable = true;
     treesitter.enable = true;
-    which-key = { enable = true; };
+    which-key = {enable = true;};
+# required for schemastore
+    lsp.servers.jsonls.enable = true;
+    schemastore = {
+      enable = true;
+
+      json = {
+        enable = true;
+      };
+
+      yaml = {
+        enable = true;
+      };
+    };
     noice = {
       # WARNING: This is considered experimental feature, but provides nice UX
       enable = true;
@@ -46,7 +58,7 @@
           action = "live_grep";
         };
       };
-      extensions = { file-browser.enable = true; };
+      extensions = {file-browser.enable = true;};
     };
 
     # Dev
@@ -68,33 +80,33 @@
     };
     lazygit.enable = true;
     gitsigns = {
-    enable = true;
-    settings = {
-      signs = {
-        add = {
-          text = " ";
-        };
-        change = {
-          text = " ";
-        };
-        delete = {
-          text = " ";
-        };
-        untracked = {
-          text = "";
-        };
-        topdelete = {
-          text = "󱂥 ";
-        };
-        changedelete = {
-          text = "󱂧 ";
+      enable = true;
+      settings = {
+        signs = {
+          add = {
+            text = " ";
+          };
+          change = {
+            text = " ";
+          };
+          delete = {
+            text = " ";
+          };
+          untracked = {
+            text = "";
+          };
+          topdelete = {
+            text = "󱂥 ";
+          };
+          changedelete = {
+            text = "󱂧 ";
+          };
         };
       };
     };
   };
-  };
   keymaps = [
-    # Open lazygit within nvim. 
+    # Open lazygit within nvim.
     {
       action = "<cmd>LazyGit<CR>";
       key = "<leader>gg";
@@ -103,6 +115,6 @@
       action = "<cmd>w<CR>";
       key = "<leader>w";
       options.desc = "save buffer";
-      }
+    }
   ];
 }
