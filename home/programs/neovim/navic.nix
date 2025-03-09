@@ -4,7 +4,7 @@ _: {
     settings = {
       separator = "  ";
       highlight = true;
-      depthLimit = 5;
+      depthLimit = 8;
       lsp = {
         autoAttach = true;
       };

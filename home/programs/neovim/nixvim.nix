@@ -1,6 +1,16 @@
 # Neovim configuration managed using https://github.com/nix-community/nixvim
 {
-  imports = [./lualine.nix ./startup.nix ./bufferline.nix ./cmp.nix ./navic.nix ./neo-tree.nix];
+  imports = [
+    ./lualine.nix
+    ./startup.nix
+    ./bufferline.nix
+    ./cmp.nix
+    ./navic.nix
+    ./neo-tree.nix
+    ./treesitter.nix
+    # auto format files
+    ./conform.nix
+  ];
   # Theme
   colorschemes.tokyonight.enable = true;
 
@@ -20,10 +30,10 @@
   plugins = {
     # UI
     web-devicons.enable = true;
-    treesitter.enable = true;
     which-key = {enable = true;};
-# required for schemastore
+    # required for schemastore
     lsp.servers.jsonls.enable = true;
+    lsp.servers.yamlls.enable = true;
     schemastore = {
       enable = true;
 
