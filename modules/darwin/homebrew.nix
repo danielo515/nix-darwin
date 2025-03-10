@@ -1,5 +1,6 @@
 # Darwin-specific Homebrew configuration
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # Homebrew configuration
   # To make this work, homebrew needs to be installed manually, see https://brew.sh
   #
