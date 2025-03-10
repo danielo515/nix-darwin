@@ -1,4 +1,11 @@
-{ system, username, isDarwin, flake, ... }: {
+{
+  system,
+  username,
+  isDarwin,
+  flake,
+  ...
+}:
+{
   # Import common and platform-specific modules
   imports = [
     # Platform-specific configurations
@@ -9,6 +16,8 @@
     ./programs/neovim
     ./programs/tmux.nix
     ./programs/starship.nix
+    # cross platform screenshots
+    ./programs/flameshot.nix
     ./navi
     # Shell
     ./shell/common.nix
@@ -25,9 +34,9 @@
   # paths it should manage.
   home = {
     username = builtins.trace ">>> username:${username} <<<" username;
-    homeDirectory =
-      builtins.trace ">>> Setting homeDirectory in home/default.nix <<<"
-      (if isDarwin then "/Users/${username}" else "/home/${username}");
+    homeDirectory = builtins.trace ">>> Setting homeDirectory in home/default.nix <<<" (
+      if isDarwin then "/Users/${username}" else "/home/${username}"
+    );
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -40,8 +49,10 @@
     stateVersion = "24.11";
   };
 
-  home.packages =
-    [ flake.packages.${system}.hola flake.packages.${system}.repo-cloner ];
+  home.packages = [
+    flake.packages.${system}.hola
+    flake.packages.${system}.repo-cloner
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
