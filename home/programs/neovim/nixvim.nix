@@ -10,6 +10,8 @@
     ./treesitter.nix
     # auto format files
     ./conform.nix
+    # show errors in the bufferline
+    ./fidget.nix
   ];
   # Theme
   colorschemes.tokyonight.enable = true;
@@ -25,15 +27,17 @@
   };
 
   # Keymaps
-  globals = {mapleader = " ";};
+  globals = {
+    mapleader = " ";
+  };
 
   plugins = {
     # UI
     web-devicons.enable = true;
-    which-key = {enable = true;};
-    # required for schemastore
-    lsp.servers.jsonls.enable = true;
-    lsp.servers.yamlls.enable = true;
+    which-key = {
+      enable = true;
+    };
+    # depends on lps servers defined in ./lsp.nix
     schemastore = {
       enable = true;
 
@@ -68,7 +72,9 @@
           action = "live_grep";
         };
       };
-      extensions = {file-browser.enable = true;};
+      extensions = {
+        file-browser.enable = true;
+      };
     };
 
     # Dev
