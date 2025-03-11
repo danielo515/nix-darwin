@@ -1,0 +1,88 @@
+#!/usr/bin/env nu
+let pluginDir = $env.XDG_CONFIG_HOME?
+| default $"($env.HOME)/.config"
+| path join "sketchybar/plugins"
+
+let spacesCmd = ["Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ"]
+| enumerate
+| reduce --fold [] {|it, acc|
+    let i = $it.index + 1
+    $acc | append [
+      "--add" "space" $"space.($i)" "left"
+      "--set" $"space.($i)"
+      $"icon=($it.item)"
+      "icon.padding_left=8"
+      "icon.padding_right=8"
+      "background.padding_left=1"
+      "background.padding_right=1"
+      "background.height=32"
+      "label.drawing=off"
+      $"script=($pluginDir)/space.nu"
+      $"click_script=aerospace workspace ($i)"
+    ]
+  }
+
+(sketchybar
+  --bar
+    height=32
+    position=top
+    padding_left=5
+    padding_right=5
+    margin=5
+    corner_radius=10
+    border_width=0
+    hidden=off
+    topmost=off
+    y_offset=2
+
+  --add event theme_changed AppleInterfaceThemeChangedNotification
+  --add item colordummy center
+  --set colordummy
+    drawing=off
+    $"script=($pluginDir)/colordummy.nu"
+  --subscribe colordummy theme_changed
+
+  ...$spacesCmd
+
+  --default
+    updates=when_shown
+    drawing=on
+    icon.font="Symbols Nerd Font:2048-em:18.0"
+    label.font="SF Pro:Regular:16.0"
+    label.padding_left=2
+    label.padding_right=2
+    icon.padding_left=2
+    icon.padding_right=2
+
+  --add event music_changed
+    com.apple.Music.playerInfo
+  --add item music left
+  --set music
+    $"script=($pluginDir)/music.nu"
+    update_freq=5
+  --subscribe music music_changed
+  --add slider music_progress left 100
+  --set music_progress
+    slider.background.height=2
+    slider.background.corner_radius=10
+    y_offset=-10
+    $"script=($pluginDir)/music_jump.nu"
+  --subscribe music_progress mouse.clicked
+
+  --add item clock right
+  --set clock
+    $"script=($pluginDir)/clock.nu"
+    update_freq=10
+    background.padding_right=4
+  --add alias "iStat Menus Status" right
+    icon.padding_left=0
+    icon.padding_right=0
+  --add alias "Little Snitch Agent" right
+    icon.padding_left=0
+    icon.padding_right=0
+  --add alias "Control Center,Battery" right
+    icon.padding_left=0
+    icon.padding_right=0
+)
+
+sketchybar --update
