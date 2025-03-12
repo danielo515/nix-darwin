@@ -8,7 +8,7 @@ hs.grid.setGrid("10x6")
 -- require("keyboard.yabai") -- testing aerospace
 require("tab-chooser")
 -- local stateMachine = require("lib.stateMachine")
--- local slack = require("lib.slack")
+require("aerospace_integration").start(8765)
 hs.application.enableSpotlightForNameSearches(true)
 
 local function isMonitorBig()
