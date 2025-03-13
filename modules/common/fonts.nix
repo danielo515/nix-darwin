@@ -6,8 +6,11 @@
       # Use the new nerd-fonts namespace
       nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
+      nerd-fonts.symbols-only
+      nerd-fonts.iosevka
       fira-code
       jetbrains-mono
+      material-design-icons
     ];
   };
 }
