@@ -83,7 +83,7 @@ def color [name: string, alpha: float = 1.0] {
   }
 
   $alpha bit-or $color
-  | fmt
+  | format number
   | get lowerhex
   | str replace "0x" ""
   | fill --alignment "right" --character "0" --width 8
@@ -100,12 +100,6 @@ def main [] {
     --set /space/
       $"icon.color=(color bgGray)"
       $"icon.highlight_color=(color blue)"
-    --set music
-      $"icon.color=(color fgGray)"
-      $"label.color=(color fgGray)"
-    --set music_progress
-      $"slider.highlight_color=(color blue)"
-      $"slider.background.color=(color bgGray)"
     --set "Control Center,Battery"
       $"alias.color=(color gold)"
     --set clock
