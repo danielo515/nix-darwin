@@ -1,9 +1,11 @@
 #!/usr/bin/env nu
+print "Starting sketchybarrc"
+
 let pluginDir = $env.XDG_CONFIG_HOME?
 | default $"($env.HOME)/.config"
 | path join "sketchybar/plugins"
 
-let spacesCmd = ["Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ"]
+let spacesCmd = ["1" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ"]
 | enumerate
 | reduce --fold [] {|it, acc|
     let i = $it.index + 1
@@ -24,7 +26,7 @@ let spacesCmd = ["Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ"]
 
 (sketchybar
   --bar
-    height=32
+    height=25
     position=top
     padding_left=5
     padding_right=5
@@ -32,8 +34,8 @@ let spacesCmd = ["Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ"]
     corner_radius=10
     border_width=0
     hidden=off
-    topmost=off
-    y_offset=2
+    topmost=on
+    y_offset=0
 
   --add event theme_changed AppleInterfaceThemeChangedNotification
   --add item colordummy center
@@ -47,27 +49,12 @@ let spacesCmd = ["Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ"]
   --default
     updates=when_shown
     drawing=on
-    icon.font="Symbols Nerd Font:2048-em:18.0"
-    label.font="SF Pro:Regular:16.0"
+    # icon.font="Symbols Nerd Font:2048-em:18.0"
+    # label.font="SF Pro:Regular:16.0"
     label.padding_left=2
     label.padding_right=2
     icon.padding_left=2
     icon.padding_right=2
-
-  --add event music_changed
-    com.apple.Music.playerInfo
-  --add item music left
-  --set music
-    $"script=($pluginDir)/music.nu"
-    update_freq=5
-  --subscribe music music_changed
-  --add slider music_progress left 100
-  --set music_progress
-    slider.background.height=2
-    slider.background.corner_radius=10
-    y_offset=-10
-    $"script=($pluginDir)/music_jump.nu"
-  --subscribe music_progress mouse.clicked
 
   --add item clock right
   --set clock
