@@ -1,3 +1,4 @@
+local log = hs.logger.new('aerospace-web-service', 'debug')
 local M = {}
 local alert = require("alert")
 
@@ -9,10 +10,16 @@ function M.start(port)
 
     -- Set up the callback function for handling requests
     M.server:setCallback(function(method, path, headers, body)
+        log.i("Aerospace integration HTTP server received request:")
         if method == "GET" then
-            if path == "/service-mode" then
-                -- Show the alert when service mode is activated
-                alert.important("Service mode activated")
+            -- Check if the path starts with /service-mode
+            if path:match("^/service%-mode") then
+                -- Extract message from the URL if present
+                local message = M.extractMessage(path)
+                -- Show the alert with custom message or default
+                log.i("message", message)
+                local alertMessage = message or "Service mode activated"
+                alert.important(alertMessage)
                 return "OK", 200, { ["Content-Type"] = "text/plain" }
             end
         end
@@ -26,6 +33,23 @@ function M.start(port)
     print("Aerospace integration HTTP server started on port " .. port)
 
     return M.server
+end
+
+-- Extract message parameter from a path
+function M.extractMessage(path)
+    -- Check if the path contains a message parameter
+    local message = path:match("%?message=(.+)$")
+
+    if not message then
+        return nil
+    end
+
+    -- URL decode the message (replace %20 with spaces, etc.)
+    message = message:gsub("%%(%x%x)", function(h)
+        return string.char(tonumber(h, 16))
+    end)
+
+    return message
 end
 
 -- Stop the HTTP server
