@@ -1,20 +1,13 @@
 # Darwin-specific home-manager configurations
 { pkgs, ... }:
-{
-  imports = [
-    ./programs.nix
-    ./hammerspoon.nix
-  ];
-
+let
   # Define Übersicht package
   uebersicht = pkgs.stdenv.mkDerivation {
     name = "uebersicht-1.6.82";
-    buildInputs = [
-      pkgs.unzip
-      pkgs.glibcLocales
-    ];
+    buildInputs = [ pkgs.unzip pkgs.glibcLocales ];
     src = pkgs.fetchurl {
-      url = "https://tracesof.net/uebersicht/releases/Uebersicht-1.6.82.app.zip";
+      url =
+        "https://tracesof.net/uebersicht/releases/Uebersicht-1.6.82.app.zip";
       sha256 = "sha256-OdteCr8D9jkJklEclGwZuXqJ+E6+KshyGev5If/7lys=";
     };
 
@@ -29,6 +22,8 @@
       cp -R "Übersicht.app" $out/Applications/
     '';
   };
+in {
+  imports = [ ./programs.nix ./hammerspoon.nix ../../modules/simple-bar.nix ];
 
   # Darwin-specific configurations
   home.packages = with pkgs; [
@@ -45,8 +40,6 @@
   # macOS-specific services
   services = {
     # Enable Syncthing for file synchronization
-    syncthing = {
-      enable = true;
-    };
+    syncthing = { enable = true; };
   };
 }

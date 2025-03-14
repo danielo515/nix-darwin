@@ -113,15 +113,12 @@
 
         # Standalone home-manager configurations
         homeConfigurations = let
-          # Common special arguments for all configurations
-          commonSpecialArgs = { inherit username useremail; };
-
           # Function to create standalone home-manager configuration
           mkHomeConfig = system: isDarwin:
             home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${system};
               modules = [ ./home ];
-              extraSpecialArgs = commonSpecialArgs // { inherit isDarwin; };
+              extraSpecialArgs = { inherit isDarwin username useremail; };
             };
         in {
           # Darwin standalone home configuration
