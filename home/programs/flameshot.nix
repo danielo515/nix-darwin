@@ -1,5 +1,5 @@
 # flameshot is a free,open source and cross platform screenshot manager
-{ pkgs, username, ... }:
+{ pkgs, username, lib, ... }:
 let
   savePath = "${
       if pkgs.stdenv.isDarwin then "/Users" else "/home"
@@ -29,5 +29,23 @@ in {
         };
       };
     };
+    "raycast/flameshot".text = ''
+      #!/bin/bash
+
+      # Required parameters:
+      # @raycast.schemaVersion 1
+      # @raycast.title flameshot
+      # @raycast.mode silent
+
+      # Optional parameters:
+      # @raycast.icon 🤖
+      # @raycast.packageName danielo.flameshot
+
+      # Documentation:
+      # @raycast.description Take an screenshot using flameshot
+      # @raycast.author danielo
+      # @raycast.authorURL https://raycast.com/danielo
+
+      ${lib.getExe pkgs.flameshot} gui'';
   };
 }
