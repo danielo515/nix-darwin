@@ -13,6 +13,7 @@
     ./conform.nix
     # show errors in the bufferline
     ./fidget.nix
+    ./telescope.nix
   ];
   # Theme
   colorschemes.tokyonight.enable = true;
@@ -28,27 +29,19 @@
   };
 
   # Keymaps
-  globals = {
-    mapleader = " ";
-  };
+  globals = { mapleader = " "; };
 
   plugins = {
     # UI
     web-devicons.enable = true;
-    which-key = {
-      enable = true;
-    };
+    which-key = { enable = true; };
     # depends on lps servers defined in ./lsp.nix
     schemastore = {
       enable = true;
 
-      json = {
-        enable = true;
-      };
+      json = { enable = true; };
 
-      yaml = {
-        enable = true;
-      };
+      yaml = { enable = true; };
     };
     noice = {
       # WARNING: This is considered experimental feature, but provides nice UX
@@ -61,22 +54,6 @@
         #lsp_doc_border = false;
       };
     };
-    telescope = {
-      enable = true;
-      keymaps = {
-        "<leader>ff" = {
-          options.desc = "file finder";
-          action = "find_files";
-        };
-        "<leader>fg" = {
-          options.desc = "find via grep";
-          action = "live_grep";
-        };
-      };
-      extensions = {
-        file-browser.enable = true;
-      };
-    };
 
     # Dev
     lazygit.enable = true;
@@ -84,24 +61,12 @@
       enable = true;
       settings = {
         signs = {
-          add = {
-            text = " ";
-          };
-          change = {
-            text = " ";
-          };
-          delete = {
-            text = " ";
-          };
-          untracked = {
-            text = "";
-          };
-          topdelete = {
-            text = "󱂥 ";
-          };
-          changedelete = {
-            text = "󱂧 ";
-          };
+          add = { text = " "; };
+          change = { text = " "; };
+          delete = { text = " "; };
+          untracked = { text = ""; };
+          topdelete = { text = "󱂥 "; };
+          changedelete = { text = "󱂧 "; };
         };
       };
     };
