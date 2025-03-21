@@ -6,7 +6,7 @@ def find-window [appName: string, windowTitle = ""] {
     let result = if $windowTitle == "" {
         $allApps | filter { $in.app-name == $appName }
     } else {
-        $allApps | filter { $in.app-name == $appName and $in.title == $windowTitle }
+        $allApps | filter { $in.app-name == $appName and ($in.window-title | str contains $windowTitle) }
     }
     if ($result | length) == 0 {
         error make { 
@@ -14,7 +14,7 @@ def find-window [appName: string, windowTitle = ""] {
         help: $"Try using one of the following available windows:\n\n(ansi blue)($allApps | table)(ansi reset)"
          }
     } else {
-        $result | first
+        $result
     }
 }
 
@@ -23,8 +23,11 @@ def move-window [windowId: int, workspace: string] {
 }
 
 def find-and-move [appName: string, windowTitle: string, workspace: string] {
-    let window = find-window $appName $windowTitle
-    move-window $window.window-id $workspace
+    let windows = find-window $appName $windowTitle
+    $windows | each { 
+        move-window $in.window-id $workspace 
+        {Workspace: $workspace, AppName: $in.app-name, WindowTitle: $in.window-title}
+        }
 }
 
 let config = [ 
@@ -37,13 +40,27 @@ let config = [
         appName: "Obsidian",
         windowTitle: "",
         workspace: "3"
+    },
+    {
+        appName: "Windsurf",
+        windowTitle: "",
+        workspace: "6"
+    },
+    {
+        appName: "Google Chrome",
+        windowTitle: "WhatsApp",
+        workspace: "9"
+    },
+    {
+        appName: "MongoDB Compass",
+        windowTitle: "",
+        workspace: "2"
     }
  ]
 
 def execute-config [] {
     $config| each  {||
         find-and-move $in.appName $in.windowTitle $in.workspace
-        {Workspace: $in.workspace, AppName: $in.appName}
     }
 }
     
@@ -53,9 +70,10 @@ export def main [appName = "", windowTitle = "", workspace = ""] {
         print $"No app name or window title specified, (ansi blue)executing config(ansi reset)"
         execute-config
     } else {
-        if $workspace != "" {
+        if $workspace == "" {
             error make { msg: "Please specify a workspace"}
         } else {
+            print { Workspace: $workspace, AppName: $appName, WindowTitle: $windowTitle }
             find-and-move $appName $windowTitle $workspace
         }
     }
