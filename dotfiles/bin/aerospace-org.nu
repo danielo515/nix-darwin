@@ -22,11 +22,15 @@ def move-window [windowId: int, workspace: string] {
     aerospace move-node-to-workspace $workspace --window-id $windowId
 }
 
-def find-and-move [appName: string, windowTitle: string, workspace: string] {
+def find-and-move [appName: string, windowTitle: string, workspace: string, width: int] {
     let windows = find-window $appName $windowTitle
-    $windows | each { 
-        move-window $in.window-id $workspace 
-        {Workspace: $workspace, AppName: $in.app-name, WindowTitle: $in.window-title}
+    $windows | each {|win|
+        move-window $win.window-id $workspace 
+        if $width > 0 {
+            print $"Resizing WINDOW $($win.window-id) to width: $($width)"
+            aerospace resize --window-id $win.window-id width $width
+        }
+        {Workspace: $workspace, AppName: $in.app-name, WindowTitle: $in.window-title, windowId: $in.window-id}
         }
 }
 
@@ -55,12 +59,29 @@ let config = [
         appName: "MongoDB Compass",
         windowTitle: "",
         workspace: "2"
+    },
+    {
+        appName: "time tracker app",
+        windowTitle: "",
+        workspace: "1",
+        width: 500,
     }
  ]
 
 def execute-config [] {
-    $config| each  {||
-        find-and-move $in.appName $in.windowTitle $in.workspace
+    $config| each  {|cfg|
+    let width = if 'width' in $cfg { $cfg.width } else { 0 }
+    try { 
+        find-and-move $cfg.appName $cfg.windowTitle $cfg.workspace $width
+     } catch {|err|
+        print $"Failed to move window for app name: '($cfg.appName)' and window title: '($cfg.windowTitle)'"
+        if 'msg' in $err {
+            print $err.msg
+        } else {
+            print $err
+        }
+        { Workspace: $cfg.workspace, AppName: $cfg.appName, WindowTitle: $cfg.windowTitle, status: "Failed" }
+     }
     }
 }
     
@@ -68,13 +89,13 @@ def execute-config [] {
 export def main [appName = "", windowTitle = "", workspace = ""] {
     if $appName == "" and $windowTitle == "" {
         print $"No app name or window title specified, (ansi blue)executing config(ansi reset)"
-        execute-config
+        execute-config | table --collapse
     } else {
         if $workspace == "" {
             error make { msg: "Please specify a workspace"}
         } else {
             print { Workspace: $workspace, AppName: $appName, WindowTitle: $windowTitle }
-            find-and-move $appName $windowTitle $workspace
+            find-and-move $appName $windowTitle $workspace 0
         }
     }
 }
