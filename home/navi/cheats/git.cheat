@@ -1,0 +1,7 @@
+% git, pull
+# Pull changes from a remote branch into it's local branch
+git fetch <remote> <branch>:<branch>
+
+
+$ branch: git branch | awk '{print $NF}'
+$ remote: git remote | awk '{print $NF}'
