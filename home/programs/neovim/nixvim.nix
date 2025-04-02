@@ -18,6 +18,12 @@
   # Theme
   colorschemes.tokyonight.enable = true;
 
+  # Use nixpkgs in sync with home manager.
+  nixpkgs.useGlobalPackages = true;
+
+  # Trying out the experimental lua loader.
+  luaLoader.enable = true;
+
   # Settings
   opts = {
     expandtab = true;

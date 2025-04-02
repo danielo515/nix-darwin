@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
-{
+{ lib, pkgs, ... }: {
   config = {
     extraConfigLuaPre =
       # lua
@@ -94,14 +89,12 @@
             stop_after_first = true;
           };
           typescript = {
-            __unkeyed-1 = "prettierd";
-            __unkeyed-2 = "prettier";
+            __unkeyed-1 = "dprint";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettier";
             stop_after_first = true;
           };
-          python = [
-            "black"
-            "isort"
-          ];
+          python = [ "black" "isort" ];
           lua = [ "stylua" ];
           nix = [ "nixfmt-rfc-style" ];
           markdown = {
@@ -116,49 +109,26 @@
           };
           terraform = [ "terraform_fmt" ];
           bicep = [ "bicep" ];
-          bash = [
-            "shellcheck"
-            "shellharden"
-            "shfmt"
-          ];
+          bash = [ "shellcheck" "shellharden" "shfmt" ];
           json = [ "jq" ];
           "_" = [ "trim_whitespace" ];
         };
 
         formatters = {
-          black = {
-            command = "${lib.getExe pkgs.black}";
-          };
-          isort = {
-            command = "${lib.getExe pkgs.isort}";
-          };
+          black = { command = "${lib.getExe pkgs.black}"; };
+          isort = { command = "${lib.getExe pkgs.isort}"; };
           nixfmt-rfc-style = {
             command = "${lib.getExe pkgs.nixfmt-rfc-style}";
           };
-          alejandra = {
-            command = "${lib.getExe pkgs.alejandra}";
-          };
-          jq = {
-            command = "${lib.getExe pkgs.jq}";
-          };
-          prettierd = {
-            command = "${lib.getExe pkgs.prettierd}";
-          };
-          stylua = {
-            command = "${lib.getExe pkgs.stylua}";
-          };
-          shellcheck = {
-            command = "${lib.getExe pkgs.shellcheck}";
-          };
-          shfmt = {
-            command = "${lib.getExe pkgs.shfmt}";
-          };
-          shellharden = {
-            command = "${lib.getExe pkgs.shellharden}";
-          };
-          bicep = {
-            command = "${lib.getExe pkgs.bicep}";
-          };
+          alejandra = { command = "${lib.getExe pkgs.alejandra}"; };
+          jq = { command = "${lib.getExe pkgs.jq}"; };
+          prettierd = { command = "${lib.getExe pkgs.prettierd}"; };
+          stylua = { command = "${lib.getExe pkgs.stylua}"; };
+          shellcheck = { command = "${lib.getExe pkgs.shellcheck}"; };
+          shfmt = { command = "${lib.getExe pkgs.shfmt}"; };
+          shellharden = { command = "${lib.getExe pkgs.shellharden}"; };
+          bicep = { command = "${lib.getExe pkgs.bicep}"; };
+          dprint = { command = "${lib.getExe pkgs.dprint}"; };
           #yamlfmt = {
           #  command = "${lib.getExe pkgs.yamlfmt}";
           #};
