@@ -6,7 +6,7 @@ let
     repo = "simple-bar";
     rev = "master";
     sha256 =
-      "sha256-Q+3wJQghCANGmQ+2VxFO7xCL2dTwHkCGikbOJeNqXEA="; # Replace with actual SHA256
+      "sha256-/gC+PL6BLgfqhwmo+LSb/nWd0uPaANaNFQdYYDW38gE="; # Replace with actual SHA256
   };
 in {
   home = {
