@@ -23,7 +23,8 @@ let
     '';
   };
 in {
-  imports = [ ./programs.nix ./hammerspoon.nix ../../modules/simple-bar.nix ./bin.nix ];
+  imports =
+    [ ./gostty.nix ./hammerspoon.nix ../../modules/simple-bar.nix ./bin.nix ];
 
   # Darwin-specific configurations
   home.packages = with pkgs; [

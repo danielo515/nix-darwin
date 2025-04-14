@@ -39,14 +39,16 @@
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       "stats" # beautiful system monitor
       "keycastr" # display keyboard keys pressed
-
+      # 3D printing
+      "prusaslicer"
+      "orcaslicer"
       # Development
       "wireshark" # network analyzer
       # "font-fira-code"
       # "font-inconsolata"
       # "font-inconsolata-nerd-font"
       # "font-hack-nerd-font"
-      "android-file-transfer"
+      # "android-file-transfer" # does not work very well
       "balenaetcher"
       "blender"
       "bruno"
@@ -66,7 +68,6 @@
       "obs"
       "openscad"
       "orbstack"
-      "orcaslicer"
       "steam"
       "upscayl"
       "utm" # full featured system emulator and virtual machine host

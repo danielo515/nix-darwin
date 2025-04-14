@@ -24,11 +24,11 @@
           "global:ctrl+grave_accent=toggle_quick_terminal"
         ];
         font-family = "JetBrainsMono Nerd Font";
-        font-size = 14;
+        font-size = 12;
         font-feature = [ "calt" "liga" "dlig" ];
         font-variation-weight = 700;
         cursor-style = "block";
-        cursor-style-blink = false;
+        cursor-style-blink = true;
         window-save-state = true;
         window-inherit-working-directory = true;
         macos-option-as-alt = true;
@@ -38,7 +38,4 @@
       };
     };
   };
-
-  # Enable Syncthing service
-  services.syncthing.enable = true;
 }
