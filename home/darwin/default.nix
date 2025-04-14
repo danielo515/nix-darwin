@@ -24,7 +24,7 @@ let
   };
 in {
   imports =
-    [ ./gostty.nix ./hammerspoon.nix ../../modules/simple-bar.nix ./bin.nix ];
+    [ ./ghostty.nix ./hammerspoon.nix ../../modules/simple-bar.nix ./bin.nix ];
 
   # Darwin-specific configurations
   home.packages = with pkgs; [

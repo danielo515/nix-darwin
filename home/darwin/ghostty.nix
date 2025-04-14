@@ -26,15 +26,15 @@
         font-family = "JetBrainsMono Nerd Font";
         font-size = 12;
         font-feature = [ "calt" "liga" "dlig" ];
-        font-variation-weight = 700;
+        # font-variation-weight = 700; # Removed - unsupported field
         cursor-style = "block";
         cursor-style-blink = true;
-        window-save-state = true;
+        window-save-state = "always"; # Changed from 'true' to 'always'
         window-inherit-working-directory = true;
         macos-option-as-alt = true;
         mouse-hide-while-typing = true;
-        # Disable ligatures when cursor is on them
-        font-disable-ligatures-in-cursor-line = true;
+        # Disable ligatures when cursor is on them - removed unsupported field
+        # font-disable-ligatures-in-cursor-line = true;
       };
     };
   };
