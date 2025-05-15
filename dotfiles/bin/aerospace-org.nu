@@ -52,6 +52,11 @@ let config = [
     },
     {
         appName: "Google Chrome",
+        windowTitle: "Danielo",
+        workspace: "4"
+    },
+    {
+        appName: "Google Chrome",
         windowTitle: "WhatsApp",
         workspace: "9"
     },
