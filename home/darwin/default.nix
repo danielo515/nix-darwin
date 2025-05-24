@@ -38,9 +38,4 @@ in {
 
   xdg.configFile.sketchybar.source = ../../dotfiles/sketchybar;
 
-  # macOS-specific services
-  services = {
-    # Enable Syncthing for file synchronization
-    syncthing = { enable = true; };
-  };
 }

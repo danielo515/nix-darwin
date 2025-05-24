@@ -26,8 +26,6 @@
 
   ];
 
-  services.syncthing.enable = true;
-
   programs = {
 
     #a better cat alternative with fancy colors

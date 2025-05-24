@@ -25,6 +25,7 @@
       "aria2" # download tool
       "httpie" # http client
       "imagemagick"
+      "withgraphite/tap/graphite" # alternative git client for better stack branches
     ];
 
     # `brew install --cask`
@@ -33,6 +34,7 @@
       "google-chrome"
       "visual-studio-code"
       "windsurf"
+      "syncthing" # I prefer to use syncthing here rather than configuring it in nix. In nix it is not persisting the settings
 
       "anki"
       "iina" # video player
