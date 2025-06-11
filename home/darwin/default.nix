@@ -1,5 +1,5 @@
 # Darwin-specific home-manager configurations
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   # Define Übersicht package
   uebersicht = pkgs.stdenv.mkDerivation {
@@ -23,8 +23,13 @@ let
     '';
   };
 in {
-  imports =
-    [ ./ghostty.nix ./hammerspoon.nix ../../modules/simple-bar.nix ./bin.nix ];
+  imports = [
+    ./ghostty.nix
+    ./hammerspoon.nix
+    ../../modules/simple-bar.nix
+    ./bin.nix
+    ./aerospace.nix
+  ];
 
   # Darwin-specific configurations
   home.packages = with pkgs; [
