@@ -10,7 +10,7 @@
     ./programs/tmux.nix
     ./programs/starship.nix
     # cross platform screenshots
-    ./programs/flameshot.nix
+    # ./programs/flameshot.nix it has problems building on darwin in the latest release
     ./navi
     # Shell
     ./shell/common.nix

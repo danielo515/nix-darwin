@@ -22,6 +22,7 @@
   # Host-specific system configurations
   networking.hostName = hostname;
   networking.computerName = "Danielo's MacBook Pro";
+  system.primaryUser = username;
 
   # Home Manager configuration
   home-manager = {
