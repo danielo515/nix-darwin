@@ -16,6 +16,7 @@
     aerospace # i3-like tiling window manager for macOS
     karabiner-elements # keyboard configuration. I use it when I don't have my cool keyboard attached
     graphite-cli
+    yalc
   ];
 
   # Host-specific system configurations
