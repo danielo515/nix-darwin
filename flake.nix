@@ -104,9 +104,6 @@
                   home-manager.users.${username} = import ./home;
                   home-manager.backupFileExtension = "home-bk";
                 }
-
-                # Include overlays
-                { nixpkgs.overlays = import ./overlays; }
               ];
             };
         in builtins.mapAttrs mkDarwinConfig darwinHosts;

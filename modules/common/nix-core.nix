@@ -1,11 +1,5 @@
 # Common Nix settings for all systems
-{
-  pkgs,
-  lib,
-  username,
-  system,
-  ...
-}: {
+{ pkgs, lib, username, system, ... }: {
   nix.enable = true;
 
   # Necessary for using flakes on this system
@@ -16,9 +10,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # Nix package
-  nix.package = pkgs.nix;
 
   # Garbage collection settings
   nix.gc = {
@@ -33,6 +24,6 @@
     auto-optimise-store = false;
 
     # Trusted users
-    trusted-users = ["root" username];
+    trusted-users = [ "root" username ];
   };
 }
