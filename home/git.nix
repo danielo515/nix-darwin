@@ -61,6 +61,6 @@
       update = "submodule update --init --recursive";
       foreach = "submodule foreach";
     };
-    ignores = [ ".DS_Store" "*.swp" "*~" ".vscode" ".idea" ];
+    ignores = [ ".DS_Store" "*.swp" "*~" ".vscode" ".idea" ".danielo" ];
   };
 }
