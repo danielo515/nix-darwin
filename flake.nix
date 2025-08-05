@@ -28,43 +28,61 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.flake-parts.follows = "flake-parts";
-
   };
 
-  outputs =
-    inputs@{ self, nixpkgs, flake-parts, nix-darwin, home-manager, ... }:
-    let
-      # Define common variables
-      username = "danielo";
-      useremail = "rdanielo@gmail.com";
-    in flake-parts.lib.mkFlake { inherit inputs; } {
-      systems =
-        [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    flake-parts,
+    nix-darwin,
+    home-manager,
+    ...
+  }: let
+    # Define common variables
+    username = "danielo";
+    useremail = "rdanielo@gmail.com";
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux"];
 
-      perSystem = { system, pkgs, lib, ... }: {
+      perSystem = {
+        system,
+        pkgs,
+        lib,
+        ...
+      }: {
         # Formatter for each system
         formatter = pkgs.alejandra;
 
         # Development shells
-        devShells.default =
-          pkgs.mkShell { buildInputs = [ pkgs.nixd pkgs.just ]; };
+        # This is the shell that gets activated when you run `nix develop` on this folder
+        devShells.default = pkgs.mkShell {
+          buildInputs = [
+            # If you want something to be available when using direnv, add it here
+            pkgs.nixd
+            pkgs.just
+            pkgs.alejandra
+          ];
+        };
 
         # Custom packages
-        packages = import ./pkgs { inherit pkgs; } // {
-          # Set repo-cloner as the default package
-          default = pkgs.callPackage ./pkgs/repo-cloner { };
-          hola = (pkgs.writeShellApplication {
-            name = "hola";
-            text = ''echo "Hola, mundo!" '';
-          });
-        };
+        packages =
+          import ./pkgs {inherit pkgs;}
+          // {
+            # Set repo-cloner as the default package
+            default = pkgs.callPackage ./pkgs/repo-cloner {};
+            hola = pkgs.writeShellApplication {
+              name = "hola";
+              text = ''echo "Hola, mundo!" '';
+            };
+          };
       };
 
       flake = {
         # Darwin configurations
         darwinConfigurations = let
           # Common special arguments for all configurations
-          commonSpecialArgs = { inherit username useremail; };
+          commonSpecialArgs = {inherit username useremail;};
 
           # Host configurations
           darwinHosts = {
@@ -83,11 +101,13 @@
           mkDarwinConfig = hostname: hostConfig:
             nix-darwin.lib.darwinSystem {
               system = hostConfig.system;
-              specialArgs = commonSpecialArgs // {
-                hostname = hostname;
-                system = hostConfig.system;
-                isDarwin = true;
-              };
+              specialArgs =
+                commonSpecialArgs
+                // {
+                  hostname = hostname;
+                  system = hostConfig.system;
+                  isDarwin = true;
+                };
               modules = [
                 # Host-specific configuration
                 hostConfig.hostPath
@@ -97,16 +117,19 @@
                   # Home Manager configuration
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = commonSpecialArgs // {
-                    isDarwin = true;
-                    flake = self;
-                  };
+                  home-manager.extraSpecialArgs =
+                    commonSpecialArgs
+                    // {
+                      isDarwin = true;
+                      flake = self;
+                    };
                   home-manager.users.${username} = import ./home;
                   home-manager.backupFileExtension = "home-bk";
                 }
               ];
             };
-        in builtins.mapAttrs mkDarwinConfig darwinHosts;
+        in
+          builtins.mapAttrs mkDarwinConfig darwinHosts;
 
         # Standalone home-manager configurations
         homeConfigurations = let
@@ -114,8 +137,8 @@
           mkHomeConfig = system: isDarwin:
             home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${system};
-              modules = [ ./home ];
-              extraSpecialArgs = { inherit isDarwin username useremail; };
+              modules = [./home];
+              extraSpecialArgs = {inherit isDarwin username useremail;};
             };
         in {
           # Darwin standalone home configuration

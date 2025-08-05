@@ -1,8 +1,13 @@
 {
-    "nix.enableLanguageServer": true,
-    "nix.serverPath": "nixd",
-    "cSpell.words": [
-        "pkgs"
-    ],
-    "makefile.configureOnOpen": false,
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nixd",
+  "cSpell.words": ["pkgs"],
+  "makefile.configureOnOpen": false,
+  "[nix]": {
+    "editor.defaultFormatter": "kamadorueda.alejandra",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": false
+  },
+  "alejandra.program": "alejandra"
 }
