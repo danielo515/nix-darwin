@@ -1,5 +1,10 @@
 # ZSH configuration
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -8,10 +13,14 @@
     autocd = true;
     autosuggestion = {
       enable = true;
-      strategy = [ "history" ];
+      strategy = ["history"];
     };
     initContent = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+      # Make sure brew is on the path for M1
+      if [[ $(uname -m) == 'arm64' ]]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
     '';
     # This are automatically substituted in any part of a command
     # for example `ls -la @g downloads` becomes `ls -la | grep -i downloads`
@@ -47,5 +56,4 @@
       # }
     ];
   };
-
 }
