@@ -12,6 +12,7 @@
     baseIndex = 1;
     keyMode = "vi";
     mouse = true;
+    tmuxp.enable = true;
 
     extraConfig = ''
       # Set terminal to support colors
