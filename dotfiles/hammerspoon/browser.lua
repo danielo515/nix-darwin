@@ -19,7 +19,7 @@ return function(browserName)
     })();
   ]]):format(browserName, url)
 
-		print(script)
+		-- print(script) -- debug. It is very useful when you are in development
 		hs.osascript.javascript(script)
 	end
 
@@ -44,7 +44,7 @@ return function(browserName)
     })();
   ]]):format(browserName, tabId)
 
-		print(script)
+		-- print(script) -- debug. It is very useful when you are in development
 		hs.osascript.javascript(script)
 	end
 
@@ -56,14 +56,14 @@ return function(browserName)
 
       for (win of browser.windows()) {
       for (let tab of win.tabs()) {
-      tabs.push({ id: tab.id(), title: tab.title() });
+      tabs.push({ id: tab.id(), title: tab.title(), url: tab.url() });
       }
       }
       return tabs;
       })();
     ]]):format(browserName)
 
-		print(script)
+		-- print(script) -- debug. It is very useful when you are in development
 		return hs.osascript.javascript(script)
 	end
 	return { open = open, jump = jump, tabById = tabById, getTabs = getTabs }
