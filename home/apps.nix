@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   home.packages = with pkgs; [
     # dev
     nixd # nix language server
@@ -29,7 +30,9 @@
   programs = {
 
     #a better cat alternative with fancy colors
-    bat = { enable = true; };
+    bat = {
+      enable = true;
+    };
 
     # A modern replacement for ‘ls’
     # useful in bash/zsh prompt, not in nushell.
@@ -68,7 +71,11 @@
       enableBashIntegration = true;
       enableFishIntegration = true;
       flags = [ "--disable-up-arrow" ];
-      settings = { filter_mode_shell_up_key_binding = "session"; };
+      # This are just plain settings from https://docs.atuin.sh/configuration/config
+      settings = {
+        filter_mode_shell_up_key_binding = "session";
+        filter_mode = "directory";
+      };
     };
 
     autojump = {
@@ -93,6 +100,8 @@
       # enableFishIntegration = true;
     };
 
-    pet = { enable = true; };
+    pet = {
+      enable = true;
+    };
   };
 }
