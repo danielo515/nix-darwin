@@ -7,7 +7,7 @@
 }: {
   programs.tmux = {
     enable = true;
-    shortcut = "a";
+    prefix = "C-b";
     escapeTime = 0;
     baseIndex = 1;
     keyMode = "vi";
@@ -15,9 +15,22 @@
     tmuxp.enable = true;
 
     extraConfig = ''
+      # Set default shell
+      set-option -g default-shell "${pkgs.zsh}/bin/zsh"
+      set-option -g default-command "${pkgs.zsh}/bin/zsh"
+
       # Set terminal to support colors
       set -g default-terminal "screen-256color"
       set -ga terminal-overrides ",*256col*:Tc"
+
+      # Set history limit
+      set -g history-limit 10000
+
+      # Set vi-style key bindings
+      setw -g mode-keys vi
+
+      # Enable mouse support
+      set -g mouse on
 
       # Status bar customization
       set -g status-style bg=default
@@ -48,7 +61,6 @@
     '';
 
     plugins = with pkgs.tmuxPlugins; [
-      sensible
       yank
       resurrect
       continuum
