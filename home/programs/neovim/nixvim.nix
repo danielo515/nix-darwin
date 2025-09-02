@@ -41,6 +41,8 @@
     # UI
     web-devicons.enable = true;
     which-key = { enable = true; };
+    # Seamless navigation between Vim splits and tmux panes (Ctrl-h/j/k/l, Ctrl-\)
+    tmux-navigator.enable = true;
     # depends on lps servers defined in ./lsp.nix
     schemastore = {
       enable = true;
