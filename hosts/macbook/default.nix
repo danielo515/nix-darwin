@@ -1,5 +1,12 @@
 # Configuration for macbook host
-{ lib, pkgs, username, hostname, system, ... }: {
+{
+  lib,
+  pkgs,
+  username,
+  hostname,
+  system,
+  ...
+}: {
   imports = [
     # Import common modules
     ../../modules/common
@@ -7,6 +14,8 @@
     # Import darwin-specific modules
     ../../modules/darwin
   ];
+
+  nix.package = pkgs.nixVersions.latest;
 
   # Common system packages (previously in hosts/common)
   environment.systemPackages = with pkgs; [
@@ -28,7 +37,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit username hostname system; };
+    extraSpecialArgs = {inherit username hostname system;};
     users.${username} = import ../../home;
     backupFileExtension = lib.mkForce "home-bk";
   };
