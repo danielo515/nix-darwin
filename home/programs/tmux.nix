@@ -70,6 +70,9 @@
       bind k select-pane -U
       bind l select-pane -R
 
+      # Quickly rename the current pane (prefix + p)
+      bind p command-prompt -p "Pane title:" "select-pane -T '%%'"
+
       # Better copy-mode (vi)
       bind -T copy-mode-vi v send -X begin-selection        # Start selection like Vim visual mode
       bind -T copy-mode-vi y send -X copy-selection-and-cancel  # Yank selection to clipboard and exit
