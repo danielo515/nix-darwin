@@ -1,5 +1,5 @@
 # Place a copy of this config to ~/.aerospace.toml
-# After that, you can edit ~/.aerospace.toml to your liking
+# After that, you can edit ~/.aerospace.toml to your liking.
 
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
@@ -124,6 +124,7 @@ alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
 alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
 alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
 alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+alt-up = 'focus up'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 alt-ctrl-shift-j = 'move left'
@@ -230,6 +231,7 @@ run = ["layout floating", "move-node-to-workspace 7"]
 1 = 'lg'
 2 = 'lg'
 3 = 'lg'
+6 = 'lg'
 7 = 'C49J89x'
 8 = 'C49J89x'
 9 = ['built-in', 'C49J89x']
