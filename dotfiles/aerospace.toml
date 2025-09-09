@@ -139,8 +139,8 @@ alt-ctrl-down = 'join-with down'
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
-alt-ctrl-shift-left = 'resize smart -50'
-alt-ctrl-shift-right = 'resize smart +50'
+alt-ctrl-shift-left = 'resize smart -150'
+alt-ctrl-shift-right = 'resize smart +150'
 alt-ctrl-shift-f = 'fullscreen'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
