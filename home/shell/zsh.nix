@@ -15,16 +15,20 @@
       enable = true;
       strategy = ["history"];
     };
-    initContent = ''
+    initContent = let
+      atuinWorkaround = lib.optionalString (config.programs.atuin.enable) ''
+        function zvm_after_init() {
+          zvm_bindkey viins '^R' atuin-search
+          zvm_bindkey vicmd '^R' atuin-search
+        }
+      '';
+    in ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
       # Make sure brew is on the path for M1
       if [[ $(uname -m) == 'arm64' ]]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
-      # Workaround to make vi-mode work with atuin
-      function zvm_after_init() {
-        zvm_bindkey viins '^R' atuin-search
-      }
+      ${atuinWorkaround}
     '';
     # This are automatically substituted in any part of a command
     # for example `ls -la @g downloads` becomes `ls -la | grep -i downloads`
