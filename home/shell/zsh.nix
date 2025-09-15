@@ -21,6 +21,10 @@
       if [[ $(uname -m) == 'arm64' ]]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
+      # Workaround to make vi-mode work with atuin
+      function zvm_after_init() {
+        zvm_bindkey viins '^R' atuin-search
+      }
     '';
     # This are automatically substituted in any part of a command
     # for example `ls -la @g downloads` becomes `ls -la | grep -i downloads`
@@ -49,11 +53,11 @@
         };
       }
       # This plugin introduces problems with atuin control+r hooks
-      # {
-      #   name = "vi-mode";
-      #   src = pkgs.zsh-vi-mode;
-      #   file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
-      # }
+      {
+        name = "vi-mode";
+        src = pkgs.zsh-vi-mode;
+        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+      }
     ];
   };
 }
