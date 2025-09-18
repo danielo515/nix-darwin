@@ -18,6 +18,9 @@ _: {
 
       # Add additional paths
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+
+      # Initialize zoxide
+      eval "$(zoxide init bash)"
     '';
   };
 }

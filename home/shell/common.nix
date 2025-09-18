@@ -20,5 +20,9 @@
     gco = "git checkout $(git branch | fzf)";
     gcor = "git checkout $(git branch --remote | fzf)";
 
+    # Zoxide aliases - make zoxide a complete substitute for cd
+    cd = "z";
+    cdi = "zi";  # Interactive directory selection
+
   };
 }

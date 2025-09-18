@@ -22,6 +22,7 @@
   ];
 
   programs.fish.enable = true;
+  programs.zoxide.enable = true;
   aerospace.enable = true;
 
   # Home Manager needs a bit of information about you and the
