@@ -16,13 +16,13 @@
     ./shell/common.nix
     ./shell/zsh.nix
     ./shell/bash.nix
+    ./shell/zoxide.nix
     ./shell/wezterm.nix
     # Keep these until fully migrated
     ./apps.nix
   ];
 
   programs.fish.enable = true;
-  programs.zoxide.enable = true;
   aerospace.enable = true;
 
   # Home Manager needs a bit of information about you and the
