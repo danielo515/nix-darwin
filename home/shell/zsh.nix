@@ -28,10 +28,6 @@
       if [[ $(uname -m) == 'arm64' ]]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
-      
-      # Initialize zoxide
-      eval "$(zoxide init zsh)"
-      
       ${atuinWorkaround}
     '';
     # This are automatically substituted in any part of a command
