@@ -7,11 +7,13 @@
   homebrew = {
     enable = true;
 
+    brewfile = "~/.config/nix-darwin/Brewfile";
+
     onActivation = {
       # Whether to enable Homebrew to auto-update itself and all formulae during nix-darwin system activation.
       # The default is false so that repeated invocations of darwin-rebuild switch are idempotent.
       autoUpdate = false;
-      upgrade = true; # Upgrade outdated casks, formulae, and App Store apps
+      upgrade = false; # Upgrade outdated casks, formulae, and App Store apps
       # 'zap': uninstalls all formulae(and related files) not listed in the generated Brewfile
       # 'uninstall': just uninstalls what is not listed, but not related files
       cleanup = "uninstall";
@@ -30,6 +32,7 @@
 
     # `brew install --cask`
     casks = [
+      "1password-cli" # one password cli
       "firefox@developer-edition"
       "google-chrome"
       "visual-studio-code"
@@ -45,7 +48,7 @@
       "prusaslicer"
       "orcaslicer"
       # Development
-      "wireshark" # network analyzer
+      # "wireshark" # network analyzer
       # "font-fira-code"
       # "font-inconsolata"
       # "font-inconsolata-nerd-font"
