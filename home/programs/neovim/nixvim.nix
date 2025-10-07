@@ -4,7 +4,7 @@
     ./lualine.nix
     ./startup.nix
     ./bufferline.nix
-    ./cmp.nix
+    ./blink-cmp.nix
     ./navic.nix
     ./neo-tree.nix
     ./treesitter.nix
