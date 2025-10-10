@@ -1,8 +1,18 @@
-{ system, username, isDarwin, flake, ... }: {
+{
+  system,
+  username,
+  isDarwin,
+  flake,
+  ...
+}: {
   # Import common and platform-specific modules
   imports = [
     # Platform-specific configurations
-    (if isDarwin then ./darwin else ./nixos)
+    (
+      if isDarwin
+      then ./darwin
+      else ./nixos
+    )
 
     # Programs
     ./git.nix
@@ -20,6 +30,8 @@
     ./shell/wezterm.nix
     # Keep these until fully migrated
     ./apps.nix
+    # Only applies if codeium is installed
+    ./codeium.nix
   ];
 
   programs.fish.enable = true;
@@ -31,7 +43,11 @@
     username = builtins.trace ">>> username:${username} <<<" username;
     homeDirectory =
       builtins.trace ">>> Setting homeDirectory in home/default.nix <<<"
-      (if isDarwin then "/Users/${username}" else "/home/${username}");
+      (
+        if isDarwin
+        then "/Users/${username}"
+        else "/home/${username}"
+      );
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -44,8 +60,7 @@
     stateVersion = "24.11";
   };
 
-  home.packages =
-    [ flake.packages.${system}.hola flake.packages.${system}.repo-cloner ];
+  home.packages = [flake.packages.${system}.hola flake.packages.${system}.repo-cloner];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
