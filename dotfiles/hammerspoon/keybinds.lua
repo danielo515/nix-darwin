@@ -126,3 +126,25 @@ hs.fnutils.each(hyperApps, function(item)
 		hs.application.launchOrFocus(appName[1])
 	end)
 end)
+
+--[[
+Hyper Spoon bindings.
+This section is for hyper key bindings.
+I usually don't need this when using my keyboard, but when I'm not on my keyboard
+this becomes useful as the hyper key is a single normal key.
+--]]
+
+hs.loadSpoon("Hyper")
+
+App = hs.application
+Hyper = spoon.Hyper
+
+Hyper:bindHotKeys({ hyperKey = { {}, "F9" } })
+
+Hyper:bind({}, "j", function()
+    App.launchOrFocusByBundleID("net.kovidgoyal.kitty")
+end)
+
+Hyper:bind({}, "s", slackWeb)
+
+require("alert").important("Hammerspoon config loaded")

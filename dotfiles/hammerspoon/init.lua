@@ -183,16 +183,3 @@ require("keybinds")
 require("keyboard.auto_flasher")
 -- Watches a file and updates when was it modified. I don't use it anymore
 -- require("watch_files")
-
-hs.loadSpoon("Hyper")
-
-App = hs.application
-Hyper = spoon.Hyper
-
-Hyper:bindHotKeys({ hyperKey = { {}, "F9" } })
-
-Hyper:bind({}, "j", function()
-    App.launchOrFocusByBundleID("net.kovidgoyal.kitty")
-end)
-
-require("alert").important("Hammerspoon config loaded")
