@@ -147,4 +147,8 @@ end)
 
 Hyper:bind({}, "s", slackWeb)
 
+Hyper:bind({}, "o", function()
+	hs.application.launchOrFocus("Obsidian")
+end)
+
 require("alert").important("Hammerspoon config loaded")
