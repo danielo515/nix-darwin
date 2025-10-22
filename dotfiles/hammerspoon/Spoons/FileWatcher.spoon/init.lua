@@ -10,33 +10,20 @@ obj.__index = obj
 -- Metadata
 obj.name = "FileWatcher"
 obj.version = "1.0"
-obj.author = "Hammerspoon"
+obj.author = "Daniel Rodríguez"
 obj.homepage = "https://github.com/Hammerspoon/Spoons"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
----@class FileWatcher
----@field logger hs.logger
----@field watchers table<string, { watcher: hs.pathwatcher, rules: Rule[] }>
----@field name string
----@field version string
----@field author string
----@field homepage string
----@field license string
-
----@class Rule
----@field pattern string # Lua pattern to match filename
----@field destination string # Path where matching files should be moved
----@field action? "move" # Action to take (currently only "move" is supported)
-
--- Logger object used within the Spoon
+--- FileWatcher.logger
+--- Variable
+--- Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.
 obj.logger = hs.logger.new("FileWatcher")
 
--- Table containing all active directory watchers
+--- FileWatcher.watchers
+--- Variable
+--- Table containing all active directory watchers. This is managed internally by the Spoon.
 obj.watchers = {}
 
----Expands tilde in path to user's home directory
----@param path string # Path that might contain tilde
----@return string # Path with tilde expanded to home directory
 local function expandTilde(path)
 	if path:sub(1, 1) == "~" then
 		return os.getenv("HOME") .. path:sub(2)
@@ -44,9 +31,6 @@ local function expandTilde(path)
 	return path
 end
 
----Ensures path ends with a trailing slash
----@param path string # Path to check
----@return string # Path with trailing slash
 local function ensureTrailingSlash(path)
 	if path:sub(-1) ~= "/" then
 		return path .. "/"
@@ -54,23 +38,14 @@ local function ensureTrailingSlash(path)
 	return path
 end
 
----Extracts filename from a full path
----@param path string # Full file path
----@return string? # Filename or nil if no filename found
 local function getFilename(path)
 	return path:match("([^/]+)$")
 end
 
----Gets file extension from filename
----@param filename string # Filename to extract extension from
----@return string # Extension without dot or empty string if no extension
 local function getFileExtension(filename)
 	return filename:match("%.([^%.]+)$") or ""
 end
 
----Gets filename without extension
----@param filename string # Filename including extension
----@return string # Filename without extension
 local function getBasename(filename)
 	local ext = getFileExtension(filename)
 	if ext ~= "" then
@@ -79,9 +54,6 @@ local function getBasename(filename)
 	return filename
 end
 
----Checks if a path exists
----@param path string # Path to check
----@return boolean # true if path exists, false otherwise
 local function directoryExists(path)
 	local file = io.open(path, "r")
 	if file then
@@ -91,9 +63,6 @@ local function directoryExists(path)
 	return false
 end
 
----Creates a directory and its parent directories if they don't exist
----@param path string # Path to create
----@return boolean # true if directory was created or exists, false otherwise
 local function createDirectory(path)
 	path = expandTilde(path)
 	if directoryExists(path) then
@@ -102,17 +71,30 @@ local function createDirectory(path)
 	return os.execute('mkdir -p "' .. path .. '"') == 0
 end
 
----Initialize the spoon
----@return FileWatcher
+--- FileWatcher:init()
+--- Method
+--- Initialize the spoon
+---
+--- Parameters:
+---  * None
+---
+--- Returns:
+---  * The FileWatcher object
 function obj:init()
 	self.watchers = {}
 	return self
 end
 
----Process a single file according to the given rules
----@param file string # Full path to the file
----@param rules Rule[] # Array of rules to apply
----@return boolean # true if file was processed successfully, false otherwise
+--- FileWatcher:processFile(file, rules)
+--- Method
+--- Process a single file according to the given rules
+---
+--- Parameters:
+---  * file - Full path to the file
+---  * rules - Array of rules to apply
+---
+--- Returns:
+---  * true if file was processed successfully, false otherwise
 function obj:processFile(file, rules)
 	local filename = getFilename(file)
 	if not filename then
@@ -149,6 +131,12 @@ function obj:processFile(file, rules)
 				local success, err = os.rename(file, destPath)
 				if success then
 					self.logger.i(string.format("Moved %s to %s", filename, destPath))
+					-- Show notification
+					hs.notify.new({
+						title = "File Moved",
+						informativeText = string.format("%s → %s", filename, destination:gsub(os.getenv("HOME"), "~")),
+						withdrawAfter = 3
+					}):send()
 				else
 					self.logger.e(string.format("Failed to move %s to %s: %s", filename, destPath, err))
 				end
@@ -159,15 +147,30 @@ function obj:processFile(file, rules)
 	return false
 end
 
----Start watching a directory with the specified rules
----@param directory string # Directory path to watch
----@param rules Rule[] # Array of rules to apply to matching files
----@return FileWatcher # The FileWatcher instance
+--- FileWatcher:watchDirectory(directory, rules)
+--- Method
+--- Start watching a directory with the specified rules
+---
+--- Parameters:
+---  * directory - Directory path to watch
+---  * rules - Array of rules to apply to matching files
+---
+--- Returns:
+---  * The FileWatcher object
+---
+--- Notes:
+---  * Each rule should be a table with the following keys:
+---    * pattern - Lua pattern to match filename (case-insensitive)
+---    * destination - Path where matching files should be moved
+---    * action - (optional) Action to take, currently only "move" is supported (default: "move")
+---  * The directory path can use tilde (~) for the home directory
+---  * Files are moved automatically when they appear in the watched directory
+---  * If a file with the same name exists at the destination, a number will be appended
 function obj:watchDirectory(directory, rules)
 	-- Expand the directory path
 	directory = expandTilde(directory)
 	directory = ensureTrailingSlash(directory)
-	self.logger.i("Attemtp to watch directory: " .. directory)
+	self.logger.i("Attempt to watch directory: " .. directory)
 
 	-- Create watcher for the directory
 	local watcher = hs.pathwatcher.new(directory, function(files)
@@ -194,9 +197,15 @@ function obj:watchDirectory(directory, rules)
 	return self
 end
 
----Stop watching a directory
----@param directory string # Directory path to stop watching
----@return FileWatcher # The FileWatcher instance
+--- FileWatcher:stopWatching(directory)
+--- Method
+--- Stop watching a directory
+---
+--- Parameters:
+---  * directory - Directory path to stop watching
+---
+--- Returns:
+---  * The FileWatcher object
 function obj:stopWatching(directory)
 	directory = expandTilde(directory)
 	directory = ensureTrailingSlash(directory)
@@ -209,13 +218,52 @@ function obj:stopWatching(directory)
 	return self
 end
 
----Stop all directory watchers
----@return FileWatcher # The FileWatcher instance
+--- FileWatcher:stopAllWatchers()
+--- Method
+--- Stop all directory watchers
+---
+--- Parameters:
+---  * None
+---
+--- Returns:
+---  * The FileWatcher object
 function obj:stopAllWatchers()
 	for directory, _ in pairs(self.watchers) do
 		self:stopWatching(directory)
 	end
 	return self
+end
+
+--- FileWatcher:start()
+--- Method
+--- Starts all configured directory watchers
+---
+--- Parameters:
+---  * None
+---
+--- Returns:
+---  * The FileWatcher object
+---
+--- Notes:
+---  * This method is provided for consistency with other Spoons
+---  * Watchers are automatically started when you call :watchDirectory()
+function obj:start()
+	-- Watchers are started automatically in watchDirectory
+	-- This method is here for API consistency
+	return self
+end
+
+--- FileWatcher:stop()
+--- Method
+--- Stops all directory watchers
+---
+--- Parameters:
+---  * None
+---
+--- Returns:
+---  * The FileWatcher object
+function obj:stop()
+	return self:stopAllWatchers()
 end
 
 return obj
