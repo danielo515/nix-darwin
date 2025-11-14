@@ -33,6 +33,9 @@
   networking.computerName = "Danielo's MacBook Pro";
   system.primaryUser = username;
 
+  # Enable Übersicht desktop widget system
+  programs.ubersicht.enable = false;
+
   # Home Manager configuration
   home-manager = {
     useGlobalPkgs = true;

@@ -6,7 +6,12 @@
   username,
   ...
 }: {
-  imports = [./apps.nix ./system.nix ./homebrew.nix];
+  imports = [
+    ./apps.nix
+    ./system.nix
+    # ./homebrew.nix
+    ./ubersicht.nix
+  ];
 
   # Darwin-specific Nix settings
   nix.extraOptions =
