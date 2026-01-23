@@ -64,6 +64,60 @@ local function slackWeb()
 	Chrome.jump("slack")
 end
 
+local function focusObsidianWithAerospace()
+	local obsidianBundleId = "md.obsidian"
+	local obsidianAppName = "Obsidian"
+	
+	-- Find aerospace executable path dynamically 
+	-- This ensures we have the correct path regardless of Hammerspoon's PATH
+	local aerospacePath = hs.execute("which aerospace", true)
+	if aerospacePath == "" or aerospacePath == nil then
+		hs.alert.show("aerospace not found")
+		return
+	end
+	aerospacePath = aerospacePath:gsub("^%s+", ""):gsub("%s+$", "")
+	
+	-- Check if app is closed
+	local checkClosed = hs.execute(aerospacePath .. " list-windows --all --format '%{app-name}' | grep '" .. obsidianAppName .. "'")
+	
+	if not checkClosed or checkClosed == "" then
+		hs.execute("open -a " .. obsidianAppName)
+		hs.timer.doAfter(1.5, function()
+			-- Get the window after it's opened and move it to current workspace
+			local currentWorkspace = hs.execute(aerospacePath .. " list-workspaces --focused"):gsub("%s+", "")
+			local windowId = hs.execute(aerospacePath .. " list-windows --all --format '%{window-id} | %{app-name}' | grep '" .. obsidianAppName .. "' | cut -d' ' -f1"):gsub("%s+", "")
+			
+			if windowId and windowId ~= "" then
+				hs.execute(aerospacePath .. " focus --window-id " .. windowId)
+				hs.execute(aerospacePath .. " move-node-to-workspace " .. currentWorkspace)
+				hs.execute(aerospacePath .. " workspace " .. currentWorkspace)
+				hs.execute(aerospacePath .. " move-mouse window-lazy-center")
+			end
+		end)
+		return
+	end
+	
+	-- Check if app is focused
+	local checkFocused = hs.execute(aerospacePath .. " list-windows --focused --format '%{app-bundle-id}'")
+	if checkFocused and checkFocused:match(obsidianBundleId) then
+		-- Move to scratchpad if focused
+		hs.execute(aerospacePath .. " move-node-to-workspace scratchpad")
+	else
+		-- Focus the app and move to current workspace
+		local currentWorkspace = hs.execute(aerospacePath .. " list-workspaces --focused"):gsub("%s+", "")
+		local windowId = hs.execute(aerospacePath .. " list-windows --all --format '%{window-id} | %{app-name}' | grep '" .. obsidianAppName .. "' | cut -d' ' -f1"):gsub("%s+", "")
+
+		if windowId and windowId ~= "" then
+			hs.execute(aerospacePath .. " focus --window-id " .. windowId)
+			hs.execute(aerospacePath .. " move-node-to-workspace " .. currentWorkspace)
+			hs.execute(aerospacePath .. " workspace " .. currentWorkspace)
+			hs.execute(aerospacePath .. " move-mouse window-lazy-center")
+		else
+			hs.alert.show("Could not find Obsidian window")
+		end
+	end
+end
+
 local US_LAYOUT = "com.apple.keylayout.US"
 local hyperApps = {
 	-- { key = "s", appName = "Slack", layout = US_LAYOUT },
@@ -150,5 +204,8 @@ Hyper:bind({}, "s", slackWeb)
 Hyper:bind({}, "o", function()
 	hs.application.launchOrFocus("Obsidian")
 end)
+
+-- Bind control+shift+o to focus Obsidian using aerospace script
+hs.hotkey.bind({ "ctrl", "shift" }, "o", focusObsidianWithAerospace)
 
 require("alert").important("Hammerspoon config loaded")
