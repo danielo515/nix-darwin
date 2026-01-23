@@ -4,9 +4,9 @@
 def find-window [appName: string, windowTitle = ""] {
     let allApps = aerospace list-windows --all --json | from json
     let result = if $windowTitle == "" {
-        $allApps | filter { $in.app-name == $appName }
+        $allApps | where { $in.app-name == $appName }
     } else {
-        $allApps | filter { $in.app-name == $appName and ($in.window-title | str contains $windowTitle) }
+        $allApps | where { $in.app-name == $appName and ($in.window-title | str contains $windowTitle) }
     }
     if ($result | length) == 0 {
         error make { 
