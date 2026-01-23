@@ -81,7 +81,6 @@
       "zoom"
       #"stremio"
       #"tableplus"
-      #"ubersicht"
       #"maccy"
       #"podman-desktop"
       #"signal"
