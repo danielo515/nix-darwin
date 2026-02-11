@@ -29,6 +29,18 @@
           eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
       ${atuinWorkaround}
+
+      # Auto-switch gh config for yuvod directory
+      autoload -U add-zsh-hook
+      _gh_switch_config() {
+        if [[ "$PWD" == "$HOME/GIT/yuvod"* ]]; then
+          export GH_CONFIG_DIR="$HOME/GIT/yuvod/.gh"
+        else
+          unset GH_CONFIG_DIR
+        fi
+      }
+      add-zsh-hook chpwd _gh_switch_config
+      _gh_switch_config  # Run on shell startup
     '';
     # This are automatically substituted in any part of a command
     # for example `ls -la @g downloads` becomes `ls -la | grep -i downloads`
