@@ -5,14 +5,15 @@
       settings = {
         keymap = {
           preset = "default";
+          "<Tab>" = ["select_next" "snippet_forward" "fallback"];
+          "<S-Tab>" = ["select_prev" "snippet_backward" "fallback"];
           "<C-j>" = ["select_next" "fallback"];
           "<C-k>" = ["select_prev" "fallback"];
           "<C-b>" = ["scroll_documentation_up" "fallback"];
           "<C-f>" = ["scroll_documentation_down" "fallback"];
           "<C-Space>" = ["show" "fallback"];
           "<C-e>" = ["hide" "fallback"];
-          "<C-CR>" = ["accept" "fallback"];
-          "<S-CR>" = ["accept" "fallback"];
+          "<CR>" = ["accept" "fallback"];
         };
 
         appearance = {
