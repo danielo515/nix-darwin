@@ -62,6 +62,7 @@
             pkgs.nixd
             pkgs.just
             pkgs.alejandra
+            pkgs.bun
           ];
         };
 
