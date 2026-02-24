@@ -79,14 +79,20 @@ end
 
 -- Focus and move an app window to the current workspace
 ---@param windowId string
-local function focusAndMoveWindow(windowId)
+---@param opts? { floating: boolean }
+local function focusAndMoveWindow(windowId, opts)
+	opts = opts or {}
 	local currentWorkspace = aerospaceWorkspace()
-	aerospace({
+	local commands = {
 		"focus --window-id " .. windowId,
 		"move-node-to-workspace " .. currentWorkspace,
 		"workspace " .. currentWorkspace,
-		"move-mouse window-lazy-center"
-	})
+	}
+	if opts.floating then
+		table.insert(commands, "layout floating")
+	end
+	table.insert(commands, "move-mouse window-lazy-center")
+	aerospace(commands)
 end
 
 -- Focus an application and move it to the current workspace
@@ -94,20 +100,22 @@ end
 -- If the app is focused, it will move it to scratchpad
 ---@param appName string
 ---@param bundleId string
-function focusApp(appName, bundleId)
+---@param opts? { floating: boolean }
+function focusApp(appName, bundleId, opts)
+	opts = opts or {}
 	if not isAppOpen(appName) then
 		hs.execute("open -a " .. appName)
 		hs.timer.doAfter(1.5, function()
 			local windowId = getAppWindowId(appName)
 			if windowId then
-				focusAndMoveWindow(windowId)
+				focusAndMoveWindow(windowId, opts)
 			else
 				hs.alert.show("Could not find " .. appName .. " window after opening")
 			end
 		end)
 		return
 	end
-	
+
 	if isAppFocused(bundleId) then
 		-- Move to scratchpad if focused
 		aerospace({ "move-node-to-workspace scratchpad" })
@@ -115,7 +123,7 @@ function focusApp(appName, bundleId)
 		-- Focus the app and move to current workspace
 		local windowId = getAppWindowId(appName)
 		if windowId then
-			focusAndMoveWindow(windowId)
+			focusAndMoveWindow(windowId, opts)
 		else
 			hs.alert.show("Could not find " .. appName .. " window")
 		end

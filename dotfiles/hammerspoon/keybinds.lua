@@ -69,11 +69,15 @@ local function focusObsidianWithAerospace()
 	aerospace.focusApp("Obsidian", "md.obsidian")
 end
 
+local function focusKittyWithAerospace()
+	aerospace.focusApp("kitty", "net.kovidgoyal.kitty", { floating = true })
+end
+
 local US_LAYOUT = "com.apple.keylayout.US"
 local hyperApps = {
 	-- { key = "s", appName = "Slack", layout = US_LAYOUT },
 	{ key = "s", callback = slackWeb, layout = US_LAYOUT },
-	{ key = "t", appName = { "Alacritty", "Kitty" }, layout = US_LAYOUT },
+	{ key = "t", callback = focusKittyWithAerospace, layout = US_LAYOUT },
 	{ key = "3", appName = "Google Chrome" },
 	{ key = "4", appName = "Firefox" },
 	{ key = "o", appName = "Obsidian", title = "Ipad" },
@@ -91,6 +95,7 @@ local hyperApps = {
 	{ key = "c", callback = toggleConsole },
 	{ key = "i", callback = ws.debugWindow },
 	{ key = "p", callback = editClipboardImage },
+	{ key = "f", callback = function() aerospace.exec({ "layout floating tiling" }) end },
 }
 -- Define the combination that is considered the hyper key
 local hyper = { "cmd", "shift", "alt", "ctrl" }
