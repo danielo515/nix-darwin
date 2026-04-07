@@ -77,6 +77,42 @@
       bind -T copy-mode-vi v send -X begin-selection        # Start selection like Vim visual mode
       bind -T copy-mode-vi y send -X copy-selection-and-cancel  # Yank selection to clipboard and exit
       bind -T copy-mode-vi Y send -X copy-end-of-line       # Yank to end of line
+
+      # Window navigation
+      bind-key -r C-h select-window -t :-
+      bind-key -r C-l select-window -t :+
+      bind-key -n M-o select-pane -t :.+
+      bind-key -n M-g select-window -t :+
+      bind-key -n M-z resize-pane -Z
+
+      # Swap windows
+      bind-key t swap-window -t -1\; select-window -t -1
+      bind-key T swap-window -t +1\; select-window -t +1
+
+      # New window preserving current path
+      bind c new-window -c "#{pane_current_path}"
+
+      # Resize panes
+      bind-key H resize-pane -L 5
+      bind-key J resize-pane -D 5
+      bind-key K resize-pane -U 5
+      bind-key L resize-pane -R 5
+
+      # Scratch popup session
+      bind-key s display-popup -E "tmux new-session -A -s scratch"
+
+      # Cycle between zoomed panes
+      bind-key -r C-a select-pane -t .+1 \; resize-pane -Z
+
+      # Join pane to target window
+      bind-key j command-prompt -p "send pane to:" "join-pane -t '%%'"
+
+      # Kill window with confirmation
+      unbind &
+      bind-key X confirm-before -p "kill-window #W? (y/n)" kill-window
+
+      # Pane info
+      bind-key i run-shell "info=\$(ps -o state= -o comm= -t '#{pane_tty}'); tmux display-message \"\$info\""
     '';
 
     plugins = with pkgs.tmuxPlugins; [
