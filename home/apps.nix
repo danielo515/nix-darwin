@@ -19,6 +19,9 @@
     wget
     yq-go # yaml processer https://github.com/mikefarah/yq
 
+    # cli tools
+    bitwarden-cli # Password manager CLI
+
     # System utilities
     btop
     httpie
