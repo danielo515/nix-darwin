@@ -20,6 +20,8 @@
         function zvm_after_init() {
           zvm_bindkey viins '^R' atuin-search
           zvm_bindkey vicmd '^R' atuin-search
+          # Re-source fzf keybindings after vi-mode overrides them
+          eval "$(fzf --zsh)"
         }
       '';
     in ''
