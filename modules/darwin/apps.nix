@@ -13,7 +13,7 @@
   environment.systemPackages = with pkgs; [
     sshs
     nushell
-    nixfmt-classic
+    nixfmt
     age
     just # use Justfile to simplify nix-darwin's commands
   ];

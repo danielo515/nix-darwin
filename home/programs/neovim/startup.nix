@@ -2,12 +2,12 @@
   plugins.startup = {
     enable = true;
 
-    colors = {
-      background = "#ffffff";
-      foldedSection = "#ffffff";
-    };
+    settings = {
+      colors = {
+        background = "#ffffff";
+        folded_section = "#ffffff";
+      };
 
-    sections = {
       header = {
         type = "text";
         oldfilesDirectory = false;
@@ -36,43 +36,19 @@
         title = "Menu";
         margin = 5;
         content = [
-          [
-            " Find File"
-            "Telescope find_files"
-            "ff"
-          ]
-          [
-            "󰍉 Find Word"
-            "Telescope live_grep"
-            "fr"
-          ]
-          [
-            " Recent Files"
-            "Telescope oldfiles"
-            "fg"
-          ]
-          [
-            " File Browser"
-            "Telescope file_browser"
-            "fe"
-          ]
+          [ "󰈞 Find File" "Telescope find_files" "ff" ]
+          [ "󰊄 Find Word" "Telescope live_grep" "fr" ]
+          [ "󰋚 Recent Files" "Telescope oldfiles" "fg" ]
+          [ "󰙅 File Browser" "Telescope file_browser" "fe" ]
         ];
         highlight = "string";
         defaultColor = "";
         oldfilesAmount = 0;
       };
-    };
 
-    options = {
-      paddings = [
-        1
-        3
-      ];
-    };
+      options = { paddings = [ 1 3 ]; };
 
-    parts = [
-      "header"
-      "body"
-    ];
+      parts = [ "header" "body" ];
+    };
   };
 }
