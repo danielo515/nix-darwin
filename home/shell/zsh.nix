@@ -9,6 +9,12 @@
     enable = true;
     enableCompletion = true;
     enableVteIntegration = true;
+    # Keep .zcompdump out of $HOME — stash it under ~/.cache/zsh.
+    completionInit = ''
+      [[ -d "$HOME/.cache/zsh" ]] || mkdir -p "$HOME/.cache/zsh"
+      autoload -U compinit
+      compinit -d "$HOME/.cache/zsh/zcompdump-$ZSH_VERSION"
+    '';
     # Automatically enter into a directory if typed directly into shell.
     autocd = true;
     autosuggestion = {
