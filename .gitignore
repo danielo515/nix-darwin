@@ -5,3 +5,4 @@ dotfiles/hammerspoon/Spoons/EmmyLua.spoon/annotations/
 .direnv/*
 .claude/worktrees/
 settings.local.json
+keymap editor port.json
