@@ -35,7 +35,10 @@
   };
 
   # Keymaps
-  globals = { mapleader = " "; };
+  globals = {
+    mapleader = " ";
+    maplocalleader = ",";
+  };
 
   plugins = {
     # UI
@@ -94,6 +97,20 @@
               vim.schedule(function() gs.nav_hunk('prev') end)
               return '<Ignore>'
             end, { expr = true, desc = "Previous git hunk" })
+
+            -- Hunk actions under ,h (localleader)
+            local ok, wk = pcall(require, 'which-key')
+            if ok then wk.add({ { '<localleader>h', group = 'Git hunks', mode = { 'n', 'v' }, buffer = bufnr } }) end
+            map('n', '<localleader>hn', function() gs.nav_hunk('next') end, { desc = "Next hunk" })
+            map('n', '<localleader>hN', function() gs.nav_hunk('prev') end, { desc = "Previous hunk" })
+            map('n', '<localleader>hs', gs.stage_hunk, { desc = "Stage hunk" })
+            map('n', '<localleader>hr', gs.reset_hunk, { desc = "Reset hunk" })
+            map('v', '<localleader>hs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, { desc = "Stage hunk" })
+            map('v', '<localleader>hr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, { desc = "Reset hunk" })
+            map('n', '<localleader>hp', gs.preview_hunk, { desc = "Preview hunk" })
+            map('n', '<localleader>hb', function() gs.blame_line { full = true } end, { desc = "Blame line" })
+            map('n', '<localleader>hd', gs.diffthis, { desc = "Diff this" })
+            map('n', '<localleader>hu', gs.undo_stage_hunk, { desc = "Undo stage hunk" })
           end
         '';
       };
@@ -109,6 +126,31 @@
       action = "<cmd>w<CR>";
       key = "<leader>w";
       options.desc = "save buffer";
+    }
+    # Diagnostics (localleader = ,)
+    {
+      mode = "n";
+      key = "<localleader>d";
+      action.__raw = "function() vim.diagnostic.goto_next() end";
+      options.desc = "Next diagnostic";
+    }
+    {
+      mode = "n";
+      key = "<localleader>D";
+      action.__raw = "function() vim.diagnostic.goto_prev() end";
+      options.desc = "Previous diagnostic";
+    }
+    {
+      mode = "n";
+      key = "<localleader>e";
+      action.__raw = "function() vim.diagnostic.open_float() end";
+      options.desc = "Show diagnostic (error) under cursor";
+    }
+    {
+      mode = "n";
+      key = "<localleader>q";
+      action.__raw = "function() vim.diagnostic.setloclist() end";
+      options.desc = "Diagnostics to loclist";
     }
   ];
 }
