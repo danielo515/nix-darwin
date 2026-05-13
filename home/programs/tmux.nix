@@ -54,7 +54,8 @@
       # Pane borders
       set -g pane-border-style fg=white
       set -g pane-active-border-style fg=green
-      set -g pane-border-format " [ ###P #T ] "
+      # Show pane index, current directory (with $HOME shortened to ~), and pane title.
+      set -g pane-border-format " [ ###P  #{s|$HOME|~|:pane_current_path}  #T ] "
       set -g pane-border-status top # This line is required to make the one above work
 
       # Reload config
@@ -120,6 +121,21 @@
       resurrect # Save/restore tmux sessions
       continuum # Auto-save/restore (works with resurrect)
       vim-tmux-navigator # Seamless Vim/Neovim <-> tmux pane navigation
+      {
+        # Floating fuzzy-finder for sessions/windows (omerxx, popularised on YouTube).
+        # Prefix + O opens the picker; `Tab` toggles between sessions and windows.
+        plugin = tmux-sessionx;
+        extraConfig = ''
+          # Bind without tmux prefix: Alt+f opens the picker directly.
+          set -g @sessionx-prefix off
+          set -g @sessionx-bind 'M-f'
+          set -g @sessionx-window-mode 'on'
+          set -g @sessionx-zoxide-mode 'on'
+          set -g @sessionx-filter-current 'false'
+          set -g @sessionx-window-height '80%'
+          set -g @sessionx-window-width '80%'
+        '';
+      }
     ];
   };
 }
