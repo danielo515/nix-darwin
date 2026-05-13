@@ -17,6 +17,7 @@
     '';
     # Automatically enter into a directory if typed directly into shell.
     autocd = true;
+    history.share = false;
     autosuggestion = {
       enable = true;
       strategy = ["history"];
