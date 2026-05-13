@@ -19,6 +19,7 @@
 
     gco = "git checkout $(git branch | fzf)";
     gcor = "git checkout $(git branch --remote | fzf)";
+    gcpbr = "git branch --all --format='%(refname:short)' | sed 's|^origin/||' | awk '!seen[\$0]++' | fzf | tr -d '\\n' | pbcopy";
 
   };
 }

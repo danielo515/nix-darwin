@@ -57,6 +57,6 @@
       };
     };
 
-    ignores = [".DS_Store" "*.swp" "*~" ".vscode" ".idea" ".danielo" "GEMINI.md"];
+    ignores = [".DS_Store" "*.swp" "*~" ".vscode" ".idea" ".danielo" "GEMINI.md" ".claude/worktrees"];
   };
 }
