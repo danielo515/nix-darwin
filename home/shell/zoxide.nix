@@ -6,7 +6,12 @@
     
     # Enable shell integrations
     enableBashIntegration = true;
-    enableZshIntegration = true;
+    # Zsh integration is sourced manually at the end of initContent in
+    # home/shell/zsh.nix so zoxide's precmd hook is registered LAST.
+    # Home-manager's auto-integration places it too early, which triggers
+    # zoxide's `_ZO_DOCTOR` warning when later code (vi-mode, add-zsh-hook)
+    # registers additional precmd hooks afterwards.
+    enableZshIntegration = false;
     enableFishIntegration = true;
     
     # Options passed to zoxide init
