@@ -50,6 +50,8 @@
         ca = "commit -am";
         dc = "diff --cached";
         amend = "commit --amend -m";
+        wt = "worktree";
+        wtl = "worktree list";
 
         # aliases for submodule
         update = "submodule update --init --recursive";
