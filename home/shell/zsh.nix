@@ -63,6 +63,10 @@
       zstyle ':fzf-tab:*' switch-group ',' '.'
       # When tmux is running, render the menu in a floating popup.
       zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+      # Git branch completions: no preview, popup as wide as the window allows.
+      zstyle ':fzf-tab:complete:(git-checkout|git-switch|git-merge|git-rebase|git-branch|git-log|git-diff|git-show|git-cherry-pick|git-reset):*' fzf-preview '''
+      zstyle ':fzf-tab:complete:(git-checkout|git-switch|git-merge|git-rebase|git-branch|git-log|git-diff|git-show|git-cherry-pick|git-reset):*' fzf-flags --preview-window=hidden
+      zstyle ':fzf-tab:complete:(git-checkout|git-switch|git-merge|git-rebase|git-branch|git-log|git-diff|git-show|git-cherry-pick|git-reset):*' popup-min-size 999 15
       # Accept the current selection with Enter (so first Tab can preview).
       zstyle ':fzf-tab:*' accept-line enter
 
