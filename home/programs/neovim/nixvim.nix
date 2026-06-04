@@ -40,6 +40,21 @@
     maplocalleader = ",";
   };
 
+  # Workaround for neovim 0.12 + VS Code/Windsurf terminal: xterm.js mis-encodes
+  # the kitty keyboard protocol, breaking Shift+digit (e.g. Shift+3 yields 3, not #).
+  # Pop the protocol flags so the terminal falls back to legacy encoding.
+  # Scoped to the VS Code/Windsurf terminal; other terminals keep the protocol.
+  # See neovim/neovim#38651, xtermjs/xterm.js#5823.
+  extraConfigLua = ''
+    if vim.env.TERM_PROGRAM == "vscode" then
+      vim.api.nvim_create_autocmd({ "VimEnter", "VimResume" }, {
+        callback = function()
+          io.stdout:write("\27[<u")
+        end,
+      })
+    end
+  '';
+
   plugins = {
     # UI
     web-devicons.enable = true;
