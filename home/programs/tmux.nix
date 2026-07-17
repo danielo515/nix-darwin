@@ -130,7 +130,7 @@
           set -g @sessionx-prefix off
           set -g @sessionx-bind 'M-f'
           set -g @sessionx-window-mode 'on'
-          set -g @sessionx-zoxide-mode 'on'
+          set -g @sessionx-zoxide-mode 'off'
           set -g @sessionx-filter-current 'false'
           set -g @sessionx-window-height '80%'
           set -g @sessionx-window-width '80%'

@@ -26,7 +26,7 @@
     ./shell/common.nix
     ./shell/zsh.nix
     ./shell/bash.nix
-    ./shell/zoxide.nix
+    ./shell/autojump.nix
     ./shell/wezterm.nix
     # Keep these until fully migrated
     ./apps.nix

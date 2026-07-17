@@ -82,13 +82,6 @@
       };
     };
 
-    autojump = {
-      enable = true;
-      enableZshIntegration = true;
-      enableBashIntegration = true;
-      enableFishIntegration = true;
-    };
-
     fzf = {
       enable = true;
       enableZshIntegration = true;

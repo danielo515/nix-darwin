@@ -69,12 +69,6 @@
       zstyle ':fzf-tab:complete:(git-checkout|git-switch|git-merge|git-rebase|git-branch|git-log|git-diff|git-show|git-cherry-pick|git-reset):*' popup-min-size 999 15
       # Accept the current selection with Enter (so first Tab can preview).
       zstyle ':fzf-tab:*' accept-line enter
-
-      # Initialize zoxide LAST so its precmd hook is registered after every
-      # other plugin (vi-mode, gh-switch, etc). Required to silence the
-      # `_ZO_DOCTOR` warning. See home/shell/zoxide.nix for why
-      # enableZshIntegration is disabled there.
-      eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
     '';
     # This are automatically substituted in any part of a command
     # for example `ls -la @g downloads` becomes `ls -la | grep -i downloads`
