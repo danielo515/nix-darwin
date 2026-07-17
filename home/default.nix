@@ -19,6 +19,7 @@
     ./programs/neovim
     ./programs/tmux.nix
     ./programs/starship.nix
+    ./programs/herdr.nix
     # cross platform screenshots
     # ./programs/flameshot.nix it has problems building on darwin in the latest release
     ./navi
@@ -36,6 +37,7 @@
 
   programs.fish.enable = true;
   aerospace.enable = true;
+  herdr.enable = true;
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.

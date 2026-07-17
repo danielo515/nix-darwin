@@ -1,0 +1,28 @@
+onboarding = false
+
+[ui]
+agent_panel_sort = "priority"
+show_agent_labels_on_pane_borders = true
+
+[ui.toast]
+delivery = "system"
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[keys]
+# Flip to the most recently focused pane, like tmux's prefix+;
+last_pane = "prefix+;"
+# Workspace switching; with two workspaces either one acts as a toggle
+previous_workspace = "prefix+u"
+next_workspace = "prefix+o"
+# Previous tab on prefix+b; sidebar toggle moved off its default to make room
+previous_tab = "prefix+b"
+toggle_sidebar = "prefix+s"
+
+[[keys.command]]
+key = "prefix+f"
+type = "shell"
+command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
+description = "Open file viewer"
