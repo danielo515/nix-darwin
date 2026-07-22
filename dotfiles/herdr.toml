@@ -20,9 +20,29 @@ next_workspace = "prefix+o"
 # Previous tab on prefix+b; sidebar toggle moved off its default to make room
 previous_tab = "prefix+b"
 toggle_sidebar = "prefix+s"
+# Sidebar toggle took prefix+s (the default settings key), so settings moves
+# to the conventional comma (like Cmd+, on macOS)
+settings = "prefix+,"
 
 [[keys.command]]
 key = "prefix+f"
 type = "shell"
 command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
 description = "Open file viewer"
+
+# prefix+y ("lazY git"); prefix+g is the default goto binding
+[[keys.command]]
+key = "prefix+y"
+type = "popup"
+command = 'cd "${HERDR_ACTIVE_PANE_CWD:-$PWD}" && lazygit'
+description = "Lazygit"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = 'cd "${HERDR_ACTIVE_PANE_CWD:-$PWD}" && exec "${SHELL:-sh}"'
+description = "Scratch terminal"
+width = "80%"
+height = "70%"
