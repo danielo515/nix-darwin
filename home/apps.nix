@@ -1,4 +1,17 @@
 { config, pkgs, ... }:
+let
+  # Flags for the Ctrl+T file widget. --no-ignore because gitignored files
+  # (.envrc, sibling repos under an ignoring parent, ...) should still be
+  # pickable; noise dirs are excluded explicitly instead.
+  fzf-fd-flags = "--hidden --no-ignore --exclude .git --exclude node_modules --exclude .direnv --exclude .DS_Store";
+  # fzf transform for the Ctrl+T widget: each press walks the search root
+  # one directory up (.., ../.., ...), tracking the current root in the prompt.
+  fzf-walk-up = pkgs.writeShellScript "fzf-walk-up" ''
+    root="''${FZF_PROMPT% > }/.."
+    root="''${root#./}"
+    printf 'change-prompt(%s > )+reload(fd ${fzf-fd-flags} . %s)' "$root" "$root"
+  '';
+in
 {
   home.packages = with pkgs; [
     # dev
@@ -87,6 +100,14 @@
       enableZshIntegration = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
+      fileWidgetCommand = "fd --strip-cwd-prefix ${fzf-fd-flags}";
+      # ctrl-u re-roots the search one directory up per press (shadowing
+      # fzf's default clear-query binding in this widget only); the prompt
+      # shows the current root.
+      fileWidgetOptions = [
+        "--prompt '. > '"
+        "--bind 'ctrl-u:transform:${fzf-walk-up}'"
+      ];
     };
 
     direnv = {
