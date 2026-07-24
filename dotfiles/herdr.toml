@@ -24,6 +24,13 @@ toggle_sidebar = "prefix+s"
 # to the conventional comma (like Cmd+, on macOS)
 settings = "prefix+,"
 
+# prefix+d ("diff"); prefix+r is the default resize-mode binding
+[[keys.command]]
+key = "prefix+d"
+type = "shell"
+command = "herdr plugin action invoke toggle --plugin persiyanov.reviewr"
+description = "Toggle reviewr sidebar"
+
 [[keys.command]]
 key = "prefix+f"
 type = "shell"

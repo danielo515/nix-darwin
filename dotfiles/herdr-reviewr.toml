@@ -1,0 +1,5 @@
+# reviewr reads this on every refresh and toggle; edits apply without a relaunch.
+# Branch scope shows the whole branch vs its merge-base with origin/main,
+# so committed agent work stays reviewable (u/b/t switch scopes at runtime).
+default_scope = "branch"
+theme = "catppuccin"
