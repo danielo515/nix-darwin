@@ -41,7 +41,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {inherit username hostname system;};
-    users.${username} = import ../../home;
+    users.${username} = {
+      imports = [../../home];
+      aerospace.enable = true;
+    };
     backupFileExtension = lib.mkForce "home-bk";
   };
 

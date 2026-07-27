@@ -36,7 +36,6 @@
   ];
 
   programs.fish.enable = true;
-  aerospace.enable = true;
   herdr.enable = true;
 
   # Home Manager needs a bit of information about you and the

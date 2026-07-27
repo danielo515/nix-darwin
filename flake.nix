@@ -141,7 +141,10 @@
             home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${system};
               modules = [./home];
-              extraSpecialArgs = {inherit isDarwin username useremail;};
+              extraSpecialArgs = {
+                inherit system isDarwin username useremail;
+                flake = self;
+              };
             };
         in {
           # Darwin standalone home configuration

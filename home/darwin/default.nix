@@ -1,6 +1,5 @@
 # Darwin-specific home-manager configurations
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     ./ghostty.nix
     ./hammerspoon.nix
@@ -19,5 +18,4 @@
   ];
 
   xdg.configFile.sketchybar.source = ../../dotfiles/sketchybar;
-
 }
