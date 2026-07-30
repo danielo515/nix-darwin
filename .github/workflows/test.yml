@@ -19,12 +19,15 @@ jobs:
         extra-conf: |
           experimental-features = nix-command flakes
 
+    - name: Enable Nix cache
+      uses: DeterminateSystems/magic-nix-cache-action@main
+
     - name: Check flake inputs
       run: nix flake show
-      
+
     - name: Check flake evaluation
       run: nix flake check
-      
+
     - name: Build configuration
       run: |
         # Use the predefined hostname from the flake
@@ -49,9 +52,12 @@ jobs:
         extra-conf: |
           experimental-features = nix-command flakes
 
+    - name: Enable Nix cache
+      uses: DeterminateSystems/magic-nix-cache-action@main
+
     - name: Check flake inputs
       run: nix flake show
-      
+
     - name: Check flake evaluation
       run: nix flake check --impure
       
