@@ -1,0 +1,79 @@
+{
+  "version": 3,
+  "skills": {
+    "effect-best-practices": {
+      "source": "betalyra/effect-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/betalyra/effect-skills.git",
+      "skillPath": "effect-best-practices/SKILL.md",
+      "skillFolderHash": "eb099fb71bc255b588a95cf4d7f2a46804b9d991",
+      "installedAt": "2026-01-27T09:22:47.365Z",
+      "updatedAt": "2026-04-15T15:33:37.989Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "c2f31172b6f256272305a5e6e7228b258446899f",
+      "installedAt": "2026-01-27T09:23:04.994Z",
+      "updatedAt": "2026-01-27T09:23:04.994Z"
+    },
+    "typeclass-design": {
+      "source": "front-depiction/cli-stock",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/front-depiction/cli-stock.git",
+      "skillPath": ".claude/skills/typeclass-design/SKILL.md",
+      "skillFolderHash": "b8e377c300ca4e6fa82ad250047d11086f48bc34",
+      "installedAt": "2026-01-27T09:47:26.647Z",
+      "updatedAt": "2026-01-27T09:47:26.647Z"
+    },
+    "remotion-best-practices": {
+      "source": "remotion-dev/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/remotion-dev/skills.git",
+      "skillPath": "skills/remotion/SKILL.md",
+      "skillFolderHash": "244095954fa19993a6252643f04607dee4ad17d6",
+      "installedAt": "2026-04-24T08:22:16.652Z",
+      "updatedAt": "2026-04-24T08:22:16.652Z"
+    },
+    "handoff": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/handoff/SKILL.md",
+      "skillFolderHash": "7bbb60d64c911617cee7f71b2ba9e24364faa14e",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-05-27T13:19:59.778Z",
+      "updatedAt": "2026-05-27T13:19:59.778Z"
+    },
+    "herdr": {
+      "source": "ogulcancelik/herdr",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/ogulcancelik/herdr.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "c234f221f9be698bc0501c60459e1ae8e67df6c3",
+      "installedAt": "2026-07-22T16:05:35.389Z",
+      "updatedAt": "2026-07-22T16:05:35.389Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "antigravity-cli",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-code-cli",
+    "opencode",
+    "warp",
+    "zed",
+    "claude-code"
+  ]
+}
