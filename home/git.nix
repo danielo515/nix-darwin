@@ -36,6 +36,8 @@
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
       pull.rebase = true;
+      # Branches created from origin/dev must not track it as upstream
+      branch.autoSetupMerge = false;
 
       alias = {
         # common aliases
