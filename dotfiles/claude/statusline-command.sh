@@ -33,20 +33,20 @@ cwd="${cwd/#$HOME/\~}"
 parts=()
 
 # user@cwd
-parts+=("$(printf "${CYAN}%s${RESET}:${BLUE}%s${RESET}" "$user" "$cwd")")
+parts+=("$(printf "${CYAN} %s${RESET}:${BLUE}󰉋 %s${RESET}" "$user" "$cwd")")
 
 # git repo + branch
 if [ -n "$repo" ]; then
   if [ -n "$branch" ]; then
-    parts+=("$(printf "${GREEN}%s${RESET} ${MAGENTA}[%s]${RESET}" "$repo" "$branch")")
+    parts+=("$(printf "${GREEN} %s${RESET} ${MAGENTA} %s${RESET}" "$repo" "$branch")")
   else
-    parts+=("$(printf "${GREEN}%s${RESET}" "$repo")")
+    parts+=("$(printf "${GREEN} %s${RESET}" "$repo")")
   fi
 fi
 
 # model
 if [ -n "$model" ]; then
-  parts+=("$(printf "${YELLOW}%s${RESET}" "$model")")
+  parts+=("$(printf "${YELLOW}󰚩 %s${RESET}" "$model")")
 fi
 
 # context usage
@@ -64,9 +64,9 @@ if [ -n "$used_pct" ]; then
     # Format large numbers with 'k' suffix for readability
     used_k=$(echo "$total_input" | awk '{ printf "%.0fk", $1/1000 }')
     total_k=$(echo "$ctx_size" | awk '{ printf "%.0fk", $1/1000 }')
-    parts+=("$(printf "ctx:${ctx_color}%s%%${RESET} ${RESET}(%s/%s)${RESET}" "$used_int" "$used_k" "$total_k")")
+    parts+=("$(printf "󰍛 ${ctx_color}%s%%${RESET} ${RESET}(%s/%s)${RESET}" "$used_int" "$used_k" "$total_k")")
   else
-    parts+=("$(printf "ctx:${ctx_color}%s%%${RESET}" "$used_int")")
+    parts+=("$(printf "󰍛 ${ctx_color}%s%%${RESET}" "$used_int")")
   fi
 fi
 
