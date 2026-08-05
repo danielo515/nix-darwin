@@ -26,6 +26,14 @@ RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
 
+# Nerd Font icons (Material Design range, written as escapes to survive editing)
+ICON_USER=$'\U000F0004'   # nf-md-account
+ICON_DIR=$'\U000F024B'    # nf-md-folder
+ICON_REPO=$'\U000F02A4'   # nf-md-github
+ICON_BRANCH=$'\U000F062C' # nf-md-source_branch
+ICON_MODEL=$'\U000F06A9'  # nf-md-robot
+ICON_CTX=$'\U000F035B'    # nf-md-memory
+
 # Shorten cwd: replace $HOME with ~
 cwd="${cwd/#$HOME/\~}"
 
@@ -33,20 +41,20 @@ cwd="${cwd/#$HOME/\~}"
 parts=()
 
 # user@cwd
-parts+=("$(printf "${CYAN} %s${RESET}:${BLUE}󰉋 %s${RESET}" "$user" "$cwd")")
+parts+=("$(printf "${CYAN}%s %s${RESET}:${BLUE}%s %s${RESET}" "$ICON_USER" "$user" "$ICON_DIR" "$cwd")")
 
 # git repo + branch
 if [ -n "$repo" ]; then
   if [ -n "$branch" ]; then
-    parts+=("$(printf "${GREEN} %s${RESET} ${MAGENTA} %s${RESET}" "$repo" "$branch")")
+    parts+=("$(printf "${GREEN}%s %s${RESET} ${MAGENTA}%s %s${RESET}" "$ICON_REPO" "$repo" "$ICON_BRANCH" "$branch")")
   else
-    parts+=("$(printf "${GREEN} %s${RESET}" "$repo")")
+    parts+=("$(printf "${GREEN}%s %s${RESET}" "$ICON_REPO" "$repo")")
   fi
 fi
 
 # model
 if [ -n "$model" ]; then
-  parts+=("$(printf "${YELLOW}󰚩 %s${RESET}" "$model")")
+  parts+=("$(printf "${YELLOW}%s %s${RESET}" "$ICON_MODEL" "$model")")
 fi
 
 # context usage
@@ -64,9 +72,9 @@ if [ -n "$used_pct" ]; then
     # Format large numbers with 'k' suffix for readability
     used_k=$(echo "$total_input" | awk '{ printf "%.0fk", $1/1000 }')
     total_k=$(echo "$ctx_size" | awk '{ printf "%.0fk", $1/1000 }')
-    parts+=("$(printf "󰍛 ${ctx_color}%s%%${RESET} ${RESET}(%s/%s)${RESET}" "$used_int" "$used_k" "$total_k")")
+    parts+=("$(printf "%s ${ctx_color}%s%%${RESET} ${RESET}(%s/%s)${RESET}" "$ICON_CTX" "$used_int" "$used_k" "$total_k")")
   else
-    parts+=("$(printf "󰍛 ${ctx_color}%s%%${RESET}" "$used_int")")
+    parts+=("$(printf "%s ${ctx_color}%s%%${RESET}" "$ICON_CTX" "$used_int")")
   fi
 fi
 
