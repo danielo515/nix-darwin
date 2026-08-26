@@ -3,3 +3,5 @@
 # so committed agent work stays reviewable (u/b/t switch scopes at runtime).
 default_scope = "branch"
 theme = "catppuccin"
+# Don't auto-open on every new worktree (e.g. cloud agents) — toggle with prefix+d instead.
+auto_open = false
