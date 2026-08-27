@@ -39,6 +39,10 @@
       if [[ $(uname -m) == 'arm64' ]]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
+      # worktrunk: git worktree manager (installed via brew, not nixpkgs)
+      if command -v wt >/dev/null 2>&1; then
+        eval "$(command wt config shell init zsh)"
+      fi
       ${atuinWorkaround}
 
       # Auto-switch gh config for yuvod directory

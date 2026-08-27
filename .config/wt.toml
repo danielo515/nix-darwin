@@ -1,0 +1,9 @@
+[post-start]
+direnv = "direnv allow"
+
+[pre-merge]
+flake-check = "nix flake check --no-build"
+
+[aliases]
+rebuild = "darwin-rebuild switch --flake .#Danielos-MacBook-Pro"
+fmt = "nix fmt"
