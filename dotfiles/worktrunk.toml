@@ -1,0 +1,22 @@
+skip-shell-integration-prompt = true
+
+# Default (unset): worktrunk's built-in default already places worktrees as
+# siblings of the repo — {{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}.
+
+[switch]
+cd = true
+
+[merge]
+squash = true
+rebase = true
+verify = true
+remove = true
+
+[aliases]
+rebuild = "darwin-rebuild switch --flake .#Danielos-MacBook-Pro"
+
+[projects."github.com/danielo515/nix-darwin"]
+merge.squash = false
+# This repo lives under root-owned /private/etc, so a sibling dir there
+# isn't writable — route its worktrees under $HOME instead.
+worktree-path = "~/GIT/worktrees/{{ repo }}.{{ branch | sanitize }}"

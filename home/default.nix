@@ -21,6 +21,7 @@
     ./programs/starship.nix
     ./programs/herdr.nix
     ./programs/claude.nix
+    ./programs/worktrunk.nix
     # cross platform screenshots
     # ./programs/flameshot.nix it has problems building on darwin in the latest release
     ./navi
