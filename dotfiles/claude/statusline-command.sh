@@ -43,15 +43,6 @@ parts=()
 # user@cwd
 parts+=("$(printf "${CYAN}%s %s${RESET}:${BLUE}%s %s${RESET}" "$ICON_USER" "$user" "$ICON_DIR" "$cwd")")
 
-# git repo + branch
-if [ -n "$repo" ]; then
-  if [ -n "$branch" ]; then
-    parts+=("$(printf "${GREEN}%s %s${RESET} ${MAGENTA}%s %s${RESET}" "$ICON_REPO" "$repo" "$ICON_BRANCH" "$branch")")
-  else
-    parts+=("$(printf "${GREEN}%s %s${RESET}" "$ICON_REPO" "$repo")")
-  fi
-fi
-
 # model
 if [ -n "$model" ]; then
   parts+=("$(printf "${YELLOW}%s %s${RESET}" "$ICON_MODEL" "$model")")
@@ -67,25 +58,50 @@ if [ -n "$used_pct" ]; then
   else
     ctx_color="$GREEN"
   fi
-  # Build context string: show tokens/total when available, always show percentage
   if [ -n "$total_input" ] && [ -n "$ctx_size" ]; then
-    # Format large numbers with 'k' suffix for readability
-    used_k=$(echo "$total_input" | awk '{ printf "%.0fk", $1/1000 }')
+    used_k=$(echo "$total_input" | awk '{ printf "%.0f", $1/1000 }')
     total_k=$(echo "$ctx_size" | awk '{ printf "%.0fk", $1/1000 }')
-    parts+=("$(printf "%s ${ctx_color}%s%%${RESET} ${RESET}(%s/%s)${RESET}" "$ICON_CTX" "$used_int" "$used_k" "$total_k")")
+    parts+=("$(printf "%s ${ctx_color}%s%%${RESET} \033[2m%s/%s\033[0m" "$ICON_CTX" "$used_int" "$used_k" "$total_k")")
   else
     parts+=("$(printf "%s ${ctx_color}%s%%${RESET}" "$ICON_CTX" "$used_int")")
   fi
 fi
 
-# Join with separator
-result=""
-for part in "${parts[@]}"; do
-  if [ -z "$result" ]; then
-    result="$part"
+# git repo + branch (kept separate so it can wrap to its own line)
+git_part=""
+if [ -n "$repo" ]; then
+  if [ -n "$branch" ]; then
+    git_part="$(printf "${GREEN}%s %s${RESET} ${MAGENTA}%s %s${RESET}" "$ICON_REPO" "$repo" "$ICON_BRANCH" "$branch")"
   else
-    result="$result $(printf '\033[2m|\033[0m') $part"
+    git_part="$(printf "${GREEN}%s %s${RESET}" "$ICON_REPO" "$repo")"
   fi
-done
+fi
 
-printf "%b\n" "$result"
+join_parts() {
+  local result="" part
+  for part in "$@"; do
+    [ -z "$part" ] && continue
+    if [ -z "$result" ]; then
+      result="$part"
+    else
+      result="$result $(printf '\033[2m|\033[0m') $part"
+    fi
+  done
+  printf '%s' "$result"
+}
+
+visible_len() {
+  local plain
+  plain=$(printf '%b' "$1" | sed $'s/\x1b\[[0-9;]*m//g')
+  printf '%s' "${#plain}"
+}
+
+full_line=$(join_parts "${parts[@]}" "$git_part")
+
+# Wrap: if the full bar doesn't fit the terminal, move repo+branch to a second line
+if [ -n "$git_part" ] && [ -n "${COLUMNS:-}" ] && [ "$(visible_len "$full_line")" -gt "$COLUMNS" ]; then
+  printf "%b\n" "$(join_parts "${parts[@]}")"
+  printf "%b\n" "$git_part"
+else
+  printf "%b\n" "$full_line"
+fi

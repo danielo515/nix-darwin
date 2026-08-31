@@ -20,6 +20,7 @@ in {
     ../../modules/simple-bar.nix
     ./bin.nix
     ./aerospace.nix
+    ./zombie-watch.nix
   ];
 
   # Darwin-specific configurations
