@@ -24,6 +24,18 @@ toggle_sidebar = "prefix+s"
 # to the conventional comma (like Cmd+, on macOS)
 settings = "prefix+,"
 
+# Built-in goto (list + hint keys, / to search) replaced by the fzf jump popup below
+goto = ""
+
+# Fuzzy jump to any workspace or tab: prefix+g, then just type
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "/etc/nix-darwin/dotfiles/herdr-jump.sh"
+description = "Fuzzy jump to workspace/tab"
+width = "60%"
+height = "60%"
+
 # prefix+d ("diff"); prefix+r is the default resize-mode binding
 [[keys.command]]
 key = "prefix+d"
