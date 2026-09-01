@@ -31,7 +31,7 @@ goto = ""
 [[keys.command]]
 key = "prefix+g"
 type = "popup"
-command = "/etc/nix-darwin/dotfiles/herdr-jump.sh"
+command = "$HOME/.config/herdr/jump.sh"
 description = "Fuzzy jump to workspace/tab"
 width = "60%"
 height = "60%"

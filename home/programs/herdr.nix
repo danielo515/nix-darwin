@@ -23,6 +23,9 @@ in {
     xdg.configFile."herdr/config.toml".source =
       config.lib.file.mkOutOfStoreSymlink
       /etc/nix-darwin/dotfiles/herdr.toml;
+    xdg.configFile."herdr/jump.sh".source =
+      config.lib.file.mkOutOfStoreSymlink
+      /etc/nix-darwin/dotfiles/herdr-jump.sh;
     xdg.configFile."herdr/plugins/config/persiyanov.reviewr/config.toml".source =
       config.lib.file.mkOutOfStoreSymlink
       /etc/nix-darwin/dotfiles/herdr-reviewr.toml;
