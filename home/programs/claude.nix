@@ -10,6 +10,9 @@ in {
     # Only this hook is ours; herdr-agent-state.sh is written and updated by
     # herdr's integration, so the hooks directory itself stays unmanaged.
     ".claude/hooks/check-npm.mjs".source = link /etc/nix-darwin/dotfiles/claude/hooks/check-npm.mjs;
+    # Only this agent is ours; other agents may be user-local, so the agents
+    # directory itself stays unmanaged.
+    ".claude/agents/effect-log-annotations.md".source = link /etc/nix-darwin/dotfiles/claude/agents/effect-log-annotations.md;
     ".agents/.skill-lock.json".source = link /etc/nix-darwin/dotfiles/claude/skill-lock.json;
   };
 }
