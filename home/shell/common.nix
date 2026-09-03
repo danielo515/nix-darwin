@@ -10,7 +10,7 @@
     grep = "grep --color=auto";
     ".." = "cd ..";
     ls =
-      "${pkgs.eza}/bin/exa --color=auto --group-directories-first --classify";
+      "${pkgs.eza}/bin/exa --color=auto --group-directories-first --classify=always";
     lst = "${ls} --tree";
     la = "${ls} --all";
     ll = "${ls} --all --long --header --group";
