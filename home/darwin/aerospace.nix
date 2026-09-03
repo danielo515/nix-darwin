@@ -1,9 +1,15 @@
-{ lib, config, pkgs, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  dotfilesPath,
+  ...
+}: {
   options.aerospace = { enable = lib.mkEnableOption "aerospace"; };
   config = lib.mkIf config.aerospace.enable {
     home.file."${config.home.homeDirectory}/.aerospace.toml".source =
       config.lib.file.mkOutOfStoreSymlink
-      /etc/nix-darwin/dotfiles/aerospace.toml;
+      "${dotfilesPath}/aerospace.toml";
 
     # The running AeroSpace server keeps serving the old socket protocol after
     # an update, breaking the CLI and window management. onChange fires only

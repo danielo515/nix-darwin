@@ -1,8 +1,10 @@
-{config, ...}: {
+{
+  config,
+  dotfilesPath,
+  ...
+}: {
   home.file = {
     "${config.home.homeDirectory}/.hammerspoon".source =
-      config.lib.file.mkOutOfStoreSymlink /etc/nix-darwin/dotfiles/hammerspoon;
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hammerspoon";
   };
-  # xdg.configFile."hammerspoon".source =
-  #       config.lib.file.mkOutOfStoreSymlink /etc/nix-darwin/dotfiles/hammerspoon;
 }

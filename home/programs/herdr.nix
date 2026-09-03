@@ -3,6 +3,7 @@
   config,
   pkgs,
   flake,
+  dotfilesPath,
   ...
 }: let
   herdr = flake.inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.herdr;
@@ -22,14 +23,13 @@ in {
     ];
     xdg.configFile."herdr/config.toml".source =
       config.lib.file.mkOutOfStoreSymlink
-      /etc/nix-darwin/dotfiles/herdr.toml;
-    xdg.configFile."herdr/jump.sh" = {
-      source = ../../dotfiles/herdr-jump.sh;
-      executable = true;
-    };
+      "${dotfilesPath}/herdr.toml";
+    xdg.configFile."herdr/jump.sh".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${dotfilesPath}/herdr-jump.sh";
     xdg.configFile."herdr/plugins/config/persiyanov.reviewr/config.toml".source =
       config.lib.file.mkOutOfStoreSymlink
-      /etc/nix-darwin/dotfiles/herdr-reviewr.toml;
+      "${dotfilesPath}/herdr-reviewr.toml";
     home.activation.herdrPlugins = lib.hm.dag.entryAfter ["writeBoundary"] (
       lib.concatMapStringsSep "\n" (plugin: let
         id = builtins.baseNameOf plugin;

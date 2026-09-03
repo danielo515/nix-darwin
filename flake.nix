@@ -125,6 +125,7 @@
                     // {
                       isDarwin = true;
                       flake = self;
+                      dotfilesPath = "/etc/nix-darwin/dotfiles";
                     };
                   home-manager.users.${username} = import ./home;
                   home-manager.backupFileExtension = "home-bk";
@@ -137,21 +138,24 @@
         # Standalone home-manager configurations
         homeConfigurations = let
           # Function to create standalone home-manager configuration
-          mkHomeConfig = system: isDarwin:
+          # dotfilesPath is where this repo's dotfiles/ directory lives on the
+          # target machine, used for out-of-store symlinks (live-editable config)
+          mkHomeConfig = system: isDarwin: dotfilesPath:
             home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${system};
               modules = [./home];
               extraSpecialArgs = {
-                inherit system isDarwin username useremail;
+                inherit system isDarwin username useremail dotfilesPath;
                 flake = self;
               };
             };
         in {
           # Darwin standalone home configuration
-          "${username}-darwin" = mkHomeConfig "aarch64-darwin" true;
+          "${username}-darwin" = mkHomeConfig "aarch64-darwin" true "/etc/nix-darwin/dotfiles";
 
-          # Linux standalone home configuration
-          "${username}-linux" = mkHomeConfig "x86_64-linux" false;
+          # Linux standalone home configuration; adjust the path to wherever
+          # the repo is cloned on that machine
+          "${username}-linux" = mkHomeConfig "x86_64-linux" false "/home/${username}/nix-darwin/dotfiles";
         };
       };
     };
