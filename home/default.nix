@@ -14,6 +14,8 @@
       else ./nixos
     )
 
+    ./dotfiles.nix
+
     # Programs
     ./git.nix
     ./programs/neovim
