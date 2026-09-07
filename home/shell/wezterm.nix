@@ -21,6 +21,7 @@ let
     config.hide_mouse_cursor_when_typing = true
     config.send_composed_key_when_left_alt_is_pressed = false
     config.keys = {
+      { key = 'Enter', mods = 'ALT', action = wezterm.action.DisableDefaultAssignment },
       {
         key = 'r',
         mods = 'SUPER|SHIFT',
