@@ -33,8 +33,8 @@ key = "prefix+g"
 type = "popup"
 command = "$HOME/.config/herdr/jump.sh"
 description = "Fuzzy jump to workspace/tab"
-width = "60%"
-height = "60%"
+width = "90%"
+height = "80%"
 
 # prefix+d ("diff"); prefix+r is the default resize-mode binding
 [[keys.command]]
