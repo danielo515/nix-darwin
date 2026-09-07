@@ -14,12 +14,26 @@ let
     config.font = wezterm.font_with_fallback { 'JetBrainsMono Nerd Font', 'JetBrains Mono' }
     config.font_size = 12
     config.harfbuzz_features = { 'calt', 'liga', 'dlig' }
-    config.window_background_opacity = 0.85
+    config.window_background_opacity = 0.93
     config.macos_window_background_blur = 20
     config.window_decorations = 'RESIZE'
     config.default_cursor_style = 'BlinkingBlock'
     config.hide_mouse_cursor_when_typing = true
     config.send_composed_key_when_left_alt_is_pressed = false
+    config.keys = {
+      {
+        key = 'r',
+        mods = 'SUPER|SHIFT',
+        action = wezterm.action.PromptInputLine {
+          description = 'Rename tab',
+          action = wezterm.action_callback(function(window, pane, line)
+            if line then
+              window:active_tab():set_title(line)
+            end
+          end),
+        },
+      },
+    }
     -- config.term = 'wezterm'
     config.window_padding = { left = 2, right = 2, top = 2, bottom = 2, }
     config.animation_fps = 1
