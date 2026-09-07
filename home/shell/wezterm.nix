@@ -23,6 +23,11 @@ let
     config.keys = {
       { key = 'Enter', mods = 'ALT', action = wezterm.action.DisableDefaultAssignment },
       {
+        key = 'p',
+        mods = 'SUPER|SHIFT',
+        action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|KEY_ASSIGNMENTS', title = 'Hotkeys' },
+      },
+      {
         key = 'r',
         mods = 'SUPER|SHIFT',
         action = wezterm.action.PromptInputLine {
