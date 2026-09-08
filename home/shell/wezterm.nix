@@ -20,13 +20,35 @@ let
     config.default_cursor_style = 'BlinkingBlock'
     config.hide_mouse_cursor_when_typing = true
     config.send_composed_key_when_left_alt_is_pressed = false
+    local function describe(action)
+      return (tostring(action):gsub('^Action%(', ""):gsub('%)$', ""))
+    end
+
+    local function show_hotkeys(window, pane)
+      local seen, choices = {}, {}
+      local function add(mods, key, action)
+        local combo = (mods ~= 'NONE' and mods ~= "" and (mods:gsub('|', '+') .. '+') or "") .. key
+        if seen[combo] then return end
+        seen[combo] = true
+        table.insert(choices, { id = combo, label = string.format('%-22s %s', combo, describe(action)) })
+      end
+      for _, k in ipairs(config.keys or {}) do add(k.mods or 'NONE', k.key, k.action) end
+      for _, k in ipairs(wezterm.gui.default_keys()) do add(k.mods, k.key, k.action) end
+      table.sort(choices, function(a, b) return a.id < b.id end)
+      window:perform_action(
+        wezterm.action.InputSelector {
+          title = 'Hotkeys',
+          fuzzy = true,
+          choices = choices,
+          action = wezterm.action_callback(function() end),
+        },
+        pane
+      )
+    end
+
     config.keys = {
       { key = 'Enter', mods = 'ALT', action = wezterm.action.DisableDefaultAssignment },
-      {
-        key = 'p',
-        mods = 'SUPER|SHIFT',
-        action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|KEY_ASSIGNMENTS', title = 'Hotkeys' },
-      },
+      { key = 'p', mods = 'SUPER|SHIFT', action = wezterm.action_callback(show_hotkeys) },
       {
         key = 'r',
         mods = 'SUPER|SHIFT',
