@@ -14,3 +14,6 @@
 - After making changes to any file (Edit, Write, NotebookEdit), if `mcp__ide__getDiagnostics` is available in the current tool list (i.e., running within an IDE context), run it on the modified file(s) to check for TypeScript errors, ESLint issues, or other diagnostics.
 - If diagnostics reveal errors, fix them before moving on.
 
+## How to respond
+
+- Be extremely concise.
