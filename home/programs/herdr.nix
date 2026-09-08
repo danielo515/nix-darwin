@@ -9,6 +9,7 @@
   plugins = [
     "smarzban/herdr-file-viewer"
     "persiyanov/herdr-reviewr"
+    "devashish2203/herdr-worktrunk"
   ];
 in {
   options.herdr = {enable = lib.mkEnableOption "herdr";};
@@ -29,6 +30,9 @@ in {
     xdg.configFile."herdr/plugins/config/persiyanov.reviewr/config.toml".source =
       config.lib.file.mkOutOfStoreSymlink
       "${config.dotfiles.path}/herdr-reviewr.toml";
+    xdg.configFile."herdr/plugins/config/worktrunk/config.toml".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.dotfiles.path}/herdr-worktrunk.toml";
     home.activation.herdrPlugins = lib.hm.dag.entryAfter ["writeBoundary"] (
       lib.concatMapStringsSep "\n" (plugin: let
         id = builtins.baseNameOf plugin;

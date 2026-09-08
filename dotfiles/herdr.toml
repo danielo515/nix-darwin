@@ -65,3 +65,29 @@ command = 'cd "${HERDR_ACTIVE_PANE_CWD:-$PWD}" && exec "${SHELL:-sh}"'
 description = "Scratch terminal"
 width = "80%"
 height = "70%"
+
+# Worktrunk-backed worktrees (plugin id "worktrunk"); prefix+shift+g overrides
+# herdr's built-in "new worktree" so wt hooks run on create/remove/merge
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "worktrunk.open"
+description = "Worktree: switch / create from default branch"
+
+[[keys.command]]
+key = "prefix+shift+c"
+type = "plugin_action"
+command = "worktrunk.open-current"
+description = "Worktree: switch / create from current branch"
+
+[[keys.command]]
+key = "prefix+shift+d"
+type = "plugin_action"
+command = "worktrunk.remove"
+description = "Worktree: remove"
+
+[[keys.command]]
+key = "prefix+shift+m"
+type = "plugin_action"
+command = "worktrunk.merge"
+description = "Worktree: merge into the target branch"

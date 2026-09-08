@@ -1,0 +1,6 @@
+# Read on every picker run; edits apply without a relaunch.
+# Worktrees open as nested worktree workspaces in the sidebar (herdr-native look).
+open_mode = "workspace"
+# Floating picker over the current layout, matching the other prefix popups.
+picker_placement = "popup"
+show_remote_branches = false
