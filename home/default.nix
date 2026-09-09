@@ -65,7 +65,7 @@
     stateVersion = "24.11";
   };
 
-  home.packages = [flake.packages.${system}.hola flake.packages.${system}.repo-cloner];
+  home.packages = [flake.packages.${system}.hola flake.packages.${system}.repo-cloner flake.packages.${system}.zombies];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

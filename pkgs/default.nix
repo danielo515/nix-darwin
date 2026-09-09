@@ -5,4 +5,5 @@
   repo-cloner = pkgs.callPackage ./repo-cloner { 
     inherit (pkgs) git gh gum; 
   };
+  zombies = pkgs.callPackage ./zombies {};
 }
