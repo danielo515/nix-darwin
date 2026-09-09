@@ -14,6 +14,7 @@ writeShellApplication {
     REPO_OWNER = "danielo515";
     REPO_NAME = "nix-darwin";
     REPO_FULL = "danielo515/nix-darwin";
+    HM_CONFIG = "danielo-linux";
   };
   text = ''
     # Function to display styled section headers
@@ -132,7 +133,25 @@ writeShellApplication {
           "  darwin-rebuild switch --flake .#"
       fi
     else
-      info "Not running on macOS, skipping nix-darwin switch."
+      section "Linux Configuration"
+      HM_DIR="$HOME/.config/home-manager"
+      if [[ "$(realpath "$TARGET_DIR")" != "$(realpath -m "$HM_DIR")" ]]; then
+        info "Dotfiles are symlinked from $HM_DIR; linking it to $TARGET_DIR."
+        mkdir -p "$(dirname "$HM_DIR")"
+        [[ -e "$HM_DIR" ]] && error "$HM_DIR already exists; remove it or clone directly there."
+        ln -s "$(realpath "$TARGET_DIR")" "$HM_DIR"
+      fi
+
+      if gum confirm "Would you like to activate the home-manager configuration?"; then
+        cd "$TARGET_DIR"
+        info "Building and activating home-manager configuration..."
+        nix run "$TARGET_DIR#homeConfigurations.$HM_CONFIG.activationPackage"
+        success "Configuration activated successfully!"
+      else
+        info "Skipping activation. Run later with:"
+        gum style --foreground 39 \
+          "  nix run $TARGET_DIR#homeConfigurations.$HM_CONFIG.activationPackage"
+      fi
     fi
   '';
 }
