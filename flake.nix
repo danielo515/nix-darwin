@@ -1,5 +1,5 @@
 {
-  description = "Danielo's Nix configuration for macOS";
+  description = "Danielo's Nix configuration for macOS (test change)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -153,6 +153,7 @@
           # Linux standalone home configuration; dotfiles.path defaults to
           # ~/.config/home-manager/dotfiles (see home/dotfiles.nix)
           "${username}-linux" = mkHomeConfig "x86_64-linux" false;
+          "${username}-linux-arm" = mkHomeConfig "aarch64-linux" false;
         };
       };
     };

@@ -1,4 +1,4 @@
-{ git, gh, gum, writeShellApplication }:
+{ git, gum, writeShellApplication }:
 
 # writeShellApplication provides the following environment variables by default:
 # - All the standard Nix build environment variables (NIX_STORE, NIX_BUILD_TOP, etc.)
@@ -9,12 +9,11 @@
 # Additional environment variables can be set via the runtimeEnv attribute
 writeShellApplication {
   name = "repo-cloner";
-  runtimeInputs = [ git gh gum ];
+  runtimeInputs = [ git gum ];
   runtimeEnv = {
     REPO_OWNER = "danielo515";
     REPO_NAME = "nix-darwin";
     REPO_FULL = "danielo515/nix-darwin";
-    HM_CONFIG = "danielo-linux";
   };
   text = ''
     # Function to display styled section headers
@@ -38,12 +37,11 @@ writeShellApplication {
       exit 1
     }
 
-    # Check arguments
-    if [ $# -ne 1 ]; then
-      error "Usage: $(basename "$0") <target-directory>"
+    if [ $# -gt 1 ]; then
+      error "Usage: $(basename "$0") [target-directory]"
     fi
 
-    TARGET_DIR="$1"
+    TARGET_DIR="''${1:-$HOME/.config/home-manager}"
 
     # Show welcome message
     gum style \
@@ -60,27 +58,11 @@ writeShellApplication {
       error "Target directory is not empty: $TARGET_DIR"
     fi
 
-    section "GitHub Authentication"
-
-    # Check if user is authenticated with GitHub
-    if ! gh auth status &>/dev/null; then
-      info "You need to authenticate with GitHub first."
-      if gum confirm "Would you like to authenticate with GitHub now?"; then
-        info "Initiating GitHub authentication process..."
-        gh auth login
-      else
-        error "GitHub authentication is required to continue."
-      fi
-    else
-      success "Already authenticated with GitHub."
-    fi
-
     section "Cloning Repository"
 
-    # Clone the repository using gh cli with a spinner
     info "Cloning repository to $TARGET_DIR..."
     gum spin --spinner dot --title "Cloning repository..." -- \
-      gh repo clone "$REPO_FULL" "$TARGET_DIR" -- --depth 1
+      git clone --depth 1 "https://github.com/$REPO_FULL" "$TARGET_DIR"
     success "Repository cloned successfully to $TARGET_DIR"
     
     # Check if running on macOS
@@ -134,6 +116,10 @@ writeShellApplication {
       fi
     else
       section "Linux Configuration"
+      case "$(uname -m)" in
+        aarch64|arm64) HM_CONFIG="danielo-linux-arm" ;;
+        *) HM_CONFIG="danielo-linux" ;;
+      esac
       HM_DIR="$HOME/.config/home-manager"
       if [[ "$(realpath "$TARGET_DIR")" != "$(realpath -m "$HM_DIR")" ]]; then
         info "Dotfiles are symlinked from $HM_DIR; linking it to $TARGET_DIR."

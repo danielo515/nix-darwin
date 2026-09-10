@@ -38,9 +38,9 @@ nix build .#repo-cloner
 
 **Bootstrap a new machine:**
 ```bash
-nix run github:danielo515/nix-darwin -- ~/my-config
+nix run github:danielo515/nix-darwin [-- <target-dir>]   # default: ~/.config/home-manager
 ```
-This clones the repo and optionally runs darwin-rebuild to set up the system.
+This clones the repo (plain git, no auth) and optionally runs darwin-rebuild on macOS or activates the home-manager config on Linux (x86_64 or aarch64).
 
 **Home-Manager Organization:**
 - `home/default.nix` - Entry point, imports platform-specific configs based on `isDarwin`
