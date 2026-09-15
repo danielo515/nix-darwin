@@ -31,14 +31,14 @@ return function(browserName)
 		local script = ([[(function() {
       var browser = Application('%s');
 
-      for (win of browser.windows()) {
-        var tabIndex =
-          win.tabs().findIndex(tab => tab.id() == "%s");
+      for (const win of browser.windows()) {
+        var tabIndex = win.tabs.id().indexOf("%s");
 
         if (tabIndex != -1) {
           browser.activate();
           win.activeTabIndex = (tabIndex + 1);
           win.index = 1;
+          return;
         }
       }
     })();
@@ -54,9 +54,11 @@ return function(browserName)
       const browser = Application("%s");
       const tabs = [];
 
-      for (win of browser.windows()) {
-      for (let tab of win.tabs()) {
-      tabs.push({ id: tab.id(), title: tab.title(), url: tab.url() });
+      for (const win of browser.windows()) {
+      const winTabs = win.tabs;
+      const ids = winTabs.id(), titles = winTabs.title(), urls = winTabs.url();
+      for (let i = 0; i < ids.length; i++) {
+      tabs.push({ id: ids[i], title: titles[i], url: urls[i] });
       }
       }
       return tabs;
