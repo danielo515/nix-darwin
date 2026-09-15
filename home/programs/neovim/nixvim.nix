@@ -14,6 +14,8 @@
     # show errors in the bufferline
     ./fidget.nix
     ./telescope.nix
+    # Claude Code + CodeCompanion agent integration
+    ./ai.nix
   ];
   # Theme
   colorschemes.tokyonight.enable = true;
@@ -32,6 +34,9 @@
     tabstop = 2;
     number = true;
     clipboard = "unnamedplus";
+    # Pick up edits made outside nvim (agents writing to disk) instead of
+    # holding a stale buffer; the :checktime autocmd in ./ai.nix triggers it.
+    autoread = true;
   };
 
   # Keymaps

@@ -13,6 +13,8 @@ in {
     # Only this hook is ours; herdr-agent-state.sh is written and updated by
     # herdr's integration, so the hooks directory itself stays unmanaged.
     ".claude/hooks/check-npm.mjs".source = link "${config.dotfiles.path}/claude/hooks/check-npm.mjs";
+    ".claude/hooks/turn-review-base.sh".source = link "${config.dotfiles.path}/claude/hooks/turn-review-base.sh";
+    ".claude/hooks/turn-review-notify.sh".source = link "${config.dotfiles.path}/claude/hooks/turn-review-notify.sh";
     # Only this agent is ours; other agents may be user-local, so the agents
     # directory itself stays unmanaged.
     ".claude/agents/effect-log-annotations.md".source = link "${config.dotfiles.path}/claude/agents/effect-log-annotations.md";

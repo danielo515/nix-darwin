@@ -20,3 +20,6 @@ merge.squash = false
 # This repo lives under root-owned /private/etc, so a sibling dir there
 # isn't writable — route its worktrees under $HOME instead.
 worktree-path = "~/GIT/worktrees/{{ repo }}.{{ branch | sanitize }}"
+
+[list]
+json-schema = 2
