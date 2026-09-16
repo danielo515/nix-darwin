@@ -23,6 +23,9 @@ base=$(git stash create 2>/dev/null)
 
 state_dir="$git_dir/claude-turn-review"
 mkdir -p "$state_dir"
+
+# One pair of snapshot files per session, and nothing else ever removes them.
+find "$state_dir" -maxdepth 1 -type f -mtime +7 -delete 2>/dev/null
 printf '%s\n' "$base" >"$state_dir/$session.base"
 git ls-files --others --exclude-standard >"$state_dir/$session.untracked" 2>/dev/null
 
