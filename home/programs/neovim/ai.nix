@@ -270,6 +270,28 @@
         save(10)
       end
 
+      -- Show the pre-turn content of every hunk inline, as virtual lines above
+      -- the new text, with word-level highlighting so a one-word edit reads as
+      -- a one-word edit. Sticky on purpose: it survives moving between hunks,
+      -- so you see before-and-after the whole way through a review instead of
+      -- re-triggering a preview at each stop.
+      local show_before = false
+
+      local function set_before(on)
+        local ok, gs = pcall(require, "gitsigns")
+        if not ok then
+          return
+        end
+        show_before = on
+        gs.toggle_deleted(on)
+        gs.toggle_word_diff(on)
+        refresh_status()
+      end
+
+      local function toggle_before()
+        set_before(not show_before)
+      end
+
       ---------------------------------------------------------------------
       -- Key hint
       ---------------------------------------------------------------------
@@ -281,6 +303,7 @@
         { "<S-Tab>", "previous hunk", prev_hunk },
         { "<CR>", "keep, go to next", keep_hunk },
         { "X", "revert this hunk", revert_hunk },
+        { "-", "show previous content", toggle_before },
         { "?", "toggle this hint", nil },
         { "q", "pause review", nil },
         { "Q", "finish review", nil },
@@ -347,6 +370,7 @@
         set("<S-Tab>", "previous hunk", prev_hunk)
         set("<CR>", "keep, go to next", keep_hunk)
         set("X", "revert this hunk", revert_hunk)
+        set("-", "show previous content", toggle_before)
         set("?", "toggle hint", toggle_hint)
         set("q", "pause review", function()
           M.pause()
@@ -419,6 +443,9 @@
 
       local function disarm()
         M.armed = false
+        if show_before then
+          set_before(false)
+        end
         vim.api.nvim_clear_autocmds({ group = keys_group })
         close_hint()
         for buf in pairs(vim.deepcopy(saved_maps)) do
@@ -453,7 +480,7 @@
           if #M.files > shown then
             table.insert(msg, "  … " .. (#M.files - shown) .. " more")
           end
-          table.insert(msg, "<Tab> next · <CR> keep · X revert · ? keys")
+          table.insert(msg, "<Tab> next · <CR> keep · X revert · - before · ? keys")
           vim.notify(table.concat(msg, "\n"), vim.log.levels.INFO, { title = "Turn complete" })
           apply_base()
           M.arm()
@@ -485,7 +512,11 @@
             h = n
           end
         end
-        return string.format("󰚩 REVIEW %d/%d · file %d/%d", h, #lines, i, #M.files)
+        local out = string.format("󰚩 REVIEW %d/%d · file %d/%d", h, #lines, i, #M.files)
+        if show_before then
+          out = out .. " · before"
+        end
+        return out
       end
 
       -- Re-arm after a pause, and jump to the first thing worth looking at.
