@@ -91,3 +91,9 @@ key = "prefix+shift+m"
 type = "plugin_action"
 command = "worktrunk.merge"
 description = "Worktree: merge into the target branch"
+
+[[keys.command]]
+key = "prefix+shift+w"
+type = "shell"
+command = 'herdr pane move "$HERDR_ACTIVE_PANE_ID" --new-workspace --focus'
+description = "Move pane to new workspace"
