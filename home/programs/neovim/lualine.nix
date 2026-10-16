@@ -36,22 +36,6 @@ _: {
               removed = " ";
             };
           }
-          # Lit while gitsigns is pointed at a Claude turn baseline rather than
-          # the index, so the gutter never silently means something else.
-          {
-            __unkeyed-1.__raw = ''
-              function()
-                return require("claude_turn_review").status()
-              end,
-
-              cond = function()
-                local ok, review = pcall(require, "claude_turn_review")
-                return ok and review.active()
-              end,
-
-              color = { fg = "#f9e2af", gui = "bold" },
-            '';
-          }
         ];
         lualine_c = [
           {

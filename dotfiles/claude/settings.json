@@ -42,30 +42,6 @@
           }
         ]
       }
-    ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/Users/danielo/.claude/hooks/turn-review-base.sh'",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/Users/danielo/.claude/hooks/turn-review-notify.sh'",
-            "timeout": 10
-          }
-        ]
-      }
     ]
   },
   "statusLine": {
