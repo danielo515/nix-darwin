@@ -27,6 +27,9 @@ in {
     xdg.configFile."herdr/jump.sh".source =
       config.lib.file.mkOutOfStoreSymlink
       "${config.dotfiles.path}/herdr-jump.sh";
+    xdg.configFile."herdr/palette.sh".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.dotfiles.path}/herdr-palette.sh";
     xdg.configFile."herdr/plugins/config/persiyanov.reviewr/config.toml".source =
       config.lib.file.mkOutOfStoreSymlink
       "${config.dotfiles.path}/herdr-reviewr.toml";

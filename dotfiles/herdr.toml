@@ -36,6 +36,16 @@ description = "Fuzzy jump to workspace/tab"
 width = "90%"
 height = "80%"
 
+# Command palette: every action below plus common built-ins, with their keys.
+# prefix+p is free because previous_tab moved to prefix+b
+[[keys.command]]
+key = "prefix+p"
+type = "popup"
+command = "$HOME/.config/herdr/palette.sh"
+description = "Command palette"
+width = "90%"
+height = "85%"
+
 # prefix+d ("diff"); prefix+r is the default resize-mode binding
 [[keys.command]]
 key = "prefix+d"
