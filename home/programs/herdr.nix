@@ -30,6 +30,9 @@ in {
     xdg.configFile."herdr/palette.sh".source =
       config.lib.file.mkOutOfStoreSymlink
       "${config.dotfiles.path}/herdr-palette.sh";
+    xdg.configFile."herdr/nest-pane.sh".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.dotfiles.path}/herdr-nest-pane.sh";
     xdg.configFile."herdr/plugins/config/persiyanov.reviewr/config.toml".source =
       config.lib.file.mkOutOfStoreSymlink
       "${config.dotfiles.path}/herdr-reviewr.toml";

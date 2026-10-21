@@ -105,5 +105,5 @@ description = "Worktree: merge into the target branch"
 [[keys.command]]
 key = "prefix+shift+w"
 type = "shell"
-command = 'herdr pane move "$HERDR_ACTIVE_PANE_ID" --new-workspace --focus'
-description = "Move pane to new workspace"
+command = "$HOME/.config/herdr/nest-pane.sh"
+description = "Nest pane under its worktree workspace"
