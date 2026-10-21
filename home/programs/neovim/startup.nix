@@ -37,7 +37,7 @@
         margin = 5;
         content = [
           [ "󰈞 Find File" "Telescope find_files" "ff" ]
-          [ "󰊄 Find Word" "Telescope live_grep" "fr" ]
+          [ "󰊄 Find Word" "FzfLua live_grep" "fr" ]
           [ "󰋚 Recent Files" "Telescope oldfiles" "fg" ]
           [ "󰙅 File Browser" "Telescope file_browser" "fe" ]
         ];
