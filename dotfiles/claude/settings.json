@@ -42,6 +42,30 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/danielo/.claude/hooks/effect-review-gate.sh' snapshot",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/danielo/.claude/hooks/effect-review-gate.sh' check",
+            "timeout": 15
+          }
+        ]
+      }
     ]
   },
   "statusLine": {

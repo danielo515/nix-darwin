@@ -1,15 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "effect-best-practices": {
-      "source": "betalyra/effect-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/betalyra/effect-skills.git",
-      "skillPath": "effect-best-practices/SKILL.md",
-      "skillFolderHash": "eb099fb71bc255b588a95cf4d7f2a46804b9d991",
-      "installedAt": "2026-01-27T09:22:47.365Z",
-      "updatedAt": "2026-04-15T15:33:37.989Z"
-    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
