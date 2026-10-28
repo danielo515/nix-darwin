@@ -18,6 +18,7 @@ in {
     # directory itself stays unmanaged.
     ".claude/agents/effect-log-annotations.md".source = link "${config.dotfiles.path}/claude/agents/effect-log-annotations.md";
     ".claude/agents/effect-ts-enforcer.md".source = link "${config.dotfiles.path}/claude/agents/effect-ts-enforcer.md";
+    ".claude/skills/explain-diff/SKILL.md".source = link "${config.dotfiles.path}/claude/skills/explain-diff/SKILL.md";
     ".agents/.skill-lock.json".source = link "${config.dotfiles.path}/claude/skill-lock.json";
   };
 }
