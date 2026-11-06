@@ -2,7 +2,7 @@
 { pkgs, username, lib, ... }:
 let
   savePath = "${
-      if pkgs.stdenv.isDarwin then "/Users" else "/home"
+      if pkgs.stdenv.hostPlatform.isDarwin then "/Users" else "/home"
     }/${username}/screenshots";
 in {
   # Ensure flameshot package installed

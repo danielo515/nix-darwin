@@ -100,14 +100,18 @@ in
       enableZshIntegration = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
-      fileWidgetCommand = "fd --strip-cwd-prefix ${fzf-fd-flags}";
-      # ctrl-u re-roots the search one directory up per press (shadowing
-      # fzf's default clear-query binding in this widget only); the prompt
-      # shows the current root.
-      fileWidgetOptions = [
-        "--prompt '. > '"
-        "--bind 'ctrl-u:transform:${fzf-walk-up}'"
-      ];
+      # atuin owns ctrl-r; fzf keeps ctrl-t and alt-c.
+      historyWidget.command = "";
+      fileWidget = {
+        command = "fd --strip-cwd-prefix ${fzf-fd-flags}";
+        # ctrl-u re-roots the search one directory up per press (shadowing
+        # fzf's default clear-query binding in this widget only); the prompt
+        # shows the current root.
+        options = [
+          "--prompt '. > '"
+          "--bind 'ctrl-u:transform:${fzf-walk-up}'"
+        ];
+      };
     };
 
     direnv = {
