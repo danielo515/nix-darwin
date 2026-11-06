@@ -14,9 +14,11 @@ in {
     # herdr's integration, so the hooks directory itself stays unmanaged.
     ".claude/hooks/check-npm.mjs".source = link "${config.dotfiles.path}/claude/hooks/check-npm.mjs";
     ".claude/hooks/effect-review-gate.sh".source = link "${config.dotfiles.path}/claude/hooks/effect-review-gate.sh";
+    ".claude/hooks/naming-review-gate.sh".source = link "${config.dotfiles.path}/claude/hooks/naming-review-gate.sh";
     # Only these agents are ours; other agents may be user-local, so the agents
     # directory itself stays unmanaged.
     ".claude/agents/effect-log-annotations.md".source = link "${config.dotfiles.path}/claude/agents/effect-log-annotations.md";
+    ".claude/agents/descriptive-naming-reviewer.md".source = link "${config.dotfiles.path}/claude/agents/descriptive-naming-reviewer.md";
     ".claude/agents/effect-ts-enforcer.md".source = link "${config.dotfiles.path}/claude/agents/effect-ts-enforcer.md";
     ".claude/skills/explain-diff/SKILL.md".source = link "${config.dotfiles.path}/claude/skills/explain-diff/SKILL.md";
     ".agents/.skill-lock.json".source = link "${config.dotfiles.path}/claude/skill-lock.json";

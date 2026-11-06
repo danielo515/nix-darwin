@@ -51,6 +51,11 @@
             "type": "command",
             "command": "bash '/Users/danielo/.claude/hooks/effect-review-gate.sh' snapshot",
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash '/Users/danielo/.claude/hooks/naming-review-gate.sh' snapshot",
+            "timeout": 15
           }
         ]
       }
@@ -62,6 +67,11 @@
           {
             "type": "command",
             "command": "bash '/Users/danielo/.claude/hooks/effect-review-gate.sh' check",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash '/Users/danielo/.claude/hooks/naming-review-gate.sh' check",
             "timeout": 15
           }
         ]
