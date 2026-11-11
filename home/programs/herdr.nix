@@ -49,6 +49,13 @@ in {
         fi
       '')
       plugins
+      + ''
+
+        if ! ${herdr}/bin/herdr plugin list 2>/dev/null | ${pkgs.gnugrep}/bin/grep -q "worktree-parent"; then
+          run ${herdr}/bin/herdr plugin link "${config.dotfiles.path}/herdr-plugins/worktree-parent" \
+            || verboseEcho "herdr plugin link failed for worktree-parent"
+        fi
+      ''
     );
   };
 }
