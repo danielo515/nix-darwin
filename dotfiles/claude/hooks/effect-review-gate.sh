@@ -13,6 +13,10 @@
 # Self-contained on purpose: it shares nothing with the turn-review hooks.
 set -uo pipefail
 
+# Inside bb the background-audits plugin runs this gate itself, after the turn and
+# without blocking it (it calls the script with BB_THREAD_ID unset).
+[ -n "${BB_THREAD_ID:-}" ] && exit 0
+
 mode=${1:-}
 input=$(cat)
 cwd=$(printf '%s' "$input" | jq -r '.cwd // empty')
