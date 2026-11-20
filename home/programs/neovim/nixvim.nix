@@ -61,6 +61,19 @@
     end
   '';
 
+  # ~/.config/nvim/init.lua tracks the active home-manager generation, so a
+  # restart after darwin-rebuild loads the new config; the session keeps layout.
+  userCommands.Reload = {
+    desc = "Restart nvim with the latest config, keeping windows and buffers";
+    command.__raw = ''
+      function()
+        local session = vim.fn.fnameescape(vim.fn.stdpath("state") .. "/reload-session.vim")
+        vim.cmd("mksession! " .. session)
+        vim.cmd("restart source " .. session)
+      end
+    '';
+  };
+
   plugins = {
     # UI
     web-devicons.enable = true;
