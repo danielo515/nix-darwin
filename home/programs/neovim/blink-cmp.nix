@@ -47,11 +47,11 @@
             auto_show = true;
             auto_show_delay_ms = 200;
             window = {
-              border = "solid";
+              border = "rounded";
             };
           };
           menu = {
-            border = "solid";
+            border = "rounded";
             draw = {
               columns = [
                 ["kind_icon"]
