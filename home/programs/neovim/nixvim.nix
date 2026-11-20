@@ -38,6 +38,8 @@
     # holding a stale buffer; the :checktime autocmd in ./ai.nix triggers it.
     autoread = true;
     winborder = "rounded";
+    # No terminals: restoring one reruns its command, e.g. a stray claude next to claudecode.nvim's split.
+    sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize";
   };
 
   # Keymaps
@@ -67,13 +69,10 @@
     desc = "Restart nvim with the latest config, keeping windows and buffers";
     command.__raw = ''
       function()
-        local session = vim.fn.fnameescape(vim.fn.stdpath("state") .. "/reload-session.vim")
-        local sessionoptions = vim.o.sessionoptions
-        -- Skip terminals so the restart doesn't relaunch a stray claude next to claudecode.nvim's own split.
-        vim.opt.sessionoptions:remove("terminal")
-        vim.cmd("mksession! " .. session)
-        vim.o.sessionoptions = sessionoptions
-        vim.cmd("restart source " .. session)
+        local session = vim.fn.stdpath("state") .. "/reload-session.vim"
+        vim.cmd.mksession({ session, bang = true })
+        -- Wait for startup.nvim's deferred cursor move on its welcome page before loading the session.
+        vim.cmd("restart lua vim.defer_fn(function() vim.cmd.source(" .. string.format("%q", session) .. ") end, 50)")
       end
     '';
   };
