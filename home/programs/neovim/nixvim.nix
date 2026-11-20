@@ -68,7 +68,11 @@
     command.__raw = ''
       function()
         local session = vim.fn.fnameescape(vim.fn.stdpath("state") .. "/reload-session.vim")
+        local sessionoptions = vim.o.sessionoptions
+        -- Skip terminals so the restart doesn't relaunch a stray claude next to claudecode.nvim's own split.
+        vim.opt.sessionoptions:remove("terminal")
         vim.cmd("mksession! " .. session)
+        vim.o.sessionoptions = sessionoptions
         vim.cmd("restart source " .. session)
       end
     '';
