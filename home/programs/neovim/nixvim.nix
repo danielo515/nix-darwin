@@ -71,6 +71,34 @@
       function()
         local session = vim.fn.stdpath("state") .. "/reload-session.vim"
         vim.cmd.mksession({ session, bang = true })
+        if vim.g.reload_loop == 1 then
+          local unsaved = vim.tbl_filter(function(buf)
+            return vim.bo[buf].buflisted and vim.bo[buf].modified
+          end, vim.api.nvim_list_bufs())
+          if #unsaved > 0 then
+            vim.notify("Reload: save or discard changes first", vim.log.levels.ERROR)
+            return
+          end
+          local running_terminals = vim.tbl_filter(function(buf)
+            return vim.bo[buf].buftype == "terminal" and vim.fn.jobwait({ vim.bo[buf].channel }, 0)[1] == -1
+          end, vim.api.nvim_list_bufs())
+          if #running_terminals > 0 and not opts.bang then
+            vim.notify("Reload: terminals are still running (e.g. Claude); use :Reload! to close them", vim.log.levels.ERROR)
+            return
+          end
+          vim.cmd.mksession({ session, bang = true })
+          vim.cmd("cquit 75")
+          return
+        end
+        -- :restart reuses this process's command line, which pins the plugin folder it started with.
+        local pack_dir = function(text) return text:match("/nix/store/[^%s,\"']*vim%-pack%-dir") end
+        local running = pack_dir(table.concat(vim.v.argv, " "))
+        local wrapper = vim.fn.resolve(vim.fn.exepath("nvim"))
+        local latest = wrapper ~= "" and pack_dir(table.concat(vim.fn.readfile(wrapper), "\n"))
+        if running and latest and running ~= latest then
+          vim.notify("Reload: plugins changed since this nvim started; quit and reopen it", vim.log.levels.ERROR)
+          return
+        end
         -- Wait for startup.nvim's deferred cursor move on its welcome page before loading the session.
         vim.cmd("restart lua vim.defer_fn(function() vim.cmd.source(" .. string.format("%q", session) .. ") end, 50)")
       end
